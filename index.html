@@ -115,7 +115,7 @@ a:hover { color: #C8371D; }
   </div>
 </section>
 
-<section id="opensource" data-screen-label="Open source" style="max-width: 1440px; margin: 0 auto; padding: 0 clamp(20px, 3.5vw, 48px) clamp(110px, 13vw, 200px); box-sizing: border-box; scroll-margin-top: 40px;">
+<section id="opensource" data-screen-label="Open source" style="max-width: 1440px; margin: 0 auto; padding: 0 clamp(20px, 3.5vw, 48px) clamp(110px, 13vw, 200px); box-sizing: border-box; scroll-margin-top: 110px;">
   <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid #161513;">
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860;">Room III — Open source</span>
@@ -171,7 +171,7 @@ a:hover { color: #C8371D; }
 </section>
 
 <section id="statement" data-screen-label="Statement" style="padding: clamp(120px, 14vw, 220px) clamp(20px, 3.5vw, 48px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 56px clamp(40px, 8vw, 140px); align-items: center; max-width: 1240px; margin: 0 auto; box-sizing: border-box;">
-  <div style="background: #161513; padding: 10px; max-width: 400px; justify-self: center; box-shadow: 0 30px 60px -30px rgba(22,21,19,0.5);">
+  <div style="background: #161513; padding: 10px; width: min(100%, 400px); box-sizing: border-box; justify-self: center; box-shadow: 0 30px 60px -30px rgba(22,21,19,0.5);">
     <div style="background: #FAF9F6; padding: 28px;"><image-slot id="v6-portrait" shape="rect" src="./assets/portrait.jpg" placeholder="Portrait" style="width: 100%; aspect-ratio: 4 / 5; display: block; filter: grayscale(1);"></image-slot></div>
   </div>
   <div style="display: flex; flex-direction: column; gap: 28px;">
@@ -182,7 +182,7 @@ a:hover { color: #C8371D; }
   </div>
 </section>
 
-<section id="career" data-screen-label="Career" style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 3.5vw, 48px) clamp(110px, 13vw, 200px); box-sizing: border-box; scroll-margin-top: 40px;">
+<section id="career" data-screen-label="Career" style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 3.5vw, 48px) clamp(110px, 13vw, 200px); box-sizing: border-box; scroll-margin-top: 110px;">
   <div style="display: flex; flex-direction: column; gap: 16px; padding-bottom: 28px; border-bottom: 1px solid #161513;">
     <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860;">Chronology</span>
     <h2 data-reveal="1" style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(52px, 7vw, 120px); line-height: 0.9; letter-spacing: -0.02em;">Career</h2>
@@ -398,8 +398,9 @@ function drawArt(cv, idx, title) {
 
 class Component extends DCLogic {
   state = { room: -1, time: '', layer: -1, filter: 'All' };
-  componentDidUpdate(pp, ps) {
-    if (ps.filter !== this.state.filter) {
+  componentDidUpdate() {
+    if (this.lastFilter !== this.state.filter) {
+      this.lastFilter = this.state.filter;
       this.drawAll();
       if (!this.reduce) document.querySelectorAll('[data-card]').forEach((el, i) => el.animate([{ opacity: 0, transform: 'translateY(20px)' }, { opacity: 1, transform: 'none' }], { duration: 700, delay: i * 60, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }));
     }
@@ -407,6 +408,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || this.props.motion === false;
+    this.lastFilter = this.state.filter;
     this.tick(); this.clock = setInterval(() => this.tick(), 15000);
     this.cx = -9999; this.cy = -9999;
     this.onMove = e => { this.cx = e.clientX; this.cy = e.clientY; };
