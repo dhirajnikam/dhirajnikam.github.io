@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Dhiraj Nikam — Flutter mobile lead and AI/RAG engineer in Pune, India. Selected apps, platforms and open-source work.">
+<meta name="theme-color" content="#EFEDE7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23161513'/%3E%3Ctext x='16' y='24' font-family='Georgia,serif' font-style='italic' font-size='22' fill='%23FAF9F6' text-anchor='middle'%3ED%3C/text%3E%3C/svg%3E">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -20,7 +23,30 @@ a { color: inherit; text-decoration: none; }
 a:hover { color: #C8371D; }
 ::selection { background: #C8371D; color: #FAF9F6; }
 :focus-visible { outline: 1.5px solid #C8371D; outline-offset: 3px; }
-@media (max-width: 860px) { [data-hide-sm] { display: none !important; } [data-room-grid] { grid-template-columns: 1fr !important; } }
+/* Phone mockup: sized off its own width (cqw), so bezel, corners and island stay true at any size */
+[data-phone] { width: 42%; max-width: 290px; container-type: inline-size; position: relative; }
+[data-phone]::before, [data-phone]::after { content: ""; position: absolute; left: -1.1cqw; width: 1.4cqw; background: #2A2824; border-radius: 1cqw 0 0 1cqw; }
+[data-phone]::before { top: 19%; height: 7%; }
+[data-phone]::after { top: 28%; height: 7%; }
+[data-phone-body] { position: relative; background: #161513; padding: 3.6cqw; border-radius: 16cqw; box-shadow: inset 0 0 0 0.6cqw #3A3832, inset 0 0 0 1.2cqw #0E0D0C, 0 40px 60px -30px rgba(22,21,19,0.55), 0 2px 6px rgba(22,21,19,0.18); }
+[data-phone-body]::before { content: ""; position: absolute; right: -1.1cqw; top: 24%; width: 1.4cqw; height: 11%; background: #2A2824; border-radius: 0 1cqw 1cqw 0; }
+[data-phone-body]::after { content: ""; position: absolute; z-index: 2; top: calc(3.6cqw + 2.2cqw); left: 50%; transform: translateX(-50%); width: 27cqw; height: 7.6cqw; background: #000; border-radius: 99px; }
+[data-phone-screen] { border-radius: 12.4cqw; overflow: hidden; background: #000; }
+header { background: rgba(239,237,231,0.86); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+@media (max-width: 860px) {
+  [data-hide-sm] { display: none !important; } [data-room-grid] { grid-template-columns: 1fr !important; }
+  [data-gallery-item] { flex-direction: column; align-items: flex-start !important; gap: 20px !important; }
+  [data-gallery-item] canvas { width: min(60vw, 30vh) !important; }
+  [data-gallery-item] > button > span { padding: 16px !important; }
+  [data-gallery-label] { width: min(72vw, 320px) !important; }
+  [data-career-row] { grid-template-columns: 1fr !important; }
+  [data-career-row] > div:first-child { position: static !important; flex-direction: row !important; align-items: baseline; gap: 12px !important; }
+}
+@media (min-width: 861px) { [data-track] { padding-top: 100px !important; box-sizing: border-box; } }
+@media (pointer: coarse) {
+  header nav a, [data-links] a { padding: 12px 0; margin: -12px 0; }
+  [role="tab"] { padding-top: 12px !important; }
+}
 </style>
 </helmet>
 
@@ -62,16 +88,16 @@ a:hover { color: #C8371D; }
     </div>
     <div data-track="1" style="position: absolute; top: 0; left: 0; height: 100%; display: flex; align-items: center; gap: clamp(80px, 12vw, 200px); padding: 0 clamp(40px, 12vw, 200px); will-change: transform;">
       <sc-for list="{{ featured }}" as="p" hint-placeholder-count="4">
-        <div style="display: flex; align-items: flex-end; gap: 32px; flex-shrink: 0;">
+        <div data-gallery-item="1" style="display: flex; align-items: flex-end; gap: 32px; flex-shrink: 0;">
           <button type="button" onClick="{{ p.view }}" aria-label="{{ p.aria }}" style="all: unset; cursor: pointer; display: block; background: #161513; padding: 10px; box-shadow: 0 30px 60px -30px rgba(22,21,19,0.5), 0 2px 6px rgba(22,21,19,0.15); transition: transform 600ms cubic-bezier(.2,.8,.2,1);" style-hover="transform: translateY(-8px);">
             <span style="display: block; background: #FAF9F6; padding: clamp(24px, 3vw, 44px);">
-              <canvas data-art="{{ p.idx }}" style="display: block; width: min(46vw, 64vh, 560px); aspect-ratio: 4 / 5; height: auto;"></canvas>
+              <canvas data-art="{{ p.idx }}" style="display: block; width: min(46vw, max(220px, calc((100vh - 300px) * 0.8)), 560px); aspect-ratio: 4 / 5; height: auto;"></canvas>
             </span>
           </button>
-          <div style="width: 230px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 1.5; padding-bottom: 6px;">
+          <div data-gallery-label="1" style="width: 230px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 1.5; padding-bottom: 6px;">
             <span style="color: #6B6860;">{{ p.num }}</span>
             <span style="font-weight: 600;">Dhiraj Nikam</span>
-            <span style="font-family: 'Instrument Serif', serif; font-size: 28px; line-height: 1.05;"><span style="font-style: italic;">{{ p.title }}</span>, {{ p.year }}</span>
+            <span style="font-family: 'Instrument Serif', serif; font-size: 28px; line-height: 1.05;"><span style="font-style: italic;">{{ p.title }}</span></span>
             <span style="color: #4A4842;">{{ p.medium }}</span>
             <span style="color: #6B6860;">{{ p.platformLine }}</span>
             <span style="margin-top: 6px; color: #4A4842;">{{ p.line }}</span>
@@ -105,7 +131,7 @@ a:hover { color: #C8371D; }
         </button>
         <div style="display: flex; flex-direction: column; gap: 5px; font-size: 13px; line-height: 1.5;">
           <span style="display: flex; justify-content: space-between; color: #6B6860;"><span>{{ p.num }}</span><span>{{ p.catLine }}</span></span>
-          <span style="font-family: 'Instrument Serif', serif; font-size: 26px; line-height: 1.1;"><span style="font-style: italic;">{{ p.title }}</span>, {{ p.year }}</span>
+          <span style="font-family: 'Instrument Serif', serif; font-size: 26px; line-height: 1.1;"><span style="font-style: italic;">{{ p.title }}</span></span>
           <span style="color: #4A4842;">{{ p.line }}</span>
           <span style="color: #6B6860;">{{ p.medium }}</span>
           <span style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; font-size: 12px;"><sc-if value="{{ p.hasApp }}" hint-placeholder-val="{{ false }}"><a href="{{ p.appStore }}" target="_blank" rel="noopener" style="border-bottom: 1px solid rgba(22,21,19,0.3);">App Store ↗</a></sc-if><sc-if value="{{ p.hasPlay }}" hint-placeholder-val="{{ false }}"><a href="{{ p.play }}" target="_blank" rel="noopener" style="border-bottom: 1px solid rgba(22,21,19,0.3);">Google Play ↗</a></sc-if><button type="button" onClick="{{ p.view }}" style="all: unset; cursor: pointer; border-bottom: 1px solid #161513; font-weight: 500;" style-hover="color: #C8371D; border-color: #C8371D;">Details →</button></span>
@@ -154,13 +180,13 @@ a:hover { color: #C8371D; }
     <div style="position: absolute; inset: 0; perspective: 1800px;">
       <div style="position: absolute; left: 50%; top: 46%; width: 0; height: 0; transform-style: preserve-3d;">
         <sc-for list="{{ layers }}" as="l" hint-placeholder-count="3">
-          <div data-plane="{{ l.i }}" style="position: absolute; left: 0; top: 0; width: min(360px, 62vw); aspect-ratio: 1; box-sizing: border-box; border: 1px solid rgba(250,249,246,0.75); background: rgba(22,21,19,0.6); transform: translate(-50%, -50%) rotateX(60deg) rotateZ(-45deg); display: flex; align-items: flex-end; padding: 20px;">
+          <div data-plane="{{ l.i }}" style="position: absolute; left: 0; top: 0; width: min(360px, 62vw, 44vh); aspect-ratio: 1; box-sizing: border-box; border: 1px solid rgba(250,249,246,0.75); background: rgba(22,21,19,0.6); transform: translate(-50%, -50%) rotateX(60deg) rotateZ(-45deg); display: flex; align-items: flex-end; padding: 20px;">
             <span style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 40px; line-height: 1;">{{ l.k }}</span>
           </div>
         </sc-for>
       </div>
     </div>
-    <div style="position: absolute; left: 50%; bottom: 13vh; width: min(360px, 60vw); height: 22px; margin-left: calc(min(360px, 60vw) / -2); border: 1px solid rgba(250,249,246,0.3); border-bottom: 0;"></div>
+    <div style="position: absolute; left: 50%; bottom: 13vh; width: min(360px, 60vw, 44vh); height: 22px; margin-left: calc(min(360px, 60vw, 44vh) / -2); border: 1px solid rgba(250,249,246,0.3); border-bottom: 0;"></div>
     <div style="position: absolute; right: clamp(20px, 3.5vw, 48px); bottom: clamp(28px, 5vh, 52px); width: 280px; font-size: 13px; line-height: 1.55; color: rgba(250,249,246,0.75); display: flex; flex-direction: column; gap: 6px;">
       <span style="font-weight: 600; color: #FAF9F6;">Dhiraj Nikam</span>
       <span style="font-family: 'Instrument Serif', serif; font-size: 26px; line-height: 1.1; color: #FAF9F6;"><span style="font-style: italic;">The Whole Stack</span>, 2026</span>
@@ -188,7 +214,7 @@ a:hover { color: #C8371D; }
     <h2 data-reveal="1" style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(52px, 7vw, 120px); line-height: 0.9; letter-spacing: -0.02em;">Career</h2>
   </div>
   <sc-for list="{{ career }}" as="c" hint-placeholder-count="5">
-    <div style="display: grid; grid-template-columns: minmax(120px, 1fr) minmax(0, 3fr); gap: 16px clamp(24px, 5vw, 80px); padding: 40px 0; border-bottom: 1px solid rgba(22,21,19,0.14);">
+    <div data-career-row="1" style="display: grid; grid-template-columns: minmax(120px, 1fr) minmax(0, 3fr); gap: 16px clamp(24px, 5vw, 80px); padding: 40px 0; border-bottom: 1px solid rgba(22,21,19,0.14);">
       <div style="display: flex; flex-direction: column; gap: 6px; position: sticky; top: 80px; align-self: start;">
         <span style="font-family: 'Instrument Serif', serif; font-size: clamp(36px, 4vw, 60px); line-height: 0.9;">{{ c.from }}</span>
         <span style="font-size: 13px; color: #6B6860;">to {{ c.to }}</span>
@@ -232,11 +258,11 @@ a:hover { color: #C8371D; }
 
 <section id="commissions" data-screen-label="Commissions" style="border-top: 1px solid rgba(22,21,19,0.14); padding: clamp(110px, 14vw, 200px) clamp(20px, 3.5vw, 48px) 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 32px;">
   <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860;">Open to remote roles</span>
-  <a data-reveal="1" href="mailto:dhirajnikam78@gmail.com" style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: clamp(48px, 9vw, 160px); line-height: 1; letter-spacing: -0.025em; overflow-wrap: anywhere;">dhirajnikam78@gmail.com</a>
+  <a data-reveal="1" href="mailto:dhirajnikam78@gmail.com" style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: clamp(30px, 9vw, 160px); line-height: 1; letter-spacing: -0.025em; overflow-wrap: anywhere;">dhirajnikam78@gmail.com</a>
   <span style="font-size: 15px; color: #4A4842; max-width: 44ch; line-height: 1.6;">For Flutter apps, AI and RAG systems, or a second pair of hands on a system that needs care. Based in Pune, India.</span>
   <div style="width: 100%; display: flex; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; margin-top: clamp(80px, 10vw, 140px); padding-top: 20px; border-top: 1px solid rgba(22,21,19,0.14); font-size: 13px; color: #6B6860;">
     <span>© 2026 Dhiraj Nikam</span>
-    <span style="display: flex; gap: 24px; flex-wrap: wrap;"><a href="https://github.com/dhirajnikam" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/dhiraj-nikam-b93028b7" target="_blank" rel="noopener">LinkedIn</a><a href="https://pub.dev/publishers/dhirajnikam.dev" target="_blank" rel="noopener">pub.dev</a><a href="./Dhiraj_Nikam_Resume.pdf" target="_blank" rel="noopener">Résumé</a></span>
+    <span data-links="1" style="display: flex; gap: 24px; flex-wrap: wrap;"><a href="https://github.com/dhirajnikam" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/dhiraj-nikam-b93028b7" target="_blank" rel="noopener">LinkedIn</a><a href="https://pub.dev/publishers/dhirajnikam.dev" target="_blank" rel="noopener">pub.dev</a><a href="./Dhiraj_Nikam_Resume.pdf" target="_blank" rel="noopener">Résumé</a></span>
     <span>{{ time }}</span>
   </div>
 </section>
@@ -253,15 +279,15 @@ a:hover { color: #C8371D; }
           <div style="width: 72%; background: #161513; padding: 8px; box-shadow: 0 24px 40px -28px rgba(22,21,19,0.55);"><div style="background: #FAF9F6; padding: 20px;"><canvas data-art="{{ room.idx }}" style="display: block; width: 100%; aspect-ratio: 4 / 5; height: auto;"></canvas></div></div>
         </sc-if>
         <sc-if value="{{ room.showMobile }}" hint-placeholder-val="{{ true }}">
-          <div style="width: 42%; background: #161513; border-radius: 15% / 7%; padding: 5%;"><image-slot id="{{ room.slotA }}" src="{{ room.shotA }}" shape="rounded" radius="16" placeholder="App screen" style="width: 100%; aspect-ratio: 9 / 19.5; display: block;"></image-slot></div>
-          <div style="width: 42%; background: #161513; border-radius: 15% / 7%; padding: 5%; margin-top: 12%;"><image-slot id="{{ room.slotB }}" src="{{ room.shotB }}" shape="rounded" radius="16" placeholder="App screen" style="width: 100%; aspect-ratio: 9 / 19.5; display: block;"></image-slot></div>
+          <div data-phone="1"><div data-phone-body="1"><div data-phone-screen="1"><image-slot id="{{ room.slotA }}" src="{{ room.shotA }}" shape="rect" placeholder="App screen" style="width: 100%; aspect-ratio: 9 / 19.5; display: block;"></image-slot></div></div></div>
+          <div data-phone="1" style="margin-top: 12%;"><div data-phone-body="1"><div data-phone-screen="1"><image-slot id="{{ room.slotB }}" src="{{ room.shotB }}" shape="rect" placeholder="App screen" style="width: 100%; aspect-ratio: 9 / 19.5; display: block;"></image-slot></div></div></div>
         </sc-if>
         <sc-if value="{{ room.showWeb }}" hint-placeholder-val="{{ false }}">
           <div style="width: 100%; background: #161513; padding: 8px;"><image-slot id="{{ room.slotA }}" src="{{ room.shotA }}" shape="rect" placeholder="Screenshot" style="width: 100%; aspect-ratio: 16 / 10; display: block;"></image-slot></div>
         </sc-if>
       </div>
       <div style="display: flex; flex-direction: column; gap: 24px;">
-        <h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(48px, 5.6vw, 88px); line-height: 0.95; letter-spacing: -0.02em;"><span style="font-style: italic;">{{ room.title }}</span>, {{ room.year }}</h2>
+        <h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(48px, 5.6vw, 88px); line-height: 0.95; letter-spacing: -0.02em;"><span style="font-style: italic;">{{ room.title }}</span></h2>
         <span style="font-size: 14px; color: #6B6860;">{{ room.medium }} · {{ room.platformLine }}</span>
         <p style="margin: 0; font-family: 'Instrument Serif', serif; font-size: 28px; line-height: 1.2; color: #C8371D;">{{ room.result }}</p>
         <p style="margin: 0; font-size: 16px; line-height: 1.7; color: #3A3832;">{{ room.body }}</p>
@@ -282,34 +308,38 @@ a:hover { color: #C8371D; }
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;timeZone&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Asia/Kolkata&quot;, &quot;tsType&quot;: &quot;string&quot;}}">
 const PROJECTS = [
-  { title: 'Sorigin OMS', featured: true, cats: ['Mobile', 'Back end'], line: 'Offline-first field-operations platform for renewable-energy O&M teams.', platforms: ['Android'], year: '2025', mobile: true, medium: 'Flutter, BLoC, Node.js, PostgreSQL, AWS', play: 'https://play.google.com/store/apps/details?id=co.sorigin.fmsoms', shots: ['./assets/oms-1.jpg', './assets/oms-2.jpg'],
-    body: 'O&M teams at solar and wind sites needed one tool for assets, work orders, inspections and field reports, often with no signal. I built an offline-first Flutter platform with role-based workflows, GPS and timestamp camera capture and supervisor reassignment. A local write queue and background sync keep engineers productive at sites with no connectivity.',
-    result: 'In daily production use by O&M field teams on Android.',
-    layers: [{ k: 'Client', v: 'Flutter, BLoC, clean architecture' }, { k: 'Sync', v: 'Local write queue, background sync' }, { k: 'API', v: 'Node.js, REST' }, { k: 'Data', v: 'PostgreSQL' }, { k: 'Infra', v: 'AWS, Shorebird, CI/CD' }] },
-  { title: 'AI Field Copilot', featured: true, cats: ['AI', 'Back end'], line: 'Real-time RAG copilot over operational data, with graph memory.', platforms: ['Internal'], year: '2025', web: true, medium: 'Python, AWS Bedrock, LangChain, LangGraph, Neo4j',
-    body: 'An internal AI copilot built on an AWS Bedrock real-time RAG pipeline, with Neo4j graph memory and source attribution. I built a RAGAS and DeepEval evaluation harness that turned prompt, retrieval and embedding changes into tracked experiments.',
-    result: 'Answer faithfulness up by ~30%.',
-    layers: [{ k: 'Model', v: 'AWS Bedrock' }, { k: 'Pipeline', v: 'Python, LangChain, LangGraph' }, { k: 'Memory', v: 'Neo4j graph memory, vector search' }, { k: 'Eval', v: 'RAGAS, DeepEval, SHAP' }, { k: 'Tools', v: 'MCP servers for Jira and GitHub' }] },
-  { title: 'Brevity', featured: true, cats: ['Mobile', 'AI'], line: 'AI news app with personalised daily digests.', platforms: ['iOS', 'Android'], year: '2024', mobile: true, medium: 'Flutter, BLoC, Gemini, Firebase', appStore: 'https://apps.apple.com/app/brevity/id6749766585', play: 'https://play.google.com/store/apps/details?id=com.brevitynews.app', shots: ['./assets/brevity-1.jpg', './assets/brevity-2.jpg'],
-    body: 'A consumer news app that builds a personalised daily digest for each reader with Gemini, so people get the day’s news in a few minutes.',
-    result: '20K+ downloads.',
-    layers: [{ k: 'Client', v: 'Flutter, BLoC' }, { k: 'AI', v: 'Gemini-generated digests' }, { k: 'Backend', v: 'Firebase' }] },
-  { title: 'Nighters', featured: true, cats: ['Mobile'], line: 'Real-time chat and location-based community platform.', platforms: ['iOS', 'Android'], year: '2023', mobile: true, medium: 'Flutter, Stream Chat, Flutter Map', appStore: 'https://apps.apple.com/app/nighters/id1572139642', shots: ['./assets/nighters-1.jpg', './assets/nighters-2.jpg'],
+  { title: 'Nighters', featured: true, cats: ['Mobile'], line: 'Real-time chat and location-based community platform.', platforms: ['iOS', 'Android'], year: '2023', mobile: true, medium: 'Flutter, Stream Chat, Flutter Map', appStore: 'https://apps.apple.com/app/nighters/id1572139642', play: 'https://play.google.com/store/apps/details?id=org.nighters.NightersApp', shots: ['./assets/nighters-1.jpg', './assets/nighters-2.jpg'],
     body: 'A community app built around real-time chat and places on a map, shipped on both iOS and Android.',
     result: '15K+ downloads.',
     layers: [{ k: 'Client', v: 'Flutter' }, { k: 'Chat', v: 'Stream Chat' }, { k: 'Maps', v: 'Flutter Map' }] },
+  { title: 'NewsCore', featured: true, cats: ['Web', 'AI'], line: 'AI cyber-intelligence dashboards for an enterprise SaaS product.', platforms: ['Web'], year: '2024', web: true, medium: 'React, Django, LangChain, LangGraph', webUrl: 'https://www.newscore.fr', webLabel: 'newscore.fr', shots: ['./assets/newscore-og.jpg'],
+    body: 'Dashboards that use AI to detect risks and decode real-time signals for an enterprise cyber-intelligence product.',
+    result: 'Risks and live signals surfaced in one place.',
+    layers: [{ k: 'Client', v: 'React' }, { k: 'API', v: 'Django' }, { k: 'AI', v: 'LangChain, LangGraph' }] },
+  { title: 'Toffy AI', featured: true, cats: ['Mobile', 'AI'], line: 'AI dog-training app with personalised plans and an always-on behaviour assistant.', platforms: ['iOS', 'Android'], year: '2025', mobile: true, medium: 'Flutter, AI assistant, subscriptions', appStore: 'https://apps.apple.com/in/app/toffy-ai-dog-training-app/id6740557230', play: 'https://play.google.com/store/apps/details?id=com.compawnion.app', shots: ['./assets/toffy-1.jpg', './assets/toffy-2.jpg'],
+    body: 'A dog-training app that builds a personalised plan from each dog’s age, personality, routine and behaviour history, and adapts it as the dog progresses. Step-by-step video lessons, an AI assistant for behaviour questions like barking or separation anxiety, and logs for walks, meals, sleep and mood.',
+    result: 'Rated 5.0 on the App Store.',
+    layers: [{ k: 'Client', v: 'Flutter' }, { k: 'AI', v: 'Personalised plans, behaviour assistant' }, { k: 'Product', v: 'Lessons, activity logs, subscriptions' }] },
+  { title: 'Sorigin EPC', featured: true, cats: ['Mobile'], line: 'Field app for solar EPC site engineers.', platforms: ['iOS', 'Android'], year: '2025', mobile: true, medium: 'Flutter, offline-first, AWS S3', appStore: 'https://apps.apple.com/in/app/sorigin-epc/id6821831554', play: 'https://play.google.com/store/apps/details?id=co.sorigin.fsm_epc', shots: ['./assets/epc-1.png', './assets/epc-2.png'],
+    body: 'Site engineers run inspections and photo-backed progress reports during construction and commissioning. Reports queue locally and sync reliably from low-connectivity project sites.',
+    result: 'Reliable reporting from low-connectivity sites.',
+    layers: [{ k: 'Client', v: 'Flutter, offline-first' }, { k: 'Media', v: 'Photo-backed reports, AWS S3' }, { k: 'Design', v: 'Sovereign Emerald design system' }] },
+  { title: 'Sorigin OMS', cats: ['Mobile', 'Back end'], line: 'Offline-first field-operations platform for renewable-energy O&M teams.', platforms: ['Android'], year: '2025', mobile: true, medium: 'Flutter, BLoC, Node.js, PostgreSQL, AWS', play: 'https://play.google.com/store/apps/details?id=co.sorigin.fmsoms', shots: ['./assets/oms-1.jpg', './assets/oms-2.jpg'],
+    body: 'O&M teams at solar and wind sites needed one tool for assets, work orders, inspections and field reports, often with no signal. I built an offline-first Flutter platform with role-based workflows, GPS and timestamp camera capture and supervisor reassignment. A local write queue and background sync keep engineers productive at sites with no connectivity.',
+    result: 'In daily production use by O&M field teams on Android.',
+    layers: [{ k: 'Client', v: 'Flutter, BLoC, clean architecture' }, { k: 'Sync', v: 'Local write queue, background sync' }, { k: 'API', v: 'Node.js, REST' }, { k: 'Data', v: 'PostgreSQL' }, { k: 'Infra', v: 'AWS, Shorebird, CI/CD' }] },
+  { title: 'AI Field Copilot', cats: ['AI', 'Back end'], line: 'Real-time RAG copilot over operational data, with graph memory.', platforms: ['Internal'], year: '2025', web: true, medium: 'Python, AWS Bedrock, LangChain, LangGraph, Neo4j',
+    body: 'An internal AI copilot built on an AWS Bedrock real-time RAG pipeline, with Neo4j graph memory and source attribution. I built a RAGAS and DeepEval evaluation harness that turned prompt, retrieval and embedding changes into tracked experiments.',
+    result: 'Answer faithfulness up by ~30%.',
+    layers: [{ k: 'Model', v: 'AWS Bedrock' }, { k: 'Pipeline', v: 'Python, LangChain, LangGraph' }, { k: 'Memory', v: 'Neo4j graph memory, vector search' }, { k: 'Eval', v: 'RAGAS, DeepEval, SHAP' }, { k: 'Tools', v: 'MCP servers for Jira and GitHub' }] },
+  { title: 'Brevity', cats: ['Mobile', 'AI'], line: 'AI news app with personalised daily digests.', platforms: ['iOS', 'Android'], year: '2024', mobile: true, medium: 'Flutter, BLoC, Gemini, Firebase', appStore: 'https://apps.apple.com/app/brevity/id6749766585', play: 'https://play.google.com/store/apps/details?id=com.brevitynews.app', shots: ['./assets/brevity-1.jpg', './assets/brevity-2.jpg'],
+    body: 'A consumer news app that builds a personalised daily digest for each reader with Gemini, so people get the day’s news in a few minutes.',
+    result: '20K+ downloads.',
+    layers: [{ k: 'Client', v: 'Flutter, BLoC' }, { k: 'AI', v: 'Gemini-generated digests' }, { k: 'Backend', v: 'Firebase' }] },
   { title: 'Sorigin AMS', cats: ['Mobile'], line: 'Analytics and monitoring for solar and wind assets.', platforms: ['Android'], year: '2025', mobile: true, medium: 'Flutter, Dart isolates, real-time APIs', play: 'https://play.google.com/store/apps/details?id=co.sorigin.ams_ren_audit', shots: ['./assets/ams-1.png', './assets/ams-2.png'],
     body: 'A monitoring product for solar and wind assets built on real-time data workflows. Heavy telemetry processing runs off the UI thread in Dart isolates, so live charts and dashboards stay smooth.',
     result: 'Live dashboards stay smooth while processing telemetry.',
     layers: [{ k: 'Client', v: 'Flutter' }, { k: 'Compute', v: 'Dart isolates' }, { k: 'Data', v: 'Real-time APIs, live telemetry' }] },
-  { title: 'Sorigin EPC', cats: ['Mobile'], line: 'Field app for solar EPC site engineers.', platforms: ['Android'], year: '2025', mobile: true, medium: 'Flutter, offline-first, AWS S3', play: 'https://play.google.com/store/apps/details?id=co.sorigin.fsm_epc', shots: ['./assets/epc-1.png', './assets/epc-2.png'],
-    body: 'Site engineers run inspections and photo-backed progress reports during construction and commissioning. Reports queue locally and sync reliably from low-connectivity project sites.',
-    result: 'Reliable reporting from low-connectivity sites.',
-    layers: [{ k: 'Client', v: 'Flutter, offline-first' }, { k: 'Media', v: 'Photo-backed reports, AWS S3' }, { k: 'Design', v: 'Sovereign Emerald design system' }] },
-  { title: 'NewsCore', cats: ['Web', 'AI'], line: 'AI cyber-intelligence dashboards for an enterprise SaaS product.', platforms: ['Web'], year: '2024', web: true, medium: 'React, Django, LangChain, LangGraph', webUrl: 'https://www.newscore.fr', webLabel: 'newscore.fr', shots: ['./assets/newscore-og.jpg'],
-    body: 'Dashboards that use AI to detect risks and decode real-time signals for an enterprise cyber-intelligence product.',
-    result: 'Risks and live signals surfaced in one place.',
-    layers: [{ k: 'Client', v: 'React' }, { k: 'API', v: 'Django' }, { k: 'AI', v: 'LangChain, LangGraph' }] },
   { title: 'Solar & Wind Assistant', cats: ['AI', 'Back end'], line: 'WhatsApp chatbot for solar and wind project teams.', platforms: ['WhatsApp'], year: '2025', web: true, medium: 'Go, Twilio, OpenAI', webUrl: 'https://github.com/dhirajnikam/whatsapp-ai', webLabel: 'GitHub',
     body: 'A WhatsApp assistant with per-user conversation memory, project-progress tracking and technical troubleshooting for project teams.',
     result: 'Project status and troubleshooting on WhatsApp.',
