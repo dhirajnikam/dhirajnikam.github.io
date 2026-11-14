@@ -15,7 +15,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Hanken+Grotesk:wght@400;500;600&amp;display=swap">
-<script src="./image-slot.js"></script>
 <style>
 :root {
   --ink: #161513; --ink-rgb: 22 21 19;
@@ -256,7 +255,7 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
 
 <section id="statement" data-screen-label="Statement" style="padding: clamp(120px, 14vw, 220px) var(--gutter); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 56px clamp(40px, 8vw, 140px); align-items: center; max-width: 1240px; margin: 0 auto; box-sizing: border-box;">
   <div style="background: var(--ink); padding: 10px; width: min(100%, 400px); box-sizing: border-box; justify-self: center; box-shadow: var(--shadow-wall);">
-    <div style="background: var(--mat); padding: 28px;"><image-slot id="v6-portrait" shape="rect" src="./assets/portrait.jpg" placeholder="Portrait" style="width: 100%; aspect-ratio: 4 / 5; display: block; filter: grayscale(1);"></image-slot></div>
+    <div style="background: var(--mat); padding: 28px;"><img src="./assets/portrait.jpg" alt="Dhiraj Nikam standing beside a motorcycle in a hillside clearing" style="width: 100%; aspect-ratio: 4 / 5; display: block; filter: grayscale(1); object-fit: cover;"></div>
   </div>
   <div style="display: flex; flex-direction: column; gap: 28px;">
     <span class="eyebrow">Artist statement</span>
@@ -337,11 +336,11 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
           <div style="width: 72%; background: var(--ink); padding: 8px; box-shadow: var(--shadow-card);"><div style="background: var(--mat); padding: 20px;"><canvas ref="{{ room.paint }}" style="display: block; width: 100%; aspect-ratio: 4 / 5; height: auto;"></canvas></div></div>
         </sc-if>
         <sc-if value="{{ room.pair }}" hint-placeholder-val="{{ true }}">
-          <div data-phone="1"><div data-phone-body="1"><div data-phone-screen="1"><image-slot id="{{ room.slot }}-a" src="{{ room.phones.0 }}" shape="rect" placeholder="App screen" style="width: 100%; aspect-ratio: 9 / 19.5; display: block;"></image-slot></div></div></div>
-          <div data-phone="1" style="margin-top: 12%;"><div data-phone-body="1"><div data-phone-screen="1"><image-slot id="{{ room.slot }}-b" src="{{ room.phones.1 }}" shape="rect" placeholder="App screen" style="width: 100%; aspect-ratio: 9 / 19.5; display: block;"></image-slot></div></div></div>
+          <div data-phone="1"><div data-phone-body="1"><div data-phone-screen="1"><img src="{{ room.phones.0 }}" alt="" style="width: 100%; aspect-ratio: 9 / 19.5; display: block; object-fit: cover;"></div></div></div>
+          <div data-phone="1" style="margin-top: 12%;"><div data-phone-body="1"><div data-phone-screen="1"><img src="{{ room.phones.1 }}" alt="" style="width: 100%; aspect-ratio: 9 / 19.5; display: block; object-fit: cover;"></div></div></div>
         </sc-if>
         <sc-if value="{{ room.desktop }}" hint-placeholder-val="{{ false }}">
-          <div style="width: 100%; background: var(--ink); padding: 8px;"><image-slot id="{{ room.slot }}-a" src="{{ room.desktop }}" shape="rect" placeholder="Screenshot" style="width: 100%; aspect-ratio: 16 / 10; display: block;"></image-slot></div>
+          <div style="width: 100%; background: var(--ink); padding: 8px;"><img src="{{ room.desktop }}" alt="" style="width: 100%; aspect-ratio: 16 / 10; display: block; object-fit: cover;"></div>
         </sc-if>
       </div>
       <div style="display: flex; flex-direction: column; gap: 24px;">
