@@ -17,245 +17,295 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Hanken+Grotesk:wght@400;500;600&amp;display=swap">
 <script src="./image-slot.js"></script>
 <style>
+:root {
+  --ink: #161513; --ink-rgb: 22 21 19;
+  --accent: #C8371D; --accent-rgb: 200 55 29;
+  --mat: #FAF9F6; --mat-rgb: 250 249 246;
+  --wall: #EFEDE7; --wall-rgb: 239 237 231;
+  --muted: #6B6860; --body: #4A4842; --body-strong: #3A3832;
+  --serif: 'Instrument Serif', serif; --sans: 'Hanken Grotesk', sans-serif;
+  --shadow-card: 0 24px 40px -28px rgb(var(--ink-rgb) / 0.55); --shadow-wall: 0 30px 60px -30px rgb(var(--ink-rgb) / 0.5);
+  --gutter: clamp(20px, 3.5vw, 48px);
+  --header-h: 70px; /* fixed header: 22px padding top and bottom + 26px name */
+  --gallery-top: calc(var(--header-h) + 30px);
+}
 html { scroll-behavior: smooth; }
-body { margin: 0; background: #EFEDE7; color: #161513; font-family: 'Hanken Grotesk', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--wall); color: var(--ink); font-family: var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
-a:hover { color: #C8371D; }
-::selection { background: #C8371D; color: #FAF9F6; }
-:focus-visible { outline: 1.5px solid #C8371D; outline-offset: 3px; }
+a:hover { color: var(--accent); }
+::selection { background: var(--accent); color: var(--mat); }
+button { all: unset; cursor: pointer; }
+:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
 /* Phone mockup: sized off its own width (cqw), so bezel, corners and island stay true at any size */
-[data-phone] { width: 42%; max-width: 290px; container-type: inline-size; position: relative; }
+[data-phone] { container-type: inline-size; position: relative; }
+[data-room] [data-phone] { width: 42%; max-width: 290px; }
 [data-phone]::before, [data-phone]::after { content: ""; position: absolute; left: -1.1cqw; width: 1.4cqw; background: #2A2824; border-radius: 1cqw 0 0 1cqw; }
 [data-phone]::before { top: 19%; height: 7%; }
 [data-phone]::after { top: 28%; height: 7%; }
-[data-phone-body] { position: relative; background: #161513; padding: 3.6cqw; border-radius: 16cqw; box-shadow: inset 0 0 0 0.6cqw #3A3832, inset 0 0 0 1.2cqw #0E0D0C, 0 40px 60px -30px rgba(22,21,19,0.55), 0 2px 6px rgba(22,21,19,0.18); }
+[data-phone-body] { position: relative; background: var(--ink); padding: 3.6cqw; border-radius: 16cqw; box-shadow: inset 0 0 0 0.6cqw var(--body-strong), inset 0 0 0 1.2cqw #0E0D0C, 0 40px 60px -30px rgb(var(--ink-rgb) / 0.55), 0 2px 6px rgb(var(--ink-rgb) / 0.18); }
 [data-phone-body]::before { content: ""; position: absolute; right: -1.1cqw; top: 24%; width: 1.4cqw; height: 11%; background: #2A2824; border-radius: 0 1cqw 1cqw 0; }
 [data-phone-body]::after { content: ""; position: absolute; z-index: 2; top: calc(3.6cqw + 2.2cqw); left: 50%; transform: translateX(-50%); width: 27cqw; height: 7.6cqw; background: #000; border-radius: 99px; }
 [data-phone-screen] { border-radius: 12.4cqw; overflow: hidden; background: #000; }
 [data-phone], [data-phone-body], [data-phone-screen] { display: block; }
-[data-shot] { display: block; width: 100%; aspect-ratio: 9 / 19.5; object-fit: cover; object-position: top; }
-[data-plate] { position: relative; display: block; aspect-ratio: 4 / 5; }
-[data-plate-row] { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 6%; }
-[data-browser] { position: absolute; left: 0; top: 14%; width: 94%; display: block; background: #FFF; border-radius: 1.6% / 2.6%; overflow: hidden; box-shadow: 0 0 0 1px rgba(22,21,19,0.12), 0 30px 50px -28px rgba(22,21,19,0.5); }
-[data-browser-bar] { display: flex; gap: 1.2%; padding: 2.2% 2.6%; background: #E6E3DB; }
-[data-browser-bar] i { width: 2.4%; aspect-ratio: 1; border-radius: 50%; background: #C4C0B6; }
-[data-shot-web] { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
-header { background: rgba(239,237,231,0.86); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.flush-top { scroll-margin-top: calc(var(--header-h) + 40px); } /* sections with no top padding of their own */
+.eyebrow { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.section-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(52px, 7vw, 120px); line-height: 0.9; letter-spacing: -0.02em; }
+.ink-link { border-bottom: 1px solid currentColor; font-weight: 500; }
+.ink-link:hover { color: var(--accent); }
+.soft-link { border-bottom: 1px solid rgb(var(--ink-rgb) / 0.3); }
+.store-badge { display: flex; flex-direction: column; gap: 1px; padding: 10px 18px; background: var(--ink); color: var(--mat); border-radius: 10px; min-width: 140px; }
+.store-badge:hover { background: var(--accent); color: var(--mat); }
+.store-badge small { font-size: 10px; letter-spacing: 0.04em; opacity: 0.75; }
+.store-badge b { font-size: 17px; font-weight: 600; line-height: 1.1; }
+.tab { padding-bottom: 4px; border-bottom: 1px solid transparent; color: var(--muted); transition: color 200ms, border-color 200ms; }
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { color: var(--ink); border-color: var(--ink); }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.gallery-track { position: absolute; top: 0; left: 0; height: 100%; display: flex; align-items: center; gap: clamp(80px, 12vw, 200px); padding: var(--gallery-top) clamp(40px, 12vw, 200px) 0; box-sizing: border-box; will-change: transform; }
+.gallery-item { display: flex; align-items: flex-end; gap: 32px; flex-shrink: 0; }
+.gallery-mat { display: block; background: var(--mat); padding: clamp(24px, 3vw, 44px); }
+.plate-slot { display: block; aspect-ratio: 4 / 5; }
+.gallery-plate { width: min(46vw, max(220px, calc((100vh - var(--gallery-top) - 200px) * 0.8)), 560px); }
+.gallery-label { width: 230px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 1.5; padding-bottom: 6px; }
+.career-row { display: grid; grid-template-columns: minmax(120px, 1fr) minmax(0, 3fr); gap: 16px clamp(24px, 5vw, 80px); padding: 40px 0; border-bottom: 1px solid rgb(var(--ink-rgb) / 0.14); }
+.career-dates { display: flex; flex-direction: column; gap: 6px; position: sticky; top: calc(var(--header-h) + 10px); align-self: start; }
+.room-grid { max-width: 1240px; margin: 0 auto; padding: 32px var(--gutter) 96px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 56px clamp(40px, 6vw, 96px); align-items: start; box-sizing: border-box; }
 @media (max-width: 860px) {
-  [data-hide-sm] { display: none !important; } [data-room-grid] { grid-template-columns: 1fr !important; }
-  [data-gallery-item] { flex-direction: column; align-items: flex-start !important; gap: 20px !important; }
-  [data-gallery-item] [data-plate] { width: min(60vw, 30vh) !important; }
-  [data-gallery-item] > button > span { padding: 16px !important; }
-  [data-gallery-label] { width: min(72vw, 320px) !important; }
-  [data-career-row] { grid-template-columns: 1fr !important; }
-  [data-career-row] > div:first-child { position: static !important; flex-direction: row !important; align-items: baseline; gap: 12px !important; }
+  .wide-only { display: none; }
+  .room-grid, .career-row { grid-template-columns: 1fr; }
+  .gallery-track { padding-top: 0; }
+  .gallery-item { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .gallery-plate { width: min(60vw, 30vh); }
+  .gallery-mat { padding: 16px; }
+  .gallery-label { width: min(72vw, 320px); }
+  .career-dates { position: static; flex-direction: row; align-items: baseline; gap: 12px; }
 }
-@media (min-width: 861px) { [data-track] { padding-top: 100px !important; box-sizing: border-box; } }
 @media (pointer: coarse) {
-  header nav a, [data-links] a { padding: 12px 0; margin: -12px 0; }
-  [role="tab"] { padding-top: 12px !important; }
+  header nav a, .footer-links a { padding: 12px 0; margin: -12px 0; }
+  .tab { padding-top: 12px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Micro-interactions. Everything here is motion-only: with reduced motion the page renders exactly as before. */
+  a { transition: color 200ms ease-out; }
+  .gallery-label > button, [data-card] > div button, [data-room] > div > button { transition: color 200ms ease-out, border-color 200ms ease-out; }
+  header nav a, .footer-links a { background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px content-box; transition: color 200ms ease-out, background-size 250ms cubic-bezier(.2,.8,.2,1); }
+  header nav a:is(:hover, :focus-visible), .footer-links a:is(:hover, :focus-visible) { background-size: 100% 1px; }
+  .arr { display: inline-block; transition: transform 250ms cubic-bezier(.2,.8,.2,1); }
+  :is(a, button):is(:hover, :focus-visible) .arr-ne { transform: translate(2px, -2px); }
+  :is(a, button):is(:hover, :focus-visible) .arr-e { transform: translateX(3px); }
+  :is(a, button):is(:hover, :focus-visible) .arr-s { transform: translateY(3px); }
+  :is(a, button):is(:hover, :focus-visible) .arr-x { transform: rotate(90deg); }
+  button:active .arr-e { transform: translateX(5px); }
+  button:active .arr-x { transform: rotate(90deg) scale(.85); }
+  .store-badge, .press { transition: background-color 200ms ease-out, color 200ms ease-out, border-color 200ms ease-out, transform 150ms ease-out; }
+  .store-badge:active, .press:active { transform: scale(.98); }
+  .gallery-mat, [data-card] > button > span { transition: transform 200ms ease-out; }
+  .gallery-item > button:active > .gallery-mat, [data-card] > button:active > span { transform: scale(.985); }
+  #elsewhere a > span:first-child, .win > span:first-child { transition: transform 250ms cubic-bezier(.2,.8,.2,1); }
+  #elsewhere a:is(:hover, :focus-visible) > span:first-child { transform: translateX(4px); }
+  .win:hover > span:first-child { transform: translateX(3px); }
 }
 </style>
 </helmet>
 
-<header style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding: 22px clamp(20px, 3.5vw, 48px); pointer-events: none;">
-  <a href="#top" style="pointer-events: auto; font-family: 'Instrument Serif', serif; font-size: 26px; line-height: 1;">Dhiraj Nikam</a>
+<header style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding: 22px var(--gutter); pointer-events: none;">
+  <a href="#top" style="pointer-events: auto; font-family: var(--serif); font-size: 26px; line-height: 1;">Dhiraj Nikam</a>
   <nav style="pointer-events: auto; display: flex; gap: 28px; font-size: 13px; letter-spacing: 0.01em;">
     <a href="#works">Works</a>
-    <a data-hide-sm="1" href="#catalogue">Catalogue</a>
-    <a data-hide-sm="1" href="#opensource">Open source</a>
-    <a data-hide-sm="1" href="#statement">About</a>
-    <a data-hide-sm="1" href="#career">Career</a>
+    <a class="wide-only" href="#catalogue">Catalogue</a>
+    <a class="wide-only" href="#opensource">Open source</a>
+    <a class="wide-only" href="#statement">About</a>
+    <a class="wide-only" href="#career">Career</a>
     <a href="#commissions">Contact</a>
   </nav>
 </header>
 
 <section id="top" data-screen-label="Hero" style="position: relative; height: max(100vh, 640px); overflow: hidden;">
-  <canvas data-hero-canvas="1" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></canvas>
-  <div style="position: absolute; left: clamp(20px, 3.5vw, 48px); right: clamp(20px, 3.5vw, 48px); bottom: clamp(28px, 4vw, 52px); display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; pointer-events: none;">
-    <h1 data-fade="1" style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(64px, 10.5vw, 184px); line-height: 0.88; letter-spacing: -0.025em;">Software,<br><span style="font-style: italic;">drawn by hand.</span></h1>
-    <div data-fade="1" style="width: 270px; background: #FAF9F6; padding: 18px 20px; box-shadow: 0 1px 2px rgba(22,21,19,0.08); font-size: 13px; line-height: 1.5; pointer-events: auto;">
-      <div style="font-weight: 600;">Dhiraj Nikam <span style="font-weight: 400; color: #6B6860;">(Pune, India)</span></div>
-      <div style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 19px; line-height: 1.25; margin: 4px 0 10px;">Field, 2026</div>
-      <div style="color: #6B6860;">1,600 particles following a noise field. JavaScript on canvas. Move your cursor to disturb it.</div>
-      <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(22,21,19,0.12); color: #6B6860;">Flutter mobile lead · AI &amp; RAG engineering</div>
+  <canvas ref="{{ paintHero }}" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></canvas>
+  <div style="position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(28px, 4vw, 52px); display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; pointer-events: none;">
+    <h1 data-fade="1" style="margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(64px, 10.5vw, 184px); line-height: 0.88; letter-spacing: -0.025em;">Software,<br><span style="font-style: italic;">drawn by hand.</span></h1>
+    <div data-fade="1" style="width: 270px; background: var(--mat); padding: 18px 20px; box-shadow: 0 1px 2px rgb(var(--ink-rgb) / 0.08); font-size: 13px; line-height: 1.5; pointer-events: auto;">
+      <div style="font-weight: 600;">Dhiraj Nikam <span style="font-weight: 400; color: var(--muted);">(Pune, India)</span></div>
+      <div style="font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.25; margin: 4px 0 10px;">Field, 2026</div>
+      <div style="color: var(--muted);">1,600 particles following a noise field. JavaScript on canvas. Move your cursor to disturb it.</div>
+      <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgb(var(--ink-rgb) / 0.12); color: var(--muted);">Flutter mobile lead · AI &amp; RAG engineering</div>
     </div>
   </div>
 </section>
 
-<section id="intro" data-screen-label="Curatorial note" style="padding: clamp(120px, 16vw, 240px) clamp(20px, 3.5vw, 48px); display: flex; flex-direction: column; align-items: center; gap: 36px; text-align: center;">
-  <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860;">Selected works, 2022 – 2026</span>
-  <p data-reveal="1" style="margin: 0; max-width: 24ch; font-family: 'Instrument Serif', serif; font-size: clamp(36px, 4.6vw, 72px); line-height: 1.04; letter-spacing: -0.015em;">Apps, platforms and the systems beneath them, built with the patience of <span style="font-style: italic; color: #C8371D;">a craft.</span></p>
-  <p style="margin: 0; max-width: 52ch; font-size: 16px; line-height: 1.7; color: #4A4842;">Four featured works hang in the first room; the full catalogue follows. Each project is shown with its real screens (or, for back-end work, a drawing generated from its name), a wall label, and the technical notes behind it.</p>
+<section id="intro" data-screen-label="Curatorial note" style="padding: clamp(120px, 16vw, 240px) var(--gutter); display: flex; flex-direction: column; align-items: center; gap: 36px; text-align: center;">
+  <span class="eyebrow">Selected works, 2022 – 2026</span>
+  <p data-reveal="1" style="margin: 0; max-width: 24ch; font-family: var(--serif); font-size: clamp(36px, 4.6vw, 72px); line-height: 1.04; letter-spacing: -0.015em;">Apps, platforms and the systems beneath them, built with the patience of <span style="font-style: italic; color: var(--accent);">a craft.</span></p>
+  <p style="margin: 0; max-width: 52ch; font-size: 16px; line-height: 1.7; color: var(--body);">{{ featuredCountWord }} featured works hang in the first room; the full catalogue follows. Each project is shown with its real screens (or, for back-end work, a drawing generated from its name), a wall label, and the technical notes behind it.</p>
 </section>
 
 <section id="works" data-gallery="1" data-screen-label="Works" style="position: relative; height: 400vh;">
   <div style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
-    <div style="position: absolute; top: 76px; left: clamp(20px, 3.5vw, 48px); right: clamp(20px, 3.5vw, 48px); display: flex; justify-content: space-between; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860; z-index: 2;">
-      <span>Room I — Featured works</span><span data-gallery-count="1">01 / 04</span>
+    <div class="eyebrow" style="position: absolute; top: calc(var(--header-h) + 6px); left: var(--gutter); right: var(--gutter); display: flex; justify-content: space-between; z-index: 2;">
+      <span>Room I — Featured works</span><span data-gallery-count="1"></span>
     </div>
-    <div data-track="1" style="position: absolute; top: 0; left: 0; height: 100%; display: flex; align-items: center; gap: clamp(80px, 12vw, 200px); padding: 0 clamp(40px, 12vw, 200px); will-change: transform;">
+    <div data-track="1" class="gallery-track">
       <sc-for list="{{ featured }}" as="p" hint-placeholder-count="4">
-        <div data-gallery-item="1" style="display: flex; align-items: flex-end; gap: 32px; flex-shrink: 0;">
-          <button type="button" onClick="{{ p.view }}" aria-label="{{ p.aria }}" style="all: unset; cursor: pointer; display: block; background: #161513; padding: 10px; box-shadow: 0 30px 60px -30px rgba(22,21,19,0.5), 0 2px 6px rgba(22,21,19,0.15); transition: transform 600ms cubic-bezier(.2,.8,.2,1);" style-hover="transform: translateY(-8px);">
-            <span style="display: block; background: #FAF9F6; padding: clamp(24px, 3vw, 44px);">
-              <span data-plate="1" style="width: min(46vw, max(220px, calc((100vh - 300px) * 0.8)), 560px);"><sc-if value="{{ p.artOnly }}" hint-placeholder-val="{{ false }}"><canvas data-art="{{ p.idx }}" style="position: absolute; inset: 0; display: block; width: 100%; height: 100%;"></canvas></sc-if><sc-if value="{{ p.showMobile }}" hint-placeholder-val="{{ true }}"><span data-plate-row="1"><span data-phone="1" style="width: 40%; margin-top: -10%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ p.shotA }}" alt="" loading="lazy" decoding="async"></span></span></span><span data-phone="1" style="width: 40%; margin-top: 14%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ p.shotB }}" alt="" loading="lazy" decoding="async"></span></span></span></span></sc-if><sc-if value="{{ p.showWeb }}" hint-placeholder-val="{{ false }}"><span data-browser="1"><span data-browser-bar="1"><i></i><i></i><i></i></span><img data-shot-web="1" src="{{ p.shotA }}" alt="" loading="lazy" decoding="async"></span><sc-if value="{{ p.webPhone }}" hint-placeholder-val="{{ false }}"><span data-phone="1" style="position: absolute; right: 2%; bottom: 4%; width: 32%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ p.shotB }}" alt="" loading="lazy" decoding="async"></span></span></span></sc-if></sc-if></span>
+        <div class="gallery-item">
+          <button type="button" onClick="{{ p.view }}" aria-label="View {{ p.title }}" style="display: block; background: var(--ink); padding: 10px; box-shadow: var(--shadow-wall), 0 2px 6px rgb(var(--ink-rgb) / 0.15); transition: transform 600ms cubic-bezier(.2,.8,.2,1);" style-hover="transform: translateY(-8px);">
+            <span class="gallery-mat">
+              <span class="gallery-plate plate-slot"><dc-import name="project-plate" project="{{ p }}" hint-size="0,0"></dc-import></span>
             </span>
           </button>
-          <div data-gallery-label="1" style="width: 230px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 1.5; padding-bottom: 6px;">
-            <span style="color: #6B6860;">{{ p.num }}</span>
+          <div class="gallery-label">
+            <span style="color: var(--muted);">{{ p.num }}</span>
             <span style="font-weight: 600;">Dhiraj Nikam</span>
-            <span style="font-family: 'Instrument Serif', serif; font-size: 28px; line-height: 1.05;"><span style="font-style: italic;">{{ p.title }}</span></span>
-            <span style="color: #4A4842;">{{ p.medium }}</span>
-            <span style="color: #6B6860;">{{ p.platformLine }}</span>
-            <span style="margin-top: 6px; color: #4A4842;">{{ p.line }}</span>
-            <span style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 4px; font-size: 12px; color: #6B6860;"><sc-if value="{{ p.hasApp }}" hint-placeholder-val="{{ false }}"><a href="{{ p.appStore }}" target="_blank" rel="noopener" style="border-bottom: 1px solid rgba(22,21,19,0.3);">App Store ↗</a></sc-if><sc-if value="{{ p.hasPlay }}" hint-placeholder-val="{{ false }}"><a href="{{ p.play }}" target="_blank" rel="noopener" style="border-bottom: 1px solid rgba(22,21,19,0.3);">Google Play ↗</a></sc-if></span>
-            <button type="button" onClick="{{ p.view }}" style="all: unset; cursor: pointer; margin-top: 10px; align-self: flex-start; font-size: 13px; font-weight: 500; border-bottom: 1px solid #161513; padding-bottom: 2px;" style-hover="color: #C8371D; border-color: #C8371D;">Enter the room →</button>
+            <span style="font-family: var(--serif); font-size: 28px; line-height: 1.05;"><span style="font-style: italic;">{{ p.title }}</span></span>
+            <span style="color: var(--body);">{{ p.medium }}</span>
+            <span style="color: var(--muted);">{{ p.platformLine }}</span>
+            <span style="margin-top: 6px; color: var(--body);">{{ p.line }}</span>
+            <span style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 4px; font-size: 12px; color: var(--muted);"><sc-if value="{{ p.appStore }}" hint-placeholder-val="{{ false }}"><a href="{{ p.appStore }}" target="_blank" rel="noopener" class="soft-link">App Store <span class="arr arr-ne">↗</span></a></sc-if><sc-if value="{{ p.play }}" hint-placeholder-val="{{ false }}"><a href="{{ p.play }}" target="_blank" rel="noopener" class="soft-link">Google Play <span class="arr arr-ne">↗</span></a></sc-if></span>
+            <button type="button" onClick="{{ p.view }}" class="ink-link" style="margin-top: 10px; align-self: flex-start; font-size: 13px; padding-bottom: 2px;">Enter the room <span class="arr arr-e">→</span></button>
           </div>
         </div>
       </sc-for>
     </div>
-    <div style="position: absolute; left: clamp(20px, 3.5vw, 48px); right: clamp(20px, 3.5vw, 48px); bottom: 36px; height: 1px; background: rgba(22,21,19,0.15);"><div data-gallery-bar="1" style="height: 1px; width: 0%; background: #161513;"></div></div>
+    <div style="position: absolute; left: var(--gutter); right: var(--gutter); bottom: 36px; height: 1px; background: rgb(var(--ink-rgb) / 0.15);"><div data-gallery-bar="1" style="height: 1px; width: 0%; background: var(--ink);"></div></div>
   </div>
 </section>
 
-<section id="catalogue" data-screen-label="Catalogue" style="max-width: 1440px; margin: 0 auto; padding: clamp(110px, 13vw, 200px) clamp(20px, 3.5vw, 48px); box-sizing: border-box; scroll-margin-top: 40px;">
-  <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid #161513;">
+<section id="catalogue" data-screen-label="Catalogue" style="max-width: 1440px; margin: 0 auto; padding: clamp(110px, 13vw, 200px) var(--gutter); box-sizing: border-box; scroll-margin-top: calc(var(--header-h) - 30px);">
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid var(--ink);">
     <div style="display: flex; flex-direction: column; gap: 16px;">
-      <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860;">Room II — Catalogue</span>
-      <h2 data-reveal="1" style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(52px, 7vw, 120px); line-height: 0.9; letter-spacing: -0.02em;">All works <span style="font-style: italic; color: #6B6860; font-size: 0.5em; letter-spacing: 0;">({{ shownCount }})</span></h2>
+      <span class="eyebrow">Room II — Catalogue</span>
+      <h2 data-reveal="1" class="section-title">All works <span style="font-style: italic; color: var(--muted); font-size: 0.5em; letter-spacing: 0;">({{ shownCount }})</span></h2>
     </div>
     <div role="tablist" aria-label="Filter projects" style="display: flex; gap: 24px; flex-wrap: wrap; font-size: 14px;">
       <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
-        <button type="button" role="tab" aria-selected="{{ f.active }}" onClick="{{ f.pick }}" style="all: unset; cursor: pointer; padding-bottom: 4px; border-bottom: 1px solid {{ f.line }}; color: {{ f.color }}; transition: color 200ms, border-color 200ms;" style-hover="color: #161513;">{{ f.label }} <span style="font-size: 11px; color: #6B6860;">{{ f.count }}</span></button>
+        <button type="button" role="tab" class="tab" aria-selected="{{ f.active }}" onClick="{{ f.pick }}">{{ f.label }} <span style="font-size: 11px; color: var(--muted);">{{ f.count }}</span></button>
       </sc-for>
     </div>
   </div>
-  <div data-grid="1" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 64px 40px; padding-top: 56px;">
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 64px 40px; padding-top: 56px;">
     <sc-for list="{{ shown }}" as="p" hint-placeholder-count="8">
       <article data-card="1" style="display: flex; flex-direction: column; gap: 18px;">
-        <button type="button" onClick="{{ p.view }}" aria-label="{{ p.aria }}" style="all: unset; cursor: pointer; display: block; background: #161513; padding: 7px; box-shadow: 0 24px 40px -28px rgba(22,21,19,0.55); transition: transform 500ms cubic-bezier(.2,.8,.2,1), box-shadow 500ms;" style-hover="transform: translateY(-6px); box-shadow: 0 34px 50px -28px rgba(22,21,19,0.6);">
-          <span style="display: block; background: #FAF9F6; padding: 20px;"><span data-plate="1" style="width: 100%;"><sc-if value="{{ p.artOnly }}" hint-placeholder-val="{{ false }}"><canvas data-art="{{ p.idx }}" style="position: absolute; inset: 0; display: block; width: 100%; height: 100%;"></canvas></sc-if><sc-if value="{{ p.showMobile }}" hint-placeholder-val="{{ true }}"><span data-plate-row="1"><span data-phone="1" style="width: 40%; margin-top: -10%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ p.shotA }}" alt="" loading="lazy" decoding="async"></span></span></span><span data-phone="1" style="width: 40%; margin-top: 14%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ p.shotB }}" alt="" loading="lazy" decoding="async"></span></span></span></span></sc-if><sc-if value="{{ p.showWeb }}" hint-placeholder-val="{{ false }}"><span data-browser="1"><span data-browser-bar="1"><i></i><i></i><i></i></span><img data-shot-web="1" src="{{ p.shotA }}" alt="" loading="lazy" decoding="async"></span><sc-if value="{{ p.webPhone }}" hint-placeholder-val="{{ false }}"><span data-phone="1" style="position: absolute; right: 2%; bottom: 4%; width: 32%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ p.shotB }}" alt="" loading="lazy" decoding="async"></span></span></span></sc-if></sc-if></span></span>
+        <button type="button" onClick="{{ p.view }}" aria-label="View {{ p.title }}" style="display: block; background: var(--ink); padding: 7px; box-shadow: var(--shadow-card); transition: transform 500ms cubic-bezier(.2,.8,.2,1), box-shadow 500ms;" style-hover="transform: translateY(-6px); box-shadow: 0 34px 50px -28px rgb(var(--ink-rgb) / 0.6);">
+          <span style="display: block; background: var(--mat); padding: 20px;"><span class="plate-slot"><dc-import name="project-plate" project="{{ p }}" hint-size="0,0"></dc-import></span></span>
         </button>
         <div style="display: flex; flex-direction: column; gap: 5px; font-size: 13px; line-height: 1.5;">
-          <span style="display: flex; justify-content: space-between; color: #6B6860;"><span>{{ p.num }}</span><span>{{ p.catLine }}</span></span>
-          <span style="font-family: 'Instrument Serif', serif; font-size: 26px; line-height: 1.1;"><span style="font-style: italic;">{{ p.title }}</span></span>
-          <span style="color: #4A4842;">{{ p.line }}</span>
-          <span style="color: #6B6860;">{{ p.medium }}</span>
-          <span style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; font-size: 12px;"><sc-if value="{{ p.hasApp }}" hint-placeholder-val="{{ false }}"><a href="{{ p.appStore }}" target="_blank" rel="noopener" style="border-bottom: 1px solid rgba(22,21,19,0.3);">App Store ↗</a></sc-if><sc-if value="{{ p.hasPlay }}" hint-placeholder-val="{{ false }}"><a href="{{ p.play }}" target="_blank" rel="noopener" style="border-bottom: 1px solid rgba(22,21,19,0.3);">Google Play ↗</a></sc-if><button type="button" onClick="{{ p.view }}" style="all: unset; cursor: pointer; border-bottom: 1px solid #161513; font-weight: 500;" style-hover="color: #C8371D; border-color: #C8371D;">Details →</button></span>
+          <span style="display: flex; justify-content: space-between; color: var(--muted);"><span>{{ p.num }}</span><span>{{ p.catLine }}</span></span>
+          <span style="font-family: var(--serif); font-size: 26px; line-height: 1.1;"><span style="font-style: italic;">{{ p.title }}</span></span>
+          <span style="color: var(--body);">{{ p.line }}</span>
+          <span style="color: var(--muted);">{{ p.medium }}</span>
+          <span style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; font-size: 12px;"><sc-if value="{{ p.appStore }}" hint-placeholder-val="{{ false }}"><a href="{{ p.appStore }}" target="_blank" rel="noopener" class="soft-link">App Store <span class="arr arr-ne">↗</span></a></sc-if><sc-if value="{{ p.play }}" hint-placeholder-val="{{ false }}"><a href="{{ p.play }}" target="_blank" rel="noopener" class="soft-link">Google Play <span class="arr arr-ne">↗</span></a></sc-if><button type="button" onClick="{{ p.view }}" class="ink-link">Details <span class="arr arr-e">→</span></button></span>
         </div>
       </article>
     </sc-for>
   </div>
 </section>
 
-<section id="opensource" data-screen-label="Open source" style="max-width: 1440px; margin: 0 auto; padding: 0 clamp(20px, 3.5vw, 48px) clamp(110px, 13vw, 200px); box-sizing: border-box; scroll-margin-top: 110px;">
-  <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid #161513;">
+<section id="opensource" class="flush-top" data-screen-label="Open source" style="max-width: 1440px; margin: 0 auto; padding: 0 var(--gutter) clamp(110px, 13vw, 200px); box-sizing: border-box;">
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid var(--ink);">
     <div style="display: flex; flex-direction: column; gap: 16px;">
-      <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860;">Room III — Open source</span>
-      <h2 data-reveal="1" style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(52px, 7vw, 120px); line-height: 0.9; letter-spacing: -0.02em;">Work in <span style="font-style: italic;">public</span></h2>
+      <span class="eyebrow">Room III — Open source</span>
+      <h2 data-reveal="1" class="section-title">Work in <span style="font-style: italic;">public</span></h2>
     </div>
-    <a href="https://github.com/dhirajnikam" target="_blank" rel="noopener" style="font-size: 14px; font-weight: 500; border-bottom: 1px solid #161513; padding-bottom: 2px;">github.com/dhirajnikam ↗</a>
+    <a href="https://github.com/dhirajnikam" target="_blank" rel="noopener" class="ink-link" style="font-size: 14px; padding-bottom: 2px;">github.com/dhirajnikam <span class="arr arr-ne">↗</span></a>
   </div>
 
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 56px clamp(40px, 6vw, 96px); padding-top: 56px; align-items: start;">
     <div style="display: flex; flex-direction: column; gap: 18px;">
-      <div style="background: #161513; padding: 8px; box-shadow: 0 24px 40px -28px rgba(22,21,19,0.55);">
-        <div style="background: #FAF9F6; padding: clamp(18px, 2.4vw, 32px);"><canvas data-contrib="1" style="display: block; width: 100%; aspect-ratio: 53 / 9; height: auto;"></canvas></div>
+      <div style="background: var(--ink); padding: 8px; box-shadow: var(--shadow-card);">
+        <div style="background: var(--mat); padding: clamp(18px, 2.4vw, 32px);"><canvas ref="{{ paintContrib }}" style="display: block; width: 100%; aspect-ratio: 53 / 9; height: auto;"></canvas></div>
       </div>
       <div style="display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; font-size: 13px; line-height: 1.5;">
-        <span><span style="font-weight: 600;">Dhiraj Nikam</span><br><span style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 22px;">A Year of Commits</span><span style="font-family: 'Instrument Serif', serif; font-size: 22px;">, 2026</span></span>
-        <span style="color: #6B6860; max-width: 30ch;">A drawing of a year at the keyboard: one ink mark per day, red marks a release.</span>
+        <span><span style="font-weight: 600;">Dhiraj Nikam</span><br><span style="font-family: var(--serif); font-style: italic; font-size: 22px;">A Year of Commits</span><span style="font-family: var(--serif); font-size: 22px;">, 2026</span></span>
+        <span style="color: var(--muted); max-width: 30ch;">A drawing of a year at the keyboard: one ink mark per day, red marks a release.</span>
       </div>
     </div>
 
-    <div style="display: flex; flex-direction: column; border-top: 1px solid #161513;">
+    <div style="display: flex; flex-direction: column; border-top: 1px solid var(--ink);">
       <sc-for list="{{ repos }}" as="r" hint-placeholder-count="5">
-        <a href="{{ r.url }}" target="_blank" rel="noopener" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 24px; padding: 20px 0; border-bottom: 1px solid rgba(22,21,19,0.14); transition: padding 400ms cubic-bezier(.2,.8,.2,1);" style-hover="padding-left: 10px; color: #161513;">
-          <span style="font-family: 'Instrument Serif', serif; font-size: 28px; line-height: 1.05;"><span style="font-style: italic;">{{ r.name }}</span> <span style="font-family: 'Hanken Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #6B6860; vertical-align: middle;">{{ r.role }}</span></span>
-          <span style="font-size: 13px; color: #4A4842; text-align: right; white-space: nowrap;">{{ r.where }}</span>
-          <span style="font-size: 14px; line-height: 1.55; color: #4A4842;">{{ r.desc }}</span>
-          <span style="display: flex; align-items: center; gap: 7px; font-size: 12px; color: #6B6860; justify-content: flex-end; white-space: nowrap;"><span style="width: 7px; height: 7px; border-radius: 50%; border: 1px solid #161513; background: {{ r.dot }};"></span>{{ r.lang }}</span>
+        <a href="{{ r.url }}" target="_blank" rel="noopener" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 24px; padding: 20px 0; border-bottom: 1px solid rgb(var(--ink-rgb) / 0.14); transition: padding 400ms cubic-bezier(.2,.8,.2,1);" style-hover="padding-left: 10px; color: var(--ink);">
+          <span style="font-family: var(--serif); font-size: 28px; line-height: 1.05;"><span style="font-style: italic;">{{ r.name }}</span> <span style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); vertical-align: middle;">{{ r.role }}</span></span>
+          <span style="font-size: 13px; color: var(--body); text-align: right; white-space: nowrap;">{{ r.where }}</span>
+          <span style="font-size: 14px; line-height: 1.55; color: var(--body);">{{ r.desc }}</span>
+          <span style="display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); justify-content: flex-end; white-space: nowrap;"><span style="width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--ink); background: {{ r.dot }};"></span>{{ r.lang }}</span>
         </a>
       </sc-for>
     </div>
   </div>
 </section>
 
-<section id="sculpture" data-sculpture="1" data-screen-label="Sculpture" style="position: relative; height: 260vh; background: #161513; color: #FAF9F6;">
+<section id="sculpture" data-sculpture="1" data-screen-label="Sculpture" style="position: relative; height: 260vh; background: var(--ink); color: var(--mat);">
   <div style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
-    <span style="position: absolute; top: 76px; left: clamp(20px, 3.5vw, 48px); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(250,249,246,0.6);">Room IV — Sculpture</span>
+    <span class="eyebrow" style="position: absolute; top: calc(var(--header-h) + 6px); left: var(--gutter); color: rgb(var(--mat-rgb) / 0.6);">Room IV — Sculpture</span>
     <div style="position: absolute; inset: 0; perspective: 1800px;">
       <div style="position: absolute; left: 50%; top: 46%; width: 0; height: 0; transform-style: preserve-3d;">
         <sc-for list="{{ layers }}" as="l" hint-placeholder-count="3">
-          <div data-plane="{{ l.i }}" style="position: absolute; left: 0; top: 0; width: min(360px, 62vw, 44vh); aspect-ratio: 1; box-sizing: border-box; border: 1px solid rgba(250,249,246,0.75); background: rgba(22,21,19,0.6); transform: translate(-50%, -50%) rotateX(60deg) rotateZ(-45deg); display: flex; align-items: flex-end; padding: 20px;">
-            <span style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 40px; line-height: 1;">{{ l.k }}</span>
+          <div data-plane="1" style="position: absolute; left: 0; top: 0; width: min(360px, 62vw, 44vh); aspect-ratio: 1; box-sizing: border-box; border: 1px solid rgb(var(--mat-rgb) / 0.75); background: rgb(var(--ink-rgb) / 0.6); transform: translate(-50%, -50%) rotateX(60deg) rotateZ(-45deg); display: flex; align-items: flex-end; padding: 20px;">
+            <span style="font-family: var(--serif); font-style: italic; font-size: 40px; line-height: 1;">{{ l.k }}</span>
           </div>
         </sc-for>
       </div>
     </div>
-    <div style="position: absolute; left: 50%; bottom: 13vh; width: min(360px, 60vw, 44vh); height: 22px; margin-left: calc(min(360px, 60vw, 44vh) / -2); border: 1px solid rgba(250,249,246,0.3); border-bottom: 0;"></div>
-    <div style="position: absolute; right: clamp(20px, 3.5vw, 48px); bottom: clamp(28px, 5vh, 52px); width: 280px; font-size: 13px; line-height: 1.55; color: rgba(250,249,246,0.75); display: flex; flex-direction: column; gap: 6px;">
-      <span style="font-weight: 600; color: #FAF9F6;">Dhiraj Nikam</span>
-      <span style="font-family: 'Instrument Serif', serif; font-size: 26px; line-height: 1.1; color: #FAF9F6;"><span style="font-style: italic;">The Whole Stack</span>, 2026</span>
+    <div style="position: absolute; right: var(--gutter); bottom: clamp(28px, 5vh, 52px); width: 280px; font-size: 13px; line-height: 1.55; color: rgb(var(--mat-rgb) / 0.75); display: flex; flex-direction: column; gap: 6px;">
+      <span style="font-weight: 600; color: var(--mat);">Dhiraj Nikam</span>
+      <span style="font-family: var(--serif); font-size: 26px; line-height: 1.1; color: var(--mat);"><span style="font-style: italic;">The Whole Stack</span>, 2026</span>
       <span>Mobile UI, AI services, data. One maker, every layer.</span>
-      <span data-legend="1" style="margin-top: 8px; padding-top: 10px; border-top: 1px solid rgba(250,249,246,0.2);">{{ layerNote }}</span>
+      <span style="margin-top: 8px; padding-top: 10px; border-top: 1px solid rgb(var(--mat-rgb) / 0.2);">{{ layerNote }}</span>
     </div>
   </div>
 </section>
 
-<section id="statement" data-screen-label="Statement" style="padding: clamp(120px, 14vw, 220px) clamp(20px, 3.5vw, 48px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 56px clamp(40px, 8vw, 140px); align-items: center; max-width: 1240px; margin: 0 auto; box-sizing: border-box;">
-  <div style="background: #161513; padding: 10px; width: min(100%, 400px); box-sizing: border-box; justify-self: center; box-shadow: 0 30px 60px -30px rgba(22,21,19,0.5);">
-    <div style="background: #FAF9F6; padding: 28px;"><image-slot id="v6-portrait" shape="rect" src="./assets/portrait.jpg" placeholder="Portrait" style="width: 100%; aspect-ratio: 4 / 5; display: block; filter: grayscale(1);"></image-slot></div>
+<section id="statement" data-screen-label="Statement" style="padding: clamp(120px, 14vw, 220px) var(--gutter); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 56px clamp(40px, 8vw, 140px); align-items: center; max-width: 1240px; margin: 0 auto; box-sizing: border-box;">
+  <div style="background: var(--ink); padding: 10px; width: min(100%, 400px); box-sizing: border-box; justify-self: center; box-shadow: var(--shadow-wall);">
+    <div style="background: var(--mat); padding: 28px;"><image-slot id="v6-portrait" shape="rect" src="./assets/portrait.jpg" placeholder="Portrait" style="width: 100%; aspect-ratio: 4 / 5; display: block; filter: grayscale(1);"></image-slot></div>
   </div>
   <div style="display: flex; flex-direction: column; gap: 28px;">
-    <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860;">Artist statement</span>
-    <p data-reveal="1" style="margin: 0; font-family: 'Instrument Serif', serif; font-size: clamp(32px, 3.4vw, 52px); line-height: 1.08; letter-spacing: -0.01em;">I treat software the way a printmaker treats a plate: <span style="font-style: italic;">every layer matters, and the last one is the one people touch.</span></p>
-    <p style="margin: 0; font-size: 16px; line-height: 1.7; color: #4A4842; max-width: 56ch;">4+ years building production Flutter apps and the AI-powered backends behind them, mostly for teams whose software has to work in the field: solar and wind O&amp;M engineers, site teams, operators. Flutter and Dart on the device; Python (FastAPI, Django, LangChain) and TypeScript (Node.js, React) on the server; AWS Bedrock, PostgreSQL and Neo4j underneath. Open-source author on pub.dev and the VS Code Marketplace.</p>
-    <div style="display: flex; gap: 28px; flex-wrap: wrap; font-size: 14px; font-weight: 500;"><a href="#career" style="border-bottom: 1px solid #161513; padding-bottom: 2px;">Career ↓</a><a href="./Dhiraj_Nikam_Resume.pdf" target="_blank" rel="noopener" style="border-bottom: 1px solid #161513; padding-bottom: 2px;">Download CV (PDF)</a></div>
+    <span class="eyebrow">Artist statement</span>
+    <p data-reveal="1" style="margin: 0; font-family: var(--serif); font-size: clamp(32px, 3.4vw, 52px); line-height: 1.08; letter-spacing: -0.01em;">I treat software the way a printmaker treats a plate: <span style="font-style: italic;">every layer matters, and the last one is the one people touch.</span></p>
+    <p style="margin: 0; font-size: 16px; line-height: 1.7; color: var(--body); max-width: 56ch;">4+ years building production Flutter apps and the AI-powered backends behind them, mostly for teams whose software has to work in the field: solar and wind O&amp;M engineers, site teams, operators. Flutter and Dart on the device; Python (FastAPI, Django, LangChain) and TypeScript (Node.js, React) on the server; AWS Bedrock, PostgreSQL and Neo4j underneath. Open-source author on pub.dev and the VS Code Marketplace.</p>
+    <div style="display: flex; gap: 28px; flex-wrap: wrap; font-size: 14px; font-weight: 500;"><a href="#career" class="ink-link" style="padding-bottom: 2px;">Career <span class="arr arr-s">↓</span></a><a href="./Dhiraj_Nikam_Resume.pdf" target="_blank" rel="noopener" class="ink-link" style="padding-bottom: 2px;">Download CV (PDF)</a></div>
   </div>
 </section>
 
-<section id="career" data-screen-label="Career" style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 3.5vw, 48px) clamp(110px, 13vw, 200px); box-sizing: border-box; scroll-margin-top: 110px;">
-  <div style="display: flex; flex-direction: column; gap: 16px; padding-bottom: 28px; border-bottom: 1px solid #161513;">
-    <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860;">Chronology</span>
-    <h2 data-reveal="1" style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(52px, 7vw, 120px); line-height: 0.9; letter-spacing: -0.02em;">Career</h2>
+<section id="career" class="flush-top" data-screen-label="Career" style="max-width: 1240px; margin: 0 auto; padding: 0 var(--gutter) clamp(110px, 13vw, 200px); box-sizing: border-box;">
+  <div style="display: flex; flex-direction: column; gap: 16px; padding-bottom: 28px; border-bottom: 1px solid var(--ink);">
+    <span class="eyebrow">Chronology</span>
+    <h2 data-reveal="1" class="section-title">Career</h2>
   </div>
   <sc-for list="{{ career }}" as="c" hint-placeholder-count="5">
-    <div data-career-row="1" style="display: grid; grid-template-columns: minmax(120px, 1fr) minmax(0, 3fr); gap: 16px clamp(24px, 5vw, 80px); padding: 40px 0; border-bottom: 1px solid rgba(22,21,19,0.14);">
-      <div style="display: flex; flex-direction: column; gap: 6px; position: sticky; top: 80px; align-self: start;">
-        <span style="font-family: 'Instrument Serif', serif; font-size: clamp(36px, 4vw, 60px); line-height: 0.9;">{{ c.from }}</span>
-        <span style="font-size: 13px; color: #6B6860;">to {{ c.to }}</span>
+    <div class="career-row">
+      <div class="career-dates">
+        <span style="font-family: var(--serif); font-size: clamp(36px, 4vw, 60px); line-height: 0.9;">{{ c.from }}</span>
+        <span style="font-size: 13px; color: var(--muted);">to {{ c.to }}</span>
       </div>
       <div style="display: flex; flex-direction: column; gap: 14px;">
         <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px 24px; flex-wrap: wrap;">
-          <span style="font-family: 'Instrument Serif', serif; font-size: clamp(28px, 2.8vw, 40px); line-height: 1.05;">{{ c.role }}, <span style="font-style: italic;">{{ c.org }}</span></span>
-          <span style="font-size: 13px; color: #6B6860;">{{ c.place }}</span>
+          <span style="font-family: var(--serif); font-size: clamp(28px, 2.8vw, 40px); line-height: 1.05;">{{ c.role }}, <span style="font-style: italic;">{{ c.org }}</span></span>
+          <span style="font-size: 13px; color: var(--muted);">{{ c.place }}</span>
         </div>
-        <p style="margin: 0; font-size: 16px; line-height: 1.7; color: #3A3832; max-width: 62ch;">{{ c.summary }}</p>
-        <div style="display: flex; flex-direction: column; font-size: 14px; line-height: 1.55; color: #3A3832;">
-          <sc-for list="{{ c.wins }}" as="w" hint-placeholder-count="3"><span style="display: grid; grid-template-columns: 22px minmax(0, 1fr); padding: 7px 0; border-top: 1px solid rgba(22,21,19,0.08);"><span style="color: #C8371D;">—</span><span>{{ w }}</span></span></sc-for>
+        <p style="margin: 0; font-size: 16px; line-height: 1.7; color: var(--body-strong); max-width: 62ch;">{{ c.summary }}</p>
+        <div style="display: flex; flex-direction: column; font-size: 14px; line-height: 1.55; color: var(--body-strong);">
+          <sc-for list="{{ c.wins }}" as="w" hint-placeholder-count="3"><span class="win" style="display: grid; grid-template-columns: 22px minmax(0, 1fr); padding: 7px 0; border-top: 1px solid rgb(var(--ink-rgb) / 0.08);"><span style="color: var(--accent);">—</span><span>{{ w }}</span></span></sc-for>
         </div>
-        <span style="font-size: 12px; color: #6B6860; letter-spacing: 0.02em;">{{ c.tech }}</span>
+        <span style="font-size: 12px; color: var(--muted); letter-spacing: 0.02em;">{{ c.tech }}</span>
       </div>
     </div>
   </sc-for>
 </section>
 
-<section id="elsewhere" data-screen-label="Elsewhere" style="background: #FAF9F6; border-top: 1px solid rgba(22,21,19,0.1);">
-  <div style="max-width: 1440px; margin: 0 auto; padding: clamp(96px, 11vw, 160px) clamp(20px, 3.5vw, 48px); box-sizing: border-box; display: flex; flex-direction: column; gap: 48px;">
+<section id="elsewhere" data-screen-label="Elsewhere" style="background: var(--mat); border-top: 1px solid rgb(var(--ink-rgb) / 0.1);">
+  <div style="max-width: 1440px; margin: 0 auto; padding: clamp(96px, 11vw, 160px) var(--gutter); box-sizing: border-box; display: flex; flex-direction: column; gap: 48px;">
     <div style="display: flex; flex-direction: column; gap: 16px;">
-      <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860;">Also</span>
-      <h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(44px, 5vw, 80px); line-height: 0.95; letter-spacing: -0.02em;">Side projects <span style="font-style: italic;">&amp; other things</span></h2>
+      <span class="eyebrow">Also</span>
+      <h2 style="margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 5vw, 80px); line-height: 0.95; letter-spacing: -0.02em;">Side projects <span style="font-style: italic;">&amp; other things</span></h2>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 48px clamp(32px, 4vw, 64px);">
       <sc-for list="{{ elsewhere }}" as="g" hint-placeholder-count="3">
-        <div style="display: flex; flex-direction: column; border-top: 1px solid #161513;">
-          <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860; padding: 14px 0 6px;">{{ g.label }}</span>
+        <div style="display: flex; flex-direction: column; border-top: 1px solid var(--ink);">
+          <span class="eyebrow" style="padding: 14px 0 6px;">{{ g.label }}</span>
           <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
-            <a href="{{ it.url }}" style="display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-bottom: 1px solid rgba(22,21,19,0.12);" style-hover="color: #C8371D;">
-              <span style="font-family: 'Instrument Serif', serif; font-size: 22px; line-height: 1.2;">{{ it.title }}</span>
-              <span style="font-size: 13px; color: #6B6860;">{{ it.meta }}</span>
+            <a href="{{ it.url }}" style="display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-bottom: 1px solid rgb(var(--ink-rgb) / 0.12);">
+              <span style="font-family: var(--serif); font-size: 22px; line-height: 1.2;">{{ it.title }}</span>
+              <span style="font-size: 13px; color: var(--muted);">{{ it.meta }}</span>
             </a>
           </sc-for>
         </div>
@@ -264,50 +314,50 @@ header { background: rgba(239,237,231,0.86); -webkit-backdrop-filter: blur(10px)
   </div>
 </section>
 
-<section id="commissions" data-screen-label="Commissions" style="border-top: 1px solid rgba(22,21,19,0.14); padding: clamp(110px, 14vw, 200px) clamp(20px, 3.5vw, 48px) 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 32px;">
-  <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860;">Open to remote roles</span>
-  <a data-reveal="1" href="mailto:dhirajnikam78@gmail.com" style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: clamp(30px, 9vw, 160px); line-height: 1; letter-spacing: -0.025em; overflow-wrap: anywhere;">dhirajnikam78@gmail.com</a>
-  <span style="font-size: 15px; color: #4A4842; max-width: 44ch; line-height: 1.6;">For Flutter apps, AI and RAG systems, or a second pair of hands on a system that needs care. Based in Pune, India.</span>
-  <div style="width: 100%; display: flex; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; margin-top: clamp(80px, 10vw, 140px); padding-top: 20px; border-top: 1px solid rgba(22,21,19,0.14); font-size: 13px; color: #6B6860;">
+<section id="commissions" data-screen-label="Commissions" style="border-top: 1px solid rgb(var(--ink-rgb) / 0.14); padding: clamp(110px, 14vw, 200px) var(--gutter) 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 32px;">
+  <span class="eyebrow">Open to remote roles</span>
+  <a data-reveal="1" href="mailto:dhirajnikam78@gmail.com" style="font-family: var(--serif); font-style: italic; font-size: clamp(30px, 9vw, 160px); line-height: 1; letter-spacing: -0.025em; overflow-wrap: anywhere;">dhirajnikam78@gmail.com</a>
+  <span style="font-size: 15px; color: var(--body); max-width: 44ch; line-height: 1.6;">For Flutter apps, AI and RAG systems, or a second pair of hands on a system that needs care. Based in Pune, India.</span>
+  <div style="width: 100%; display: flex; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; margin-top: clamp(80px, 10vw, 140px); padding-top: 20px; border-top: 1px solid rgb(var(--ink-rgb) / 0.14); font-size: 13px; color: var(--muted);">
     <span>© 2026 Dhiraj Nikam</span>
-    <span data-links="1" style="display: flex; gap: 24px; flex-wrap: wrap;"><a href="https://github.com/dhirajnikam" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/dhiraj-nikam-b93028b7" target="_blank" rel="noopener">LinkedIn</a><a href="https://pub.dev/publishers/dhirajnikam.dev" target="_blank" rel="noopener">pub.dev</a><a href="./Dhiraj_Nikam_Resume.pdf" target="_blank" rel="noopener">Résumé</a></span>
+    <span class="footer-links"><a href="https://github.com/dhirajnikam" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/dhiraj-nikam-b93028b7" target="_blank" rel="noopener">LinkedIn</a><a href="https://pub.dev/publishers/dhirajnikam.dev" target="_blank" rel="noopener">pub.dev</a><a href="./Dhiraj_Nikam_Resume.pdf" target="_blank" rel="noopener">Résumé</a></span>
     <span>{{ time }}</span>
   </div>
 </section>
 
-<sc-if value="{{ roomOpen }}" hint-placeholder-val="{{ false }}">
-  <div data-room="1" role="dialog" aria-modal="true" style="position: fixed; inset: 0; z-index: 120; background: #EFEDE7; overflow-y: auto;">
-    <div style="position: sticky; top: 0; display: flex; justify-content: space-between; align-items: baseline; padding: 22px clamp(20px, 3.5vw, 48px); background: #EFEDE7; z-index: 2;">
-      <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860;">{{ room.num }} — {{ room.title }}</span>
-      <button type="button" onClick="{{ close }}" style="all: unset; cursor: pointer; font-size: 14px; font-weight: 500; border-bottom: 1px solid #161513;" style-hover="color: #C8371D; border-color: #C8371D;">Close ✕</button>
+<sc-if value="{{ room }}" hint-placeholder-val="{{ false }}">
+  <div data-room="1" role="dialog" aria-modal="true" style="position: fixed; inset: 0; z-index: 120; background: var(--wall); overflow-y: auto;">
+    <div style="position: sticky; top: 0; display: flex; justify-content: space-between; align-items: baseline; padding: 22px var(--gutter); background: var(--wall); z-index: 2;">
+      <span class="eyebrow">{{ room.num }} — {{ room.title }}</span>
+      <button type="button" onClick="{{ close }}" class="ink-link" style="font-size: 14px;">Close <span class="arr arr-x">✕</span></button>
     </div>
-    <div data-room-grid="1" style="max-width: 1240px; margin: 0 auto; padding: 32px clamp(20px, 3.5vw, 48px) 96px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 56px clamp(40px, 6vw, 96px); align-items: start; box-sizing: border-box;">
-      <div style="display: flex; gap: 5%; justify-content: center; background: #FAF9F6; padding: 56px 8%; box-shadow: 0 1px 2px rgba(22,21,19,0.06);">
-        <sc-if value="{{ room.artOnly }}" hint-placeholder-val="{{ false }}">
-          <div style="width: 72%; background: #161513; padding: 8px; box-shadow: 0 24px 40px -28px rgba(22,21,19,0.55);"><div style="background: #FAF9F6; padding: 20px;"><canvas data-art="{{ room.idx }}" style="display: block; width: 100%; aspect-ratio: 4 / 5; height: auto;"></canvas></div></div>
+    <div class="room-grid">
+      <div style="display: flex; gap: 5%; justify-content: center; background: var(--mat); padding: 56px 8%; box-shadow: 0 1px 2px rgb(var(--ink-rgb) / 0.06);">
+        <sc-if value="{{ room.art }}" hint-placeholder-val="{{ false }}">
+          <div style="width: 72%; background: var(--ink); padding: 8px; box-shadow: var(--shadow-card);"><div style="background: var(--mat); padding: 20px;"><canvas ref="{{ room.paint }}" style="display: block; width: 100%; aspect-ratio: 4 / 5; height: auto;"></canvas></div></div>
         </sc-if>
-        <sc-if value="{{ room.showMobile }}" hint-placeholder-val="{{ true }}">
-          <div data-phone="1"><div data-phone-body="1"><div data-phone-screen="1"><image-slot id="{{ room.slotA }}" src="{{ room.shotA }}" shape="rect" placeholder="App screen" style="width: 100%; aspect-ratio: 9 / 19.5; display: block;"></image-slot></div></div></div>
-          <div data-phone="1" style="margin-top: 12%;"><div data-phone-body="1"><div data-phone-screen="1"><image-slot id="{{ room.slotB }}" src="{{ room.shotB }}" shape="rect" placeholder="App screen" style="width: 100%; aspect-ratio: 9 / 19.5; display: block;"></image-slot></div></div></div>
+        <sc-if value="{{ room.pair }}" hint-placeholder-val="{{ true }}">
+          <div data-phone="1"><div data-phone-body="1"><div data-phone-screen="1"><image-slot id="{{ room.slot }}-a" src="{{ room.phones.0 }}" shape="rect" placeholder="App screen" style="width: 100%; aspect-ratio: 9 / 19.5; display: block;"></image-slot></div></div></div>
+          <div data-phone="1" style="margin-top: 12%;"><div data-phone-body="1"><div data-phone-screen="1"><image-slot id="{{ room.slot }}-b" src="{{ room.phones.1 }}" shape="rect" placeholder="App screen" style="width: 100%; aspect-ratio: 9 / 19.5; display: block;"></image-slot></div></div></div>
         </sc-if>
-        <sc-if value="{{ room.showWeb }}" hint-placeholder-val="{{ false }}">
-          <div style="width: 100%; background: #161513; padding: 8px;"><image-slot id="{{ room.slotA }}" src="{{ room.shotA }}" shape="rect" placeholder="Screenshot" style="width: 100%; aspect-ratio: 16 / 10; display: block;"></image-slot></div>
+        <sc-if value="{{ room.desktop }}" hint-placeholder-val="{{ false }}">
+          <div style="width: 100%; background: var(--ink); padding: 8px;"><image-slot id="{{ room.slot }}-a" src="{{ room.desktop }}" shape="rect" placeholder="Screenshot" style="width: 100%; aspect-ratio: 16 / 10; display: block;"></image-slot></div>
         </sc-if>
       </div>
       <div style="display: flex; flex-direction: column; gap: 24px;">
-        <h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(48px, 5.6vw, 88px); line-height: 0.95; letter-spacing: -0.02em;"><span style="font-style: italic;">{{ room.title }}</span></h2>
-        <span style="font-size: 14px; color: #6B6860;">{{ room.medium }} · {{ room.platformLine }}</span>
-        <p style="margin: 0; font-family: 'Instrument Serif', serif; font-size: 28px; line-height: 1.2; color: #C8371D;">{{ room.result }}</p>
-        <p style="margin: 0; font-size: 16px; line-height: 1.7; color: #3A3832;">{{ room.body }}</p>
-        <div style="display: flex; flex-direction: column; font-size: 14px; border-top: 1px solid #161513;">
+        <h2 style="margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(48px, 5.6vw, 88px); line-height: 0.95; letter-spacing: -0.02em;"><span style="font-style: italic;">{{ room.title }}</span></h2>
+        <span style="font-size: 14px; color: var(--muted);">{{ room.medium }} · {{ room.platformLine }}</span>
+        <p style="margin: 0; font-family: var(--serif); font-size: 28px; line-height: 1.2; color: var(--accent);">{{ room.result }}</p>
+        <p style="margin: 0; font-size: 16px; line-height: 1.7; color: var(--body-strong);">{{ room.body }}</p>
+        <div style="display: flex; flex-direction: column; font-size: 14px; border-top: 1px solid var(--ink);">
           <sc-for list="{{ room.layers }}" as="l" hint-placeholder-count="4">
-            <div style="display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(22,21,19,0.14);"><span style="color: #6B6860;">{{ l.k }}</span><span>{{ l.v }}</span></div>
+            <div style="display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid rgb(var(--ink-rgb) / 0.14);"><span style="color: var(--muted);">{{ l.k }}</span><span>{{ l.v }}</span></div>
           </sc-for>
         </div>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <sc-if value="{{ room.hasApp }}" hint-placeholder-val="{{ false }}"><a href="{{ room.appStore }}" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 1px; padding: 10px 18px; background: #161513; color: #FAF9F6; border-radius: 10px; min-width: 140px;" style-hover="background: #C8371D; color: #FAF9F6;"><span style="font-size: 10px; letter-spacing: 0.04em; opacity: 0.75;">Download on the</span><span style="font-size: 17px; font-weight: 600; line-height: 1.1;">App Store</span></a></sc-if>
-          <sc-if value="{{ room.hasPlay }}" hint-placeholder-val="{{ false }}"><a href="{{ room.play }}" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 1px; padding: 10px 18px; background: #161513; color: #FAF9F6; border-radius: 10px; min-width: 140px;" style-hover="background: #C8371D; color: #FAF9F6;"><span style="font-size: 10px; letter-spacing: 0.04em; opacity: 0.75;">Get it on</span><span style="font-size: 17px; font-weight: 600; line-height: 1.1;">Google Play</span></a></sc-if>
-          <sc-if value="{{ room.hasWeb }}" hint-placeholder-val="{{ false }}"><a href="{{ room.web_url }}" target="_blank" rel="noopener" style="display: flex; align-items: center; padding: 10px 18px; border: 1px solid #161513; border-radius: 10px; font-size: 15px; font-weight: 500;" style-hover="border-color: #C8371D; color: #C8371D;">{{ room.webLabel }} ↗</a></sc-if>
+          <sc-if value="{{ room.appStore }}" hint-placeholder-val="{{ false }}"><a href="{{ room.appStore }}" target="_blank" rel="noopener" class="store-badge"><small>Download on the</small><b>App Store</b></a></sc-if>
+          <sc-if value="{{ room.play }}" hint-placeholder-val="{{ false }}"><a href="{{ room.play }}" target="_blank" rel="noopener" class="store-badge"><small>Get it on</small><b>Google Play</b></a></sc-if>
+          <sc-if value="{{ room.site }}" hint-placeholder-val="{{ false }}"><a href="{{ room.site.url }}" target="_blank" rel="noopener" class="press" style="display: flex; align-items: center; padding: 10px 18px; border: 1px solid var(--ink); border-radius: 10px; font-size: 15px; font-weight: 500;" style-hover="border-color: var(--accent); color: var(--accent);">{{ room.site.label }} <span class="arr arr-ne">↗</span></a></sc-if>
         </div>
       </div>
     </div>
@@ -316,43 +366,43 @@ header { background: rgba(239,237,231,0.86); -webkit-backdrop-filter: blur(10px)
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;timeZone&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Asia/Kolkata&quot;, &quot;tsType&quot;: &quot;string&quot;}}">
 const PROJECTS = [
-  { title: 'Nighters', featured: true, cats: ['Mobile'], line: 'Real-time chat and location-based community platform.', platforms: ['iOS', 'Android'], year: '2023', mobile: true, medium: 'Flutter, Stream Chat, Flutter Map', appStore: 'https://apps.apple.com/app/nighters/id1572139642', play: 'https://play.google.com/store/apps/details?id=org.nighters.NightersApp', shots: ['./assets/nighters-1.jpg', './assets/nighters-2.jpg'],
+  { title: 'Nighters', featured: true, cats: ['Mobile'], line: 'Real-time chat and location-based community platform.', platforms: ['iOS', 'Android'], medium: 'Flutter, Stream Chat, Flutter Map', appStore: 'https://apps.apple.com/app/nighters/id1572139642', play: 'https://play.google.com/store/apps/details?id=org.nighters.NightersApp', phones: ['./assets/nighters-1.jpg', './assets/nighters-2.jpg'],
     body: 'A community app built around real-time chat and places on a map, shipped on both iOS and Android.',
     result: '15K+ downloads.',
     layers: [{ k: 'Client', v: 'Flutter' }, { k: 'Chat', v: 'Stream Chat' }, { k: 'Maps', v: 'Flutter Map' }] },
-  { title: 'NewsCore', featured: true, cats: ['Web', 'AI'], line: 'AI cyber-intelligence dashboards for an enterprise SaaS product.', platforms: ['Web'], year: '2024', web: true, medium: 'React, Django, LangChain, LangGraph', webUrl: 'https://www.newscore.fr', webLabel: 'newscore.fr', shots: ['./assets/newscore-web.jpg', './assets/newscore-m.jpg'],
+  { title: 'NewsCore', featured: true, cats: ['Web', 'AI'], line: 'AI cyber-intelligence dashboards for an enterprise SaaS product.', platforms: ['Web'], medium: 'React, Django, LangChain, LangGraph', site: { url: 'https://www.newscore.fr', label: 'newscore.fr' }, desktop: './assets/newscore-web.jpg', phones: ['./assets/newscore-m.jpg'],
     body: 'Dashboards that use AI to detect risks and decode real-time signals for an enterprise cyber-intelligence product.',
     result: 'Risks and live signals surfaced in one place.',
     layers: [{ k: 'Client', v: 'React' }, { k: 'API', v: 'Django' }, { k: 'AI', v: 'LangChain, LangGraph' }] },
-  { title: 'Toffy AI', featured: true, cats: ['Mobile', 'AI'], line: 'AI dog-training app with personalised plans and an always-on behaviour assistant.', platforms: ['iOS', 'Android'], year: '2025', mobile: true, medium: 'Flutter, AI assistant, subscriptions', appStore: 'https://apps.apple.com/in/app/toffy-ai-dog-training-app/id6740557230', play: 'https://play.google.com/store/apps/details?id=com.compawnion.app', shots: ['./assets/toffy-1.jpg', './assets/toffy-2.jpg'],
+  { title: 'Toffy AI', featured: true, cats: ['Mobile', 'AI'], line: 'AI dog-training app with personalised plans and an always-on behaviour assistant.', platforms: ['iOS', 'Android'], medium: 'Flutter, AI assistant, subscriptions', appStore: 'https://apps.apple.com/in/app/toffy-ai-dog-training-app/id6740557230', play: 'https://play.google.com/store/apps/details?id=com.compawnion.app', phones: ['./assets/toffy-1.jpg', './assets/toffy-2.jpg'],
     body: 'A dog-training app that builds a personalised plan from each dog’s age, personality, routine and behaviour history, and adapts it as the dog progresses. Step-by-step video lessons, an AI assistant for behaviour questions like barking or separation anxiety, and logs for walks, meals, sleep and mood.',
     result: 'Rated 5.0 on the App Store.',
     layers: [{ k: 'Client', v: 'Flutter' }, { k: 'AI', v: 'Personalised plans, behaviour assistant' }, { k: 'Product', v: 'Lessons, activity logs, subscriptions' }] },
-  { title: 'Sorigin EPC', featured: true, cats: ['Mobile'], line: 'Field app for solar EPC site engineers.', platforms: ['iOS', 'Android'], year: '2025', mobile: true, medium: 'Flutter, offline-first, AWS S3', appStore: 'https://apps.apple.com/in/app/sorigin-epc/id6821831554', play: 'https://play.google.com/store/apps/details?id=co.sorigin.fsm_epc', shots: ['./assets/epc-1.jpg', './assets/epc-2.jpg'],
+  { title: 'Sorigin EPC', featured: true, cats: ['Mobile'], line: 'Field app for solar EPC site engineers.', platforms: ['iOS', 'Android'], medium: 'Flutter, offline-first, AWS S3', appStore: 'https://apps.apple.com/in/app/sorigin-epc/id6821831554', play: 'https://play.google.com/store/apps/details?id=co.sorigin.fsm_epc', phones: ['./assets/epc-1.jpg', './assets/epc-2.jpg'],
     body: 'Site engineers run inspections and photo-backed progress reports during construction and commissioning. Reports queue locally and sync reliably from low-connectivity project sites.',
     result: 'Reliable reporting from low-connectivity sites.',
     layers: [{ k: 'Client', v: 'Flutter, offline-first' }, { k: 'Media', v: 'Photo-backed reports, AWS S3' }, { k: 'Design', v: 'Sovereign Emerald design system' }] },
-  { title: 'Sorigin OMS', cats: ['Mobile', 'Back end'], line: 'Offline-first field-operations platform for renewable-energy O&M teams.', platforms: ['Android'], year: '2025', mobile: true, medium: 'Flutter, BLoC, Node.js, PostgreSQL, AWS', play: 'https://play.google.com/store/apps/details?id=co.sorigin.fmsoms', shots: ['./assets/oms-1.jpg', './assets/oms-2.jpg'],
+  { title: 'Sorigin OMS', cats: ['Mobile', 'Back end'], line: 'Offline-first field-operations platform for renewable-energy O&M teams.', platforms: ['Android'], medium: 'Flutter, BLoC, Node.js, PostgreSQL, AWS', play: 'https://play.google.com/store/apps/details?id=co.sorigin.fmsoms', phones: ['./assets/oms-1.jpg', './assets/oms-2.jpg'],
     body: 'O&M teams at solar and wind sites needed one tool for assets, work orders, inspections and field reports, often with no signal. I built an offline-first Flutter platform with role-based workflows, GPS and timestamp camera capture and supervisor reassignment. A local write queue and background sync keep engineers productive at sites with no connectivity.',
     result: 'In daily production use by O&M field teams on Android.',
     layers: [{ k: 'Client', v: 'Flutter, BLoC, clean architecture' }, { k: 'Sync', v: 'Local write queue, background sync' }, { k: 'API', v: 'Node.js, REST' }, { k: 'Data', v: 'PostgreSQL' }, { k: 'Infra', v: 'AWS, Shorebird, CI/CD' }] },
-  { title: 'AI Field Copilot', cats: ['AI', 'Back end'], line: 'Real-time RAG copilot over operational data, with graph memory.', platforms: ['Internal'], year: '2025', web: true, medium: 'Python, AWS Bedrock, LangChain, LangGraph, Neo4j',
+  { title: 'AI Field Copilot', art: 'flow', cats: ['AI', 'Back end'], line: 'Real-time RAG copilot over operational data, with graph memory.', platforms: ['Internal'], medium: 'Python, AWS Bedrock, LangChain, LangGraph, Neo4j',
     body: 'An internal AI copilot built on an AWS Bedrock real-time RAG pipeline, with Neo4j graph memory and source attribution. I built a RAGAS and DeepEval evaluation harness that turned prompt, retrieval and embedding changes into tracked experiments.',
     result: 'Answer faithfulness up by ~30%.',
     layers: [{ k: 'Model', v: 'AWS Bedrock' }, { k: 'Pipeline', v: 'Python, LangChain, LangGraph' }, { k: 'Memory', v: 'Neo4j graph memory, vector search' }, { k: 'Eval', v: 'RAGAS, DeepEval, SHAP' }, { k: 'Tools', v: 'MCP servers for Jira and GitHub' }] },
-  { title: 'Brevity', cats: ['Mobile', 'AI'], line: 'AI news app with personalised daily digests.', platforms: ['iOS', 'Android'], year: '2024', mobile: true, medium: 'Flutter, BLoC, Gemini, Firebase', appStore: 'https://apps.apple.com/app/brevity/id6749766585', play: 'https://play.google.com/store/apps/details?id=com.brevitynews.app', shots: ['./assets/brevity-1.jpg', './assets/brevity-2.jpg'],
+  { title: 'Brevity', cats: ['Mobile', 'AI'], line: 'AI news app with personalised daily digests.', platforms: ['iOS', 'Android'], medium: 'Flutter, BLoC, Gemini, Firebase', appStore: 'https://apps.apple.com/app/brevity/id6749766585', play: 'https://play.google.com/store/apps/details?id=com.brevitynews.app', phones: ['./assets/brevity-1.jpg', './assets/brevity-2.jpg'],
     body: 'A consumer news app that builds a personalised daily digest for each reader with Gemini, so people get the day’s news in a few minutes.',
     result: '20K+ downloads.',
     layers: [{ k: 'Client', v: 'Flutter, BLoC' }, { k: 'AI', v: 'Gemini-generated digests' }, { k: 'Backend', v: 'Firebase' }] },
-  { title: 'Sorigin AMS', cats: ['Mobile'], line: 'Analytics and monitoring for solar and wind assets.', platforms: ['Android'], year: '2025', mobile: true, medium: 'Flutter, Dart isolates, real-time APIs', play: 'https://play.google.com/store/apps/details?id=co.sorigin.ams_ren_audit', shots: ['./assets/ams-1.jpg', './assets/ams-2.jpg'],
+  { title: 'Sorigin AMS', cats: ['Mobile'], line: 'Analytics and monitoring for solar and wind assets.', platforms: ['Android'], medium: 'Flutter, Dart isolates, real-time APIs', play: 'https://play.google.com/store/apps/details?id=co.sorigin.ams_ren_audit', phones: ['./assets/ams-1.jpg', './assets/ams-2.jpg'],
     body: 'A monitoring product for solar and wind assets built on real-time data workflows. Heavy telemetry processing runs off the UI thread in Dart isolates, so live charts and dashboards stay smooth.',
     result: 'Live dashboards stay smooth while processing telemetry.',
     layers: [{ k: 'Client', v: 'Flutter' }, { k: 'Compute', v: 'Dart isolates' }, { k: 'Data', v: 'Real-time APIs, live telemetry' }] },
-  { title: 'Solar & Wind Assistant', cats: ['AI', 'Back end'], line: 'WhatsApp chatbot for solar and wind project teams.', platforms: ['WhatsApp'], year: '2025', web: true, medium: 'Go, Twilio, OpenAI', webUrl: 'https://github.com/dhirajnikam/whatsapp-ai', webLabel: 'GitHub',
+  { title: 'Solar & Wind Assistant', art: 'marks', cats: ['AI', 'Back end'], line: 'WhatsApp chatbot for solar and wind project teams.', platforms: ['WhatsApp'], medium: 'Go, Twilio, OpenAI', site: { url: 'https://github.com/dhirajnikam/whatsapp-ai', label: 'GitHub' },
     body: 'A WhatsApp assistant with per-user conversation memory, project-progress tracking and technical troubleshooting for project teams.',
     result: 'Project status and troubleshooting on WhatsApp.',
     layers: [{ k: 'Service', v: 'Go' }, { k: 'Channel', v: 'Twilio WhatsApp' }, { k: 'AI', v: 'OpenAI, per-user memory' }] },
-  { title: 'SignalForge', cats: ['Web', 'AI'], line: 'Intelligence engine for web, RSS and X/Twitter sources.', platforms: ['Web'], year: '2026', web: true, medium: 'Next.js, TypeScript, SQLite', webUrl: 'https://github.com/dhirajnikam/signalforge', webLabel: 'GitHub',
+  { title: 'SignalForge', art: 'threads', cats: ['Web', 'AI'], line: 'Intelligence engine for web, RSS and X/Twitter sources.', platforms: ['Web'], medium: 'Next.js, TypeScript, SQLite', site: { url: 'https://github.com/dhirajnikam/signalforge', label: 'GitHub' },
     body: 'Ingests and normalises web, RSS and X/Twitter sources, then summarises them, maps relationships and generates scenarios with confidence labels. It runs with or without an LLM.',
     result: 'Works with or without an LLM.',
     layers: [{ k: 'App', v: 'Next.js, TypeScript' }, { k: 'Data', v: 'SQLite' }, { k: 'Pipeline', v: 'Ingest, normalise, summarise, scenario' }] }
@@ -364,7 +414,7 @@ const REPOS = [
   { name: 'Commit Wizard', role: 'Author', desc: 'VS Code extension that writes AI-assisted commit messages from staged diffs.', lang: 'TypeScript', where: '300+ installs', url: 'https://marketplace.visualstudio.com/items?itemName=dhirajnikam1998.commit-wizard' },
   { name: 'Nodey', role: 'Author', desc: 'Go CLI/TUI for building and visualising flowchart logic.', lang: 'Go', where: 'GitHub', url: 'https://github.com/DN-OpenSource/nodey' }
 ];
-const LANG_DOT = { TypeScript: '#161513', Dart: '#FAF9F6', Python: '#C8371D', Go: '#6B6860' };
+const LANG_DOT = { TypeScript: 'var(--ink)', Dart: 'var(--mat)', Go: 'var(--muted)' };
 const CAREER = [
   { from: '2025', to: 'now', role: 'Senior Engineer, Full-Stack & AI', org: 'Sorigin Group (Suzlon Group)', place: 'Pune · Hybrid', summary: 'Own Sorigin’s production Flutter apps (OMS, AMS and EPC) and the AI copilot behind them for solar and wind operations, from mobile UI and offline sync to Python and Node.js services on AWS.', wins: ['Built the offline-first OMS field-operations platform used daily by O&M teams', 'Architected an AWS Bedrock RAG copilot; evaluation harness lifted answer faithfulness by ~30%', 'Cut over-the-air release time by 96% (24 hours to 15 minutes) with Shorebird and CI/CD', 'Defined the shared Sovereign Emerald design system used across all three apps'], tech: 'Flutter · BLoC · Python · LangChain · Node.js · AWS Bedrock · Neo4j' },
   { from: '2022', to: '2025', role: 'Senior Software Engineer, Flutter & Backend', org: 'Atomic Loops', place: 'Pune · Remote', summary: 'Owned Flutter apps and their Node.js and Python backends for client products in fintech, e-commerce, edtech and wellness.', wins: ['Owned 8+ production apps on Google Play and the App Store; 40K+ combined downloads', 'Shipped Brevity (20K+ downloads) and Nighters (15K+ downloads)', 'Delivered BLE integrations for EEG-based wellness products', 'Built and published flutter_api_client on pub.dev as the shared networking layer'], tech: 'Flutter · Node.js · Python · Django · React · Firebase' },
@@ -375,86 +425,107 @@ const ELSEWHERE = [
   { label: 'Impact', items: [{ title: '8+ production apps shipped', meta: 'Google Play & App Store', url: '#works' }, { title: '40K+ combined downloads', meta: 'Across client products', url: '#works' }, { title: '96% faster Flutter releases', meta: '24 hours to 15 minutes', url: '#career' }] },
   { label: 'Links', items: [{ title: 'dhirajnikam.github.io', meta: 'Portfolio', url: 'https://dhirajnikam.github.io/' }, { title: 'github.com/dhirajnikam', meta: 'GitHub', url: 'https://github.com/dhirajnikam' }, { title: 'pub.dev publisher', meta: 'dhirajnikam.dev', url: 'https://pub.dev/publishers/dhirajnikam.dev' }] }
 ];
+const NUMBER_WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+const pad2 = n => String(n).padStart(2, '0');
 const FILTERS = ['All', 'Mobile', 'AI', 'Web', 'Back end'];
 const LAYERS = [
   { k: 'Interface', note: 'Interface: Flutter, Dart, BLoC, React, TypeScript' },
   { k: 'Services', note: 'Services: Python, FastAPI, Django, Node.js, LangChain' },
   { k: 'Data', note: 'Data: PostgreSQL, Redis, Neo4j, vector DBs, AWS' }
 ];
-const INK = '#161513', RED = '#C8371D', MAT = '#FAF9F6', WALL = '#EFEDE7';
+const SPLIT_AT = 0.45, LAYER_SPAN = (0.99 - SPLIT_AT) / LAYERS.length;
+let palette;
+const colors = () => palette || (palette = (() => {
+  const css = getComputedStyle(document.documentElement), v = name => css.getPropertyValue('--' + name).trim();
+  const alpha = name => a => `rgb(${v(name + '-rgb')} / ${a})`;
+  return { ink: v('ink'), accent: v('accent'), mat: v('mat'), wall: v('wall'), inkA: alpha('ink'), accentA: alpha('accent'), wallA: alpha('wall') };
+})());
 const clamp = v => Math.max(0, Math.min(1, v));
 const ease = t => t * t * (3 - 2 * t);
 const rng = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
 const hash = str => [...str].reduce((a, c) => Math.imul(a ^ c.charCodeAt(0), 16777619), 2166136261);
 const field = (x, y, s, f) => (Math.sin(x * f + s) + Math.cos(y * f * 1.31 + s * 1.7) + Math.sin((x + y) * f * 0.61 + s * 0.3)) * Math.PI * 0.6;
 
-function drawArt(cv, idx, title) {
-  const dpr = Math.min(2, devicePixelRatio || 1), w = cv.clientWidth, h = cv.clientHeight;
-  if (!w || !h) return;
-  cv.width = w * dpr; cv.height = h * dpr;
-  const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
-  ctx.fillStyle = MAT; ctx.fillRect(0, 0, w, h);
-  const R = rng(hash(title)), s = R() * 100, u = w / 400, st = idx % 5;
-  ctx.lineCap = 'round';
-  if (st === 0) { // flow lines
+const ART = {
+  flow(ctx, w, h, u, s, R, C) {
     for (let n = 0; n < 900; n++) {
       let x = R() * w, y = R() * h; const red = R() < 0.025;
       ctx.beginPath(); ctx.moveTo(x, y);
       for (let k = 0; k < 60; k++) { const a = field(x / u, y / u, s, 0.011); x += Math.cos(a) * 2 * u; y += Math.sin(a) * 2 * u; ctx.lineTo(x, y); }
-      ctx.strokeStyle = red ? RED : 'rgba(22,21,19,0.32)'; ctx.lineWidth = (red ? 1.6 : 0.6) * u; ctx.stroke();
+      ctx.strokeStyle = red ? C.accent : C.inkA(0.32); ctx.lineWidth = (red ? 1.6 : 0.6) * u; ctx.stroke();
     }
-  } else if (st === 1) { // stacked horizontal contours
-    const rows = 70;
-    for (let r = 0; r < rows; r++) {
-      const y0 = h * 0.08 + (h * 0.84) * r / rows; ctx.beginPath();
-      for (let x = w * 0.08; x <= w * 0.92; x += 2) { const d = Math.exp(-Math.pow((x - w / 2) / (w * 0.18), 2)); const y = y0 - d * (Math.sin(x * 0.04 / u + r * 0.3 + s) + 1.2) * 14 * u * (0.4 + R() * 0.02); x === w * 0.08 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
-      ctx.strokeStyle = r === 41 ? RED : INK; ctx.lineWidth = (r === 41 ? 1.6 : 0.7) * u; ctx.stroke();
-    }
-  } else if (st === 2) { // concentric rings, offset
-    const cx = w * (0.4 + R() * 0.2), cy = h * (0.4 + R() * 0.2);
-    for (let r = 6; r < Math.max(w, h); r += 7 * u) {
-      ctx.beginPath();
-      for (let a = 0; a <= Math.PI * 2 + 0.05; a += 0.04) { const rr = r + Math.sin(a * 3 + r * 0.02 + s) * 6 * u; const x = cx + Math.cos(a) * rr, y = cy + Math.sin(a) * rr; a === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
-      ctx.strokeStyle = Math.abs(r - 120 * u) < 4 * u ? RED : 'rgba(22,21,19,0.75)'; ctx.lineWidth = 0.7 * u; ctx.stroke();
-    }
-  } else if (st === 3) { // grid of rotated marks
+  },
+  marks(ctx, w, h, u, s, R, C) {
     const g = 16 * u;
     for (let y = g; y < h - g / 2; y += g) for (let x = g; x < w - g / 2; x += g) {
       const a = field(x / u, y / u, s, 0.008); const red = R() < 0.018;
       ctx.beginPath(); ctx.moveTo(x - Math.cos(a) * g * 0.42, y - Math.sin(a) * g * 0.42); ctx.lineTo(x + Math.cos(a) * g * 0.42, y + Math.sin(a) * g * 0.42);
-      ctx.strokeStyle = red ? RED : INK; ctx.lineWidth = (red ? 2 : 1) * u; ctx.stroke();
+      ctx.strokeStyle = red ? C.accent : C.ink; ctx.lineWidth = (red ? 2 : 1) * u; ctx.stroke();
     }
-  } else { // vertical threads
+  },
+  threads(ctx, w, h, u, s, R, C) {
     const n = 90, pick = Math.floor(R() * n);
     for (let i = 0; i < n; i++) {
       const x0 = w * 0.08 + (w * 0.84) * i / n; ctx.beginPath();
       for (let y = h * 0.06; y <= h * 0.94; y += 3) { const x = x0 + Math.sin(y * 0.012 / u + s) * Math.sin(i * 0.11 + s) * 18 * u; y === h * 0.06 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
-      ctx.strokeStyle = i === pick ? RED : 'rgba(22,21,19,0.8)'; ctx.lineWidth = (i === pick ? 1.6 : 0.6) * u; ctx.stroke();
+      ctx.strokeStyle = i === pick ? C.accent : C.inkA(0.8); ctx.lineWidth = (i === pick ? 1.6 : 0.6) * u; ctx.stroke();
     }
+  }
+};
+
+const painter = new ResizeObserver(entries => entries.forEach(e => e.target.isConnected ? e.target.paint() : painter.unobserve(e.target)));
+const paintWith = draw => cv => { if (!cv) return; cv.paint = () => draw(cv); painter.unobserve(cv); painter.observe(cv); };
+const slug = t => t.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+function drawArt(cv, project) {
+  const dpr = Math.min(2, devicePixelRatio || 1), w = cv.clientWidth, h = cv.clientHeight;
+  if (!w || !h) return;
+  cv.width = w * dpr; cv.height = h * dpr;
+  const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
+  const C = colors();
+  ctx.fillStyle = C.mat; ctx.fillRect(0, 0, w, h);
+  const R = rng(hash(project.title)), s = R() * 100, u = w / 400;
+  ctx.lineCap = 'round';
+  ART[project.art](ctx, w, h, u, s, R, C);
+}
+
+function drawContrib(cv) {
+  const dpr = Math.min(2, devicePixelRatio || 1), w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
+  cv.width = w * dpr; cv.height = h * dpr; const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
+  const C = colors();
+  ctx.fillStyle = C.mat; ctx.fillRect(0, 0, w, h);
+  const r = rng(2026), cw = w / 53, ch = h / 7;
+  for (let x = 0; x < 53; x++) for (let y = 0; y < 7; y++) {
+    const wk = y > 0 && y < 6 ? 1 : 0.35, v = Math.max(0, r() * 1.3 - 0.3) * wk * (0.6 + 0.4 * Math.sin(x / 6));
+    const cx = x * cw + cw / 2, cy = y * ch + ch / 2, rel = r() < 0.012;
+    if (v < 0.05 && !rel) { ctx.fillStyle = C.inkA(0.12); ctx.fillRect(cx - 0.75, cy - 0.75, 1.5, 1.5); continue; }
+    const len = Math.min(cw, ch) * (0.25 + v * 0.55), a = -Math.PI / 4 + (r() - 0.5) * 0.5;
+    ctx.strokeStyle = rel ? C.accent : C.inkA((0.35 + v * 0.6).toFixed(2)); ctx.lineWidth = rel ? 2 : 1 + v * 0.8; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(cx - Math.cos(a) * len, cy - Math.sin(a) * len); ctx.lineTo(cx + Math.cos(a) * len, cy + Math.sin(a) * len); ctx.stroke();
   }
 }
 
 class Component extends DCLogic {
   state = { room: -1, time: '', layer: -1, filter: 'All' };
-  componentDidUpdate() {
-    if (this.lastFilter !== this.state.filter) {
-      this.lastFilter = this.state.filter;
-      this.drawAll();
-      if (!this.reduce) document.querySelectorAll('[data-card]').forEach((el, i) => el.animate([{ opacity: 0, transform: 'translateY(20px)' }, { opacity: 1, transform: 'none' }], { duration: 700, delay: i * 60, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }));
-    }
+  views = PROJECTS.map((p, i) => ({
+    ...p, num: 'No. ' + pad2(i + 1), platformLine: p.platforms.join(', '), catLine: p.cats.join(' · '), slot: 'v6-proj-' + slug(p.title),
+    pair: !p.desktop && p.phones, overlay: p.desktop && p.phones && p.phones[0],
+    view: () => this.open(i), paint: paintWith(cv => drawArt(cv, p))
+  }));
+  featured = this.views.filter(p => p.featured);
+  paintHero = paintWith(cv => this.setupHero(cv));
+  paintContrib = paintWith(drawContrib);
+  animateCards() {
+    if (!this.reduce) document.querySelectorAll('[data-card]').forEach((el, i) => el.animate([{ opacity: 0, transform: 'translateY(20px)' }, { opacity: 1, transform: 'none' }], { duration: 700, delay: i * 60, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }));
   }
 
   componentDidMount() {
     this.reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || this.props.motion === false;
-    this.lastFilter = this.state.filter;
     this.tick(); this.clock = setInterval(() => this.tick(), 15000);
     this.cx = -9999; this.cy = -9999;
     this.onMove = e => { this.cx = e.clientX; this.cy = e.clientY; };
     this.onKey = e => { if (e.key === 'Escape' && this.state.room >= 0) this.close(); };
-    this.onResize = () => { this.setupHero(); this.drawAll(); };
-    addEventListener('mousemove', this.onMove); addEventListener('keydown', this.onKey); addEventListener('resize', this.onResize);
-    this.setupHero(); this.drawAll();
-    (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => this.drawAll());
+    addEventListener('mousemove', this.onMove); addEventListener('keydown', this.onKey);
     if (!this.reduce) {
       document.querySelectorAll('[data-fade]').forEach((el, i) => el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 1400, delay: 300 + i * 200, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }));
       this.io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.animate([{ opacity: 0, transform: 'translateY(30px)' }, { opacity: 1, transform: 'none' }], { duration: 1200, easing: 'cubic-bezier(.2,.8,.2,1)' }); this.io.unobserve(e.target); } }), { threshold: 0.25 });
@@ -465,7 +536,7 @@ class Component extends DCLogic {
   }
 
   componentWillUnmount() {
-    removeEventListener('mousemove', this.onMove); removeEventListener('keydown', this.onKey); removeEventListener('resize', this.onResize);
+    removeEventListener('mousemove', this.onMove); removeEventListener('keydown', this.onKey);
     clearInterval(this.clock); cancelAnimationFrame(this.raf); if (this.io) this.io.disconnect();
   }
 
@@ -476,30 +547,11 @@ class Component extends DCLogic {
     this.setState({ time });
   }
 
-  drawAll() {
-    document.querySelectorAll('[data-art]').forEach(cv => { const i = +cv.dataset.art; drawArt(cv, i, PROJECTS[i].title); });
-    document.querySelectorAll('[data-contrib]').forEach(cv => {
-      const dpr = Math.min(2, devicePixelRatio || 1), w = cv.clientWidth, h = cv.clientHeight; if (!w) return;
-      cv.width = w * dpr; cv.height = h * dpr; const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
-      ctx.fillStyle = MAT; ctx.fillRect(0, 0, w, h);
-      const r = rng(2026), cw = w / 53, ch = h / 7;
-      for (let x = 0; x < 53; x++) for (let y = 0; y < 7; y++) {
-        const wk = y > 0 && y < 6 ? 1 : 0.35, v = Math.max(0, r() * 1.3 - 0.3) * wk * (0.6 + 0.4 * Math.sin(x / 6));
-        const cx = x * cw + cw / 2, cy = y * ch + ch / 2, rel = r() < 0.012;
-        if (v < 0.05 && !rel) { ctx.fillStyle = 'rgba(22,21,19,0.12)'; ctx.fillRect(cx - 0.75, cy - 0.75, 1.5, 1.5); continue; }
-        const len = Math.min(cw, ch) * (0.25 + v * 0.55), a = -Math.PI / 4 + (r() - 0.5) * 0.5;
-        ctx.strokeStyle = rel ? RED : 'rgba(22,21,19,' + (0.35 + v * 0.6).toFixed(2) + ')'; ctx.lineWidth = rel ? 2 : 1 + v * 0.8; ctx.lineCap = 'round';
-        ctx.beginPath(); ctx.moveTo(cx - Math.cos(a) * len, cy - Math.sin(a) * len); ctx.lineTo(cx + Math.cos(a) * len, cy + Math.sin(a) * len); ctx.stroke();
-      }
-    });
-  }
-
-  setupHero() {
-    const cv = document.querySelector('[data-hero-canvas]'); if (!cv) return;
+  setupHero(cv) {
     const dpr = Math.min(2, devicePixelRatio || 1), w = cv.clientWidth, h = cv.clientHeight;
     cv.width = w * dpr; cv.height = h * dpr;
     const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.fillStyle = WALL; ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = colors().wall; ctx.fillRect(0, 0, w, h);
     const R = rng(7);
     this.hero = { cv, ctx, w, h, t: 0, ps: Array.from({ length: 1600 }, () => ({ x: R() * w, y: R() * h, life: R() * 200, red: R() < 0.02 })) };
     if (this.reduce) for (let k = 0; k < 120; k++) this.stepHero();
@@ -507,8 +559,8 @@ class Component extends DCLogic {
 
   stepHero() {
     const H = this.hero; if (!H) return;
-    const { ctx, w, h } = H; H.t += 0.0016;
-    ctx.fillStyle = 'rgba(239,237,231,0.035)'; ctx.fillRect(0, 0, w, h);
+    const { ctx, w, h } = H, C = colors(); H.t += 0.0016;
+    ctx.fillStyle = C.wallA(0.035); ctx.fillRect(0, 0, w, h);
     const rect = H.cv.getBoundingClientRect(), mx = this.cx - rect.left, my = this.cy - rect.top;
     ctx.lineWidth = 0.7;
     for (const p of H.ps) {
@@ -516,7 +568,7 @@ class Component extends DCLogic {
       const dx = p.x - mx, dy = p.y - my, d = Math.hypot(dx, dy);
       if (d < 180) a += (1 - d / 180) * Math.PI * 0.9;
       const nx = p.x + Math.cos(a) * 1.4, ny = p.y + Math.sin(a) * 1.4;
-      ctx.strokeStyle = p.red ? 'rgba(200,55,29,0.7)' : 'rgba(22,21,19,0.22)';
+      ctx.strokeStyle = p.red ? C.accentA(0.7) : C.inkA(0.22);
       ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(nx, ny); ctx.stroke();
       p.x = nx; p.y = ny; p.life--;
       if (p.life < 0 || nx < 0 || ny < 0 || nx > w || ny > h) { p.x = Math.random() * w; p.y = Math.random() * h; p.life = 120 + Math.random() * 200; }
@@ -534,19 +586,18 @@ class Component extends DCLogic {
       const r = g.getBoundingClientRect(); const p = clamp(-r.top / Math.max(1, r.height - vh));
       tr.style.transform = `translate3d(${-p * dist}px,0,0)`;
       const bar = document.querySelector('[data-gallery-bar]'); if (bar) bar.style.width = (p * 100).toFixed(2) + '%';
-      const c = document.querySelector('[data-gallery-count]'); if (c) c.textContent = String(Math.min(4, Math.floor(p * 3.999) + 1)).padStart(2, '0') + ' / 04';
+      const c = document.querySelector('[data-gallery-count]'); if (c) { const n = this.featured.length; c.textContent = pad2(Math.min(n, Math.floor(p * n) + 1)) + ' / ' + pad2(n); }
     }
 
     const sc = document.querySelector('[data-sculpture]');
     if (sc) {
       const r = sc.getBoundingClientRect(); const p = clamp(-r.top / (r.height - vh));
       const e = this.reduce ? 1 : ease(clamp(p / 0.4));
-      const active = p < 0.45 ? -1 : p < 0.63 ? 0 : p < 0.81 ? 1 : 2;
-      sc.querySelectorAll('[data-plane]').forEach(pl => {
-        const i = +pl.dataset.plane;
-        pl.style.transform = `translate(-50%, -50%) rotateX(60deg) rotateZ(${-45 + (this.reduce ? 0 : p * 50)}deg) translateZ(${(1 - i) * (10 + e * 130) + (active === i ? 20 : 0)}px)`;
-        pl.style.borderColor = active === i ? RED : 'rgba(250,249,246,0.75)';
-        pl.style.color = active === i ? RED : MAT;
+      const active = p < SPLIT_AT ? -1 : Math.min(LAYERS.length - 1, Math.floor((p - SPLIT_AT) / LAYER_SPAN));
+      sc.querySelectorAll('[data-plane]').forEach((pl, i) => {
+        pl.style.transform = `translate(-50%, -50%) rotateX(60deg) rotateZ(${-45 + (this.reduce ? 0 : p * 50)}deg) translateZ(${((LAYERS.length - 1) / 2 - i) * (10 + e * 130) + (active === i ? 20 : 0)}px)`;
+        pl.style.borderColor = active === i ? 'var(--accent)' : 'rgb(var(--mat-rgb) / 0.75)';
+        pl.style.color = active === i ? 'var(--accent)' : 'var(--mat)';
       });
       if (active !== this.state.layer) this.setState({ layer: active });
     }
@@ -554,7 +605,7 @@ class Component extends DCLogic {
 
   open(i) {
     this.setState({ room: i }, () => {
-      document.body.style.overflow = 'hidden'; this.drawAll();
+      document.body.style.overflow = 'hidden';
       const el = document.querySelector('[data-room]');
       if (el && !this.reduce) el.animate([{ clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], { duration: 800, easing: 'cubic-bezier(.7,0,.2,1)' });
     });
@@ -562,27 +613,22 @@ class Component extends DCLogic {
   close() { document.body.style.overflow = ''; this.setState({ room: -1 }); }
 
   renderVals() {
-    const projects = PROJECTS.map((p, i) => ({
-      ...p, idx: String(i), num: 'No. ' + String(i + 1).padStart(2, '0'), platformLine: p.platforms.join(', '), catLine: p.cats.join(' · '),
-      web: !!p.web, mobile: !!p.mobile, slotA: 'v6-proj-' + i + '-a', slotB: 'v6-proj-' + i + '-b', shotA: p.shots ? p.shots[0] : '', artOnly: !p.shots, showMobile: !!p.mobile && !!p.shots, showWeb: !!p.web && !!p.shots, webPhone: !!p.web && !!p.shots && !!p.shots[1], shotB: p.shots ? p.shots[1] : '',
-      hasApp: !!p.appStore, hasPlay: !!p.play, hasWeb: !!p.webUrl, web_url: p.webUrl || '#', webLabel: p.webLabel || 'Website',
-      aria: 'View ' + p.title, view: () => this.open(i)
-    }));
+    const projects = this.views;
     const f = this.state.filter;
     const shown = projects.filter(p => f === 'All' || p.cats.includes(f));
     const l = this.state.layer;
     return {
       time: this.state.time,
-      featured: projects.filter(p => p.featured),
-      repos: REPOS.map(r => ({ ...r, dot: LANG_DOT[r.lang] || '#FAF9F6' })),
+      featured: this.featured, featuredCountWord: NUMBER_WORDS[this.featured.length],
+      repos: REPOS.map(r => ({ ...r, dot: LANG_DOT[r.lang] })),
       career: CAREER,
       elsewhere: ELSEWHERE,
-      shown, shownCount: String(shown.length).padStart(2, '0'),
-      filters: FILTERS.map(label => ({ label, active: f === label, count: String(label === 'All' ? projects.length : projects.filter(p => p.cats.includes(label)).length), line: f === label ? '#161513' : 'transparent', color: f === label ? '#161513' : '#6B6860', pick: () => this.setState({ filter: label }) })),
-      layers: LAYERS.map((x, i) => ({ ...x, i: String(i) })),
+      shown, shownCount: pad2(shown.length),
+      filters: FILTERS.map(label => ({ label, active: f === label, count: String(label === 'All' ? projects.length : projects.filter(p => p.cats.includes(label)).length), pick: () => this.setState({ filter: label }, () => this.animateCards()) })),
+      layers: LAYERS,
       layerNote: l < 0 ? 'Scroll to separate the layers.' : LAYERS[l].note,
-      roomOpen: this.state.room >= 0,
-      room: this.state.room >= 0 ? projects[this.state.room] : projects[0],
+      room: projects[this.state.room],
+      paintHero: this.paintHero, paintContrib: this.paintContrib,
       close: () => this.close()
     };
   }

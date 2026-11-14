@@ -1,0 +1,23 @@
+<x-dc>
+<helmet>
+<style>
+/* The phone frame itself ([data-phone…]) is styled by index.html, which also uses it on the project page. */
+[data-plate] { position: relative; display: block; width: 100%; aspect-ratio: 4 / 5; }
+[data-plate-row] { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 6%; }
+[data-plate] canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+[data-shot] { display: block; width: 100%; aspect-ratio: 9 / 19.5; object-fit: cover; object-position: top; }
+[data-browser] { position: absolute; left: 0; top: 14%; width: 94%; display: block; background: #FFF; border-radius: 1.6% / 2.6%; overflow: hidden; box-shadow: 0 0 0 1px rgb(var(--ink-rgb) / 0.12), 0 30px 50px -28px rgb(var(--ink-rgb) / 0.5); }
+[data-browser-bar] { display: flex; gap: 1.2%; padding: 2.2% 2.6%; background: #E6E3DB; }
+[data-browser-bar] i { width: 2.4%; aspect-ratio: 1; border-radius: 50%; background: #C4C0B6; }
+[data-shot-web] { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+@media (prefers-reduced-motion: no-preference) {
+  [data-plate] [data-phone], [data-browser] { transition: transform 300ms cubic-bezier(.2,.8,.2,1); }
+  button:is(:hover, :focus-visible) [data-plate-row] > [data-phone]:first-child { transform: translate(-3%, -2%); }
+  button:is(:hover, :focus-visible) [data-plate-row] > [data-phone]:last-child { transform: translate(3%, 2%); }
+  button:is(:hover, :focus-visible) [data-browser] { transform: translateY(-2%); }
+  button:is(:hover, :focus-visible) [data-plate] > [data-phone] { transform: translate(3%, 3%); }
+}
+</style>
+</helmet>
+<span data-plate="1"><sc-if value="{{ project.art }}" hint-placeholder-val="{{ false }}"><canvas ref="{{ project.paint }}"></canvas></sc-if><sc-if value="{{ project.pair }}" hint-placeholder-val="{{ false }}"><span data-plate-row="1"><span data-phone="1" style="width: 40%; margin-top: -10%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ project.phones.0 }}" alt="" loading="lazy" decoding="async"></span></span></span><span data-phone="1" style="width: 40%; margin-top: 14%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ project.phones.1 }}" alt="" loading="lazy" decoding="async"></span></span></span></span></sc-if><sc-if value="{{ project.desktop }}" hint-placeholder-val="{{ false }}"><span data-browser="1"><span data-browser-bar="1"><i></i><i></i><i></i></span><img data-shot-web="1" src="{{ project.desktop }}" alt="" loading="lazy" decoding="async"></span><sc-if value="{{ project.overlay }}" hint-placeholder-val="{{ false }}"><span data-phone="1" style="position: absolute; right: 2%; bottom: 4%; width: 32%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ project.overlay }}" alt="" loading="lazy" decoding="async"></span></span></span></sc-if></sc-if></span>
+</x-dc>
