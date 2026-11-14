@@ -32,11 +32,19 @@ a:hover { color: #C8371D; }
 [data-phone-body]::before { content: ""; position: absolute; right: -1.1cqw; top: 24%; width: 1.4cqw; height: 11%; background: #2A2824; border-radius: 0 1cqw 1cqw 0; }
 [data-phone-body]::after { content: ""; position: absolute; z-index: 2; top: calc(3.6cqw + 2.2cqw); left: 50%; transform: translateX(-50%); width: 27cqw; height: 7.6cqw; background: #000; border-radius: 99px; }
 [data-phone-screen] { border-radius: 12.4cqw; overflow: hidden; background: #000; }
+[data-phone], [data-phone-body], [data-phone-screen] { display: block; }
+[data-shot] { display: block; width: 100%; aspect-ratio: 9 / 19.5; object-fit: cover; object-position: top; }
+[data-plate] { position: relative; display: block; aspect-ratio: 4 / 5; }
+[data-plate-row] { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 6%; }
+[data-browser] { position: absolute; left: 0; top: 14%; width: 94%; display: block; background: #FFF; border-radius: 1.6% / 2.6%; overflow: hidden; box-shadow: 0 0 0 1px rgba(22,21,19,0.12), 0 30px 50px -28px rgba(22,21,19,0.5); }
+[data-browser-bar] { display: flex; gap: 1.2%; padding: 2.2% 2.6%; background: #E6E3DB; }
+[data-browser-bar] i { width: 2.4%; aspect-ratio: 1; border-radius: 50%; background: #C4C0B6; }
+[data-shot-web] { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
 header { background: rgba(239,237,231,0.86); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 @media (max-width: 860px) {
   [data-hide-sm] { display: none !important; } [data-room-grid] { grid-template-columns: 1fr !important; }
   [data-gallery-item] { flex-direction: column; align-items: flex-start !important; gap: 20px !important; }
-  [data-gallery-item] canvas { width: min(60vw, 30vh) !important; }
+  [data-gallery-item] [data-plate] { width: min(60vw, 30vh) !important; }
   [data-gallery-item] > button > span { padding: 16px !important; }
   [data-gallery-label] { width: min(72vw, 320px) !important; }
   [data-career-row] { grid-template-columns: 1fr !important; }
@@ -78,7 +86,7 @@ header { background: rgba(239,237,231,0.86); -webkit-backdrop-filter: blur(10px)
 <section id="intro" data-screen-label="Curatorial note" style="padding: clamp(120px, 16vw, 240px) clamp(20px, 3.5vw, 48px); display: flex; flex-direction: column; align-items: center; gap: 36px; text-align: center;">
   <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6860;">Selected works, 2022 – 2026</span>
   <p data-reveal="1" style="margin: 0; max-width: 24ch; font-family: 'Instrument Serif', serif; font-size: clamp(36px, 4.6vw, 72px); line-height: 1.04; letter-spacing: -0.015em;">Apps, platforms and the systems beneath them, built with the patience of <span style="font-style: italic; color: #C8371D;">a craft.</span></p>
-  <p style="margin: 0; max-width: 52ch; font-size: 16px; line-height: 1.7; color: #4A4842;">Four featured works hang in the first room; the full catalogue follows. Each project is shown with a drawing generated from its own name, a wall label, and the technical notes behind it.</p>
+  <p style="margin: 0; max-width: 52ch; font-size: 16px; line-height: 1.7; color: #4A4842;">Four featured works hang in the first room; the full catalogue follows. Each project is shown with its real screens (or, for back-end work, a drawing generated from its name), a wall label, and the technical notes behind it.</p>
 </section>
 
 <section id="works" data-gallery="1" data-screen-label="Works" style="position: relative; height: 400vh;">
@@ -91,7 +99,7 @@ header { background: rgba(239,237,231,0.86); -webkit-backdrop-filter: blur(10px)
         <div data-gallery-item="1" style="display: flex; align-items: flex-end; gap: 32px; flex-shrink: 0;">
           <button type="button" onClick="{{ p.view }}" aria-label="{{ p.aria }}" style="all: unset; cursor: pointer; display: block; background: #161513; padding: 10px; box-shadow: 0 30px 60px -30px rgba(22,21,19,0.5), 0 2px 6px rgba(22,21,19,0.15); transition: transform 600ms cubic-bezier(.2,.8,.2,1);" style-hover="transform: translateY(-8px);">
             <span style="display: block; background: #FAF9F6; padding: clamp(24px, 3vw, 44px);">
-              <canvas data-art="{{ p.idx }}" style="display: block; width: min(46vw, max(220px, calc((100vh - 300px) * 0.8)), 560px); aspect-ratio: 4 / 5; height: auto;"></canvas>
+              <span data-plate="1" style="width: min(46vw, max(220px, calc((100vh - 300px) * 0.8)), 560px);"><sc-if value="{{ p.artOnly }}" hint-placeholder-val="{{ false }}"><canvas data-art="{{ p.idx }}" style="position: absolute; inset: 0; display: block; width: 100%; height: 100%;"></canvas></sc-if><sc-if value="{{ p.showMobile }}" hint-placeholder-val="{{ true }}"><span data-plate-row="1"><span data-phone="1" style="width: 40%; margin-top: -10%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ p.shotA }}" alt="" loading="lazy" decoding="async"></span></span></span><span data-phone="1" style="width: 40%; margin-top: 14%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ p.shotB }}" alt="" loading="lazy" decoding="async"></span></span></span></span></sc-if><sc-if value="{{ p.showWeb }}" hint-placeholder-val="{{ false }}"><span data-browser="1"><span data-browser-bar="1"><i></i><i></i><i></i></span><img data-shot-web="1" src="{{ p.shotA }}" alt="" loading="lazy" decoding="async"></span><sc-if value="{{ p.webPhone }}" hint-placeholder-val="{{ false }}"><span data-phone="1" style="position: absolute; right: 2%; bottom: 4%; width: 32%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ p.shotB }}" alt="" loading="lazy" decoding="async"></span></span></span></sc-if></sc-if></span>
             </span>
           </button>
           <div data-gallery-label="1" style="width: 230px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 1.5; padding-bottom: 6px;">
@@ -127,7 +135,7 @@ header { background: rgba(239,237,231,0.86); -webkit-backdrop-filter: blur(10px)
     <sc-for list="{{ shown }}" as="p" hint-placeholder-count="8">
       <article data-card="1" style="display: flex; flex-direction: column; gap: 18px;">
         <button type="button" onClick="{{ p.view }}" aria-label="{{ p.aria }}" style="all: unset; cursor: pointer; display: block; background: #161513; padding: 7px; box-shadow: 0 24px 40px -28px rgba(22,21,19,0.55); transition: transform 500ms cubic-bezier(.2,.8,.2,1), box-shadow 500ms;" style-hover="transform: translateY(-6px); box-shadow: 0 34px 50px -28px rgba(22,21,19,0.6);">
-          <span style="display: block; background: #FAF9F6; padding: 20px;"><canvas data-art="{{ p.idx }}" style="display: block; width: 100%; aspect-ratio: 4 / 5; height: auto;"></canvas></span>
+          <span style="display: block; background: #FAF9F6; padding: 20px;"><span data-plate="1" style="width: 100%;"><sc-if value="{{ p.artOnly }}" hint-placeholder-val="{{ false }}"><canvas data-art="{{ p.idx }}" style="position: absolute; inset: 0; display: block; width: 100%; height: 100%;"></canvas></sc-if><sc-if value="{{ p.showMobile }}" hint-placeholder-val="{{ true }}"><span data-plate-row="1"><span data-phone="1" style="width: 40%; margin-top: -10%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ p.shotA }}" alt="" loading="lazy" decoding="async"></span></span></span><span data-phone="1" style="width: 40%; margin-top: 14%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ p.shotB }}" alt="" loading="lazy" decoding="async"></span></span></span></span></sc-if><sc-if value="{{ p.showWeb }}" hint-placeholder-val="{{ false }}"><span data-browser="1"><span data-browser-bar="1"><i></i><i></i><i></i></span><img data-shot-web="1" src="{{ p.shotA }}" alt="" loading="lazy" decoding="async"></span><sc-if value="{{ p.webPhone }}" hint-placeholder-val="{{ false }}"><span data-phone="1" style="position: absolute; right: 2%; bottom: 4%; width: 32%;"><span data-phone-body="1"><span data-phone-screen="1"><img data-shot="1" src="{{ p.shotB }}" alt="" loading="lazy" decoding="async"></span></span></span></sc-if></sc-if></span></span>
         </button>
         <div style="display: flex; flex-direction: column; gap: 5px; font-size: 13px; line-height: 1.5;">
           <span style="display: flex; justify-content: space-between; color: #6B6860;"><span>{{ p.num }}</span><span>{{ p.catLine }}</span></span>
@@ -312,7 +320,7 @@ const PROJECTS = [
     body: 'A community app built around real-time chat and places on a map, shipped on both iOS and Android.',
     result: '15K+ downloads.',
     layers: [{ k: 'Client', v: 'Flutter' }, { k: 'Chat', v: 'Stream Chat' }, { k: 'Maps', v: 'Flutter Map' }] },
-  { title: 'NewsCore', featured: true, cats: ['Web', 'AI'], line: 'AI cyber-intelligence dashboards for an enterprise SaaS product.', platforms: ['Web'], year: '2024', web: true, medium: 'React, Django, LangChain, LangGraph', webUrl: 'https://www.newscore.fr', webLabel: 'newscore.fr', shots: ['./assets/newscore-og.jpg'],
+  { title: 'NewsCore', featured: true, cats: ['Web', 'AI'], line: 'AI cyber-intelligence dashboards for an enterprise SaaS product.', platforms: ['Web'], year: '2024', web: true, medium: 'React, Django, LangChain, LangGraph', webUrl: 'https://www.newscore.fr', webLabel: 'newscore.fr', shots: ['./assets/newscore-web.jpg', './assets/newscore-m.jpg'],
     body: 'Dashboards that use AI to detect risks and decode real-time signals for an enterprise cyber-intelligence product.',
     result: 'Risks and live signals surfaced in one place.',
     layers: [{ k: 'Client', v: 'React' }, { k: 'API', v: 'Django' }, { k: 'AI', v: 'LangChain, LangGraph' }] },
@@ -336,7 +344,7 @@ const PROJECTS = [
     body: 'A consumer news app that builds a personalised daily digest for each reader with Gemini, so people get the day’s news in a few minutes.',
     result: '20K+ downloads.',
     layers: [{ k: 'Client', v: 'Flutter, BLoC' }, { k: 'AI', v: 'Gemini-generated digests' }, { k: 'Backend', v: 'Firebase' }] },
-  { title: 'Sorigin AMS', cats: ['Mobile'], line: 'Analytics and monitoring for solar and wind assets.', platforms: ['Android'], year: '2025', mobile: true, medium: 'Flutter, Dart isolates, real-time APIs', play: 'https://play.google.com/store/apps/details?id=co.sorigin.ams_ren_audit', shots: ['./assets/ams-1.png', './assets/ams-2.png'],
+  { title: 'Sorigin AMS', cats: ['Mobile'], line: 'Analytics and monitoring for solar and wind assets.', platforms: ['Android'], year: '2025', mobile: true, medium: 'Flutter, Dart isolates, real-time APIs', play: 'https://play.google.com/store/apps/details?id=co.sorigin.ams_ren_audit', shots: ['./assets/ams-1.jpg', './assets/ams-2.jpg'],
     body: 'A monitoring product for solar and wind assets built on real-time data workflows. Heavy telemetry processing runs off the UI thread in Dart isolates, so live charts and dashboards stay smooth.',
     result: 'Live dashboards stay smooth while processing telemetry.',
     layers: [{ k: 'Client', v: 'Flutter' }, { k: 'Compute', v: 'Dart isolates' }, { k: 'Data', v: 'Real-time APIs, live telemetry' }] },
@@ -556,7 +564,7 @@ class Component extends DCLogic {
   renderVals() {
     const projects = PROJECTS.map((p, i) => ({
       ...p, idx: String(i), num: 'No. ' + String(i + 1).padStart(2, '0'), platformLine: p.platforms.join(', '), catLine: p.cats.join(' · '),
-      web: !!p.web, mobile: !!p.mobile, slotA: 'v6-proj-' + i + '-a', slotB: 'v6-proj-' + i + '-b', shotA: p.shots ? p.shots[0] : '', artOnly: !p.shots, showMobile: !!p.mobile && !!p.shots, showWeb: !!p.web && !!p.shots, shotB: p.shots ? p.shots[1] : '',
+      web: !!p.web, mobile: !!p.mobile, slotA: 'v6-proj-' + i + '-a', slotB: 'v6-proj-' + i + '-b', shotA: p.shots ? p.shots[0] : '', artOnly: !p.shots, showMobile: !!p.mobile && !!p.shots, showWeb: !!p.web && !!p.shots, webPhone: !!p.web && !!p.shots && !!p.shots[1], shotB: p.shots ? p.shots[1] : '',
       hasApp: !!p.appStore, hasPlay: !!p.play, hasWeb: !!p.webUrl, web_url: p.webUrl || '#', webLabel: p.webLabel || 'Website',
       aria: 'View ' + p.title, view: () => this.open(i)
     }));
