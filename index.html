@@ -5,10 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Dhiraj Nikam — Flutter mobile lead and AI/RAG engineer in Pune, India. Selected apps, platforms and open-source work.">
 <meta name="theme-color" content="#EFEDE7">
+<link rel="canonical" href="https://dhirajnikam.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dhirajnikam.github.io/">
+<meta property="og:title" content="Dhiraj Nikam — Selected Works">
+<meta property="og:description" content="Flutter mobile lead and AI/RAG engineer in Pune, India. Selected apps, platforms and open-source work.">
+<meta property="og:image" content="https://dhirajnikam.github.io/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Dhiraj Nikam","jobTitle":"Senior Engineer, Full-Stack & AI","url":"https://dhirajnikam.github.io/","address":{"@type":"PostalAddress","addressLocality":"Pune","addressCountry":"IN"},"sameAs":["https://github.com/dhirajnikam","https://www.linkedin.com/in/dhiraj-nikam-b93028b7","https://pub.dev/publishers/dhirajnikam.dev"]}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23161513'/%3E%3Ctext x='16' y='24' font-family='Georgia,serif' font-style='italic' font-size='22' fill='%23FAF9F6' text-anchor='middle'%3ED%3C/text%3E%3C/svg%3E">
 <script src="./support.js"></script>
 </head>
 <body>
+<noscript><p style="font-family: Georgia, serif; padding: 24px; max-width: 60ch;">Dhiraj Nikam — Flutter mobile lead and AI/RAG engineer in Pune, India. This portfolio is drawn with JavaScript; with it switched off, find me at <a href="mailto:dhirajnikam78@gmail.com">dhirajnikam78@gmail.com</a>, <a href="https://github.com/dhirajnikam">GitHub</a>, <a href="https://www.linkedin.com/in/dhiraj-nikam-b93028b7">LinkedIn</a> or read the <a href="./Dhiraj_Nikam_Resume.pdf">résumé (PDF)</a>.</p></noscript>
 <x-dc>
 <helmet>
 <title>Dhiraj Nikam — Selected Works</title>
@@ -19,6 +30,7 @@
 :root {
   --ink: #161513; --ink-rgb: 22 21 19;
   --accent: #C8371D; --accent-rgb: 200 55 29;
+  --signal: var(--accent); --signal-rgb: var(--accent-rgb); /* the accent as a ground: survives sections that re-point --accent */
   --mat: #FAF9F6; --mat-rgb: 250 249 246;
   --wall: #EFEDE7; --wall-rgb: 239 237 231;
   --muted: #6B6860; --body: #4A4842; --body-strong: #3A3832;
@@ -28,13 +40,22 @@
   --header-h: 70px; /* fixed header: 22px padding top and bottom + 26px name */
   --gallery-top: calc(var(--header-h) + 30px);
 }
-html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body { margin: 0; background: var(--wall); color: var(--ink); font-family: var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--accent); }
 ::selection { background: var(--accent); color: var(--mat); }
 button { all: unset; cursor: pointer; }
 :focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
+.skip { position: fixed; left: var(--gutter); top: -80px; z-index: 200; padding: 10px 16px; background: var(--ink); color: var(--mat); font-size: 14px; }
+.skip:focus { top: 12px; color: var(--mat); }
+/* Phones: the six rooms live behind one Menu button, in a full-screen list under the header. */
+.menu-btn { display: none; font-size: 13px; letter-spacing: 0.01em; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+.menu-panel { position: fixed; inset: 0; z-index: 49; background: var(--wall); display: flex; flex-direction: column; justify-content: center; padding: var(--header-h) var(--gutter) 32px; box-sizing: border-box; overflow-y: auto; }
+.menu-panel a { display: flex; align-items: baseline; gap: 16px; padding: 6px 0; font-family: var(--serif); font-size: clamp(38px, 12vw, 64px); line-height: 1.12; letter-spacing: -0.02em; border-bottom: 1px solid rgb(var(--ink-rgb) / 0.12); }
+.menu-panel small { width: 22px; font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; color: var(--muted); }
+@media (min-width: 861px) { .menu-panel { display: none; } }
+@media (prefers-reduced-motion: no-preference) { .menu-panel { animation: menu-in 260ms cubic-bezier(.2,.8,.2,1); } @keyframes menu-in { from { opacity: 0; transform: translateY(-10px); } } }
 /* Phone mockup: sized off its own width (cqw), so bezel, corners and island stay true at any size */
 [data-phone] { container-type: inline-size; position: relative; }
 [data-room] [data-phone] { width: 42%; max-width: 290px; }
@@ -46,7 +67,20 @@ button { all: unset; cursor: pointer; }
 [data-phone-body]::after { content: ""; position: absolute; z-index: 2; top: calc(3.6cqw + 2.2cqw); left: 50%; transform: translateX(-50%); width: 27cqw; height: 7.6cqw; background: #000; border-radius: 99px; }
 [data-phone-screen] { border-radius: 12.4cqw; overflow: hidden; background: #000; }
 [data-phone], [data-phone-body], [data-phone-screen] { display: block; }
-header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+/* Monitor mockup for web projects: bezel, neck and foot, all sized off its own width like the phone. */
+[data-monitor] { container-type: inline-size; position: relative; display: block; align-self: flex-start; } /* the stand hangs below the box (about 15.5% of its width): leave that much room under it */
+[data-monitor-screen] { position: relative; z-index: 1; display: block; background: var(--ink); padding: 2cqw 2cqw 2.4cqw; border-radius: 2.4cqw; box-shadow: inset 0 0 0 0.35cqw var(--body-strong), 0 6cqw 9cqw -6cqw rgb(var(--ink-rgb) / 0.55), 0 2px 6px rgb(var(--ink-rgb) / 0.18); }
+[data-monitor-screen] img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 0.6cqw; }
+[data-monitor]::before { content: ""; position: absolute; left: 50%; top: calc(100% - 1.6cqw); width: 17cqw; height: 15.6cqw; transform: translateX(-50%); background: linear-gradient(#3A3832, #24221F); clip-path: polygon(16% 0, 84% 0, 100% 100%, 0 100%); }
+[data-monitor]::after { content: ""; position: absolute; left: 50%; top: calc(100% + 13.8cqw); width: 36cqw; height: 1.7cqw; transform: translateX(-50%); background: #2A2824; border-radius: 0.9cqw 0.9cqw 0.3cqw 0.3cqw; box-shadow: 0 2cqw 3cqw -1.4cqw rgb(var(--ink-rgb) / 0.5); }
+header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: background-color 300ms ease-out, color 300ms ease-out; }
+/* The header takes the tone of the section under it (set in frame()). */
+header[data-tone="ink"] { background: rgb(var(--ink-rgb) / 0.86); color: var(--mat); }
+/* Signal-colour room: the accent becomes the ground, so hover, focus and selection fall back to ink. */
+[data-tone="accent"] { background: var(--signal); color: var(--mat); --accent: var(--ink); --muted: var(--mat); --body: var(--mat); }
+header[data-tone="accent"] { background: rgb(var(--signal-rgb) / 0.9); }
+[data-plane] canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.os-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 32px clamp(40px, 6vw, 96px); padding-top: 40px; align-items: start; }
 .flush-top { scroll-margin-top: calc(var(--header-h) + 40px); } /* sections with no top padding of their own */
 .eyebrow { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
 .section-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(52px, 7vw, 120px); line-height: 0.9; letter-spacing: -0.02em; }
@@ -59,7 +93,7 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
 .store-badge b { font-size: 17px; font-weight: 600; line-height: 1.1; }
 .tab { padding-bottom: 4px; border-bottom: 1px solid transparent; color: var(--muted); transition: color 200ms, border-color 200ms; }
 .tab:hover { color: var(--ink); }
-.tab[aria-selected="true"] { color: var(--ink); border-color: var(--ink); }
+.tab[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); }
 .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
 .gallery-track { position: absolute; top: 0; left: 0; height: 100%; display: flex; align-items: center; gap: clamp(80px, 12vw, 200px); padding: var(--gallery-top) clamp(40px, 12vw, 200px) 0; box-sizing: border-box; will-change: transform; }
 .gallery-item { display: flex; align-items: flex-end; gap: 32px; flex-shrink: 0; }
@@ -71,18 +105,36 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
 .career-dates { display: flex; flex-direction: column; gap: 6px; position: sticky; top: calc(var(--header-h) + 10px); align-self: start; }
 .room-grid { max-width: 1240px; margin: 0 auto; padding: 32px var(--gutter) 96px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 56px clamp(40px, 6vw, 96px); align-items: start; box-sizing: border-box; }
 @media (max-width: 860px) {
-  .wide-only { display: none; }
-  .room-grid, .career-row { grid-template-columns: 1fr; }
-  .gallery-track { padding-top: 0; }
+  header nav a { display: none; }
+  .menu-btn { display: block; }
+  .room-grid, .career-row, .os-grid { grid-template-columns: 1fr; }
+  .gallery-track { padding-top: 56px; }
   .gallery-item { flex-direction: column; align-items: flex-start; gap: 20px; }
-  .gallery-plate { width: min(60vw, 30vh); }
+  .gallery-plate { width: min(60vw, max(120px, calc((100vh - 505px) * 0.8))); } /* whatever height is left after the label */
   .gallery-mat { padding: 16px; }
   .gallery-label { width: min(72vw, 320px); }
   .career-dates { position: static; flex-direction: row; align-items: baseline; gap: 12px; }
 }
+@media (max-width: 860px) and (max-height: 700px) { /* short phones: a shorter wall label, so frame and label both fit */
+  .gallery-label > :nth-child(2), .gallery-label > :nth-child(5), .gallery-label > :nth-child(6) { display: none; }
+  .gallery-plate { width: min(60vw, max(110px, calc((100vh - 405px) * 0.8))); }
+}
+@media (max-width: 860px) and (max-height: 520px) { /* a phone on its side: frame and label side by side */
+  .gallery-item { flex-direction: row; align-items: flex-end; }
+  .gallery-plate { width: max(90px, calc((100vh - 215px) * 0.8)); }
+}
+/* The stacked planes: sized off the viewport, and smaller wherever the wall label has to sit underneath or close by. */
+[data-plane] { width: min(360px, 62vw, 44vh); }
+[data-stack] { top: 46%; }
+@media (max-width: 1100px), (max-height: 760px) { [data-plane] { width: min(360px, 56vw, 30vh); } [data-stack] { top: 41%; } }
+@media (max-height: 520px) { [data-stack] { top: 47%; } }
 @media (pointer: coarse) {
   header nav a, .footer-links a { padding: 12px 0; margin: -12px 0; }
+  .menu-btn { padding-top: 14px; margin-top: -14px; }
   .tab { padding-top: 12px; }
+  /* Small text links get a finger-sized hit area without moving their underline. */
+  .ink-link, .soft-link { position: relative; }
+  .ink-link::after, .soft-link::after { content: ""; position: absolute; inset: -13px -6px; }
 }
 @media (prefers-reduced-motion: no-preference) {
   /* Micro-interactions. Everything here is motion-only: with reduced motion the page renders exactly as before. */
@@ -108,38 +160,46 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
 </style>
 </helmet>
 
+<a class="skip" href="#works">Skip to the works</a>
 <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding: 22px var(--gutter); pointer-events: none;">
   <a href="#top" style="pointer-events: auto; font-family: var(--serif); font-size: 26px; line-height: 1;">Dhiraj Nikam</a>
   <nav style="pointer-events: auto; display: flex; gap: 28px; font-size: 13px; letter-spacing: 0.01em;">
     <a href="#works">Works</a>
-    <a class="wide-only" href="#catalogue">Catalogue</a>
-    <a class="wide-only" href="#opensource">Open source</a>
-    <a class="wide-only" href="#statement">About</a>
-    <a class="wide-only" href="#career">Career</a>
+    <a href="#catalogue">Catalogue</a>
+    <a href="#opensource">Open source</a>
+    <a href="#statement">About</a>
+    <a href="#career">Career</a>
     <a href="#commissions">Contact</a>
+    <button type="button" class="menu-btn" aria-expanded="{{ menuOpen }}" aria-controls="menu" onClick="{{ toggleMenu }}">{{ menuLabel }}</button>
   </nav>
 </header>
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <nav id="menu" class="menu-panel" aria-label="Sections">
+    <sc-for list="{{ menuLinks }}" as="m" hint-placeholder-count="6"><a href="{{ m.href }}" onClick="{{ closeMenu }}"><small>{{ m.num }}</small>{{ m.label }}</a></sc-for>
+  </nav>
+</sc-if>
 
-<section id="top" data-screen-label="Hero" style="position: relative; height: max(100vh, 640px); overflow: hidden;">
+<main>
+<section id="top" data-screen-label="Hero" aria-label="Hero" style="position: relative; height: max(100vh, 640px); overflow: hidden;">
   <canvas ref="{{ paintHero }}" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></canvas>
   <div style="position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(28px, 4vw, 52px); display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; pointer-events: none;">
     <h1 data-fade="1" style="margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(64px, 10.5vw, 184px); line-height: 0.88; letter-spacing: -0.025em;">Software,<br><span style="font-style: italic;">drawn by hand.</span></h1>
     <div data-fade="1" style="width: 270px; background: var(--mat); padding: 18px 20px; box-shadow: 0 1px 2px rgb(var(--ink-rgb) / 0.08); font-size: 13px; line-height: 1.5; pointer-events: auto;">
       <div style="font-weight: 600;">Dhiraj Nikam <span style="font-weight: 400; color: var(--muted);">(Pune, India)</span></div>
-      <div style="font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.25; margin: 4px 0 10px;">Field, 2026</div>
-      <div style="color: var(--muted);">1,600 particles following a noise field. JavaScript on canvas. Move your cursor to disturb it.</div>
-      <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgb(var(--ink-rgb) / 0.12); color: var(--muted);">Flutter mobile lead · AI &amp; RAG engineering</div>
+      <div style="font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.25; margin: 4px 0 10px;">Flutter mobile lead, AI &amp; RAG engineer</div>
+      <div style="color: var(--muted);">8+ production apps on the App Store and Google Play, 40K+ downloads. Open to remote roles.</div>
+      <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgb(var(--ink-rgb) / 0.12); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;"><a href="#works" class="ink-link">See the works <span class="arr arr-s">↓</span></a><a href="mailto:dhirajnikam78@gmail.com" class="soft-link" style="color: var(--muted);">Email me</a></div>
     </div>
   </div>
 </section>
 
-<section id="intro" data-screen-label="Curatorial note" style="padding: clamp(120px, 16vw, 240px) var(--gutter); display: flex; flex-direction: column; align-items: center; gap: 36px; text-align: center;">
+<section id="intro" data-screen-label="Curatorial note" aria-label="Curatorial note" style="padding: clamp(120px, 16vw, 240px) var(--gutter); display: flex; flex-direction: column; align-items: center; gap: 36px; text-align: center;">
   <span class="eyebrow">Selected works, 2022 – 2026</span>
-  <p data-reveal="1" style="margin: 0; max-width: 24ch; font-family: var(--serif); font-size: clamp(36px, 4.6vw, 72px); line-height: 1.04; letter-spacing: -0.015em;">Apps, platforms and the systems beneath them, built with the patience of <span style="font-style: italic; color: var(--accent);">a craft.</span></p>
+  <p data-words="1" style="margin: 0; max-width: 24ch; font-family: var(--serif); font-size: clamp(36px, 4.6vw, 72px); line-height: 1.04; letter-spacing: -0.015em;">Apps, platforms and the systems beneath them, built with the patience of <span style="font-style: italic; color: var(--accent);">a craft.</span></p>
   <p style="margin: 0; max-width: 52ch; font-size: 16px; line-height: 1.7; color: var(--body);">{{ featuredCountWord }} featured works hang in the first room; the full catalogue follows. Each project is shown with its real screens (or, for back-end work, a drawing generated from its name), a wall label, and the technical notes behind it.</p>
 </section>
 
-<section id="works" data-gallery="1" data-screen-label="Works" style="position: relative; height: 400vh;">
+<section id="works" data-gallery="1" data-screen-label="Works" aria-label="Works" style="position: relative; height: 400vh;">
   <div style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
     <div class="eyebrow" style="position: absolute; top: calc(var(--header-h) + 6px); left: var(--gutter); right: var(--gutter); display: flex; justify-content: space-between; z-index: 2;">
       <span>Room I — Featured works</span><span data-gallery-count="1"></span>
@@ -169,15 +229,15 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
   </div>
 </section>
 
-<section id="catalogue" data-screen-label="Catalogue" style="max-width: 1440px; margin: 0 auto; padding: clamp(110px, 13vw, 200px) var(--gutter); box-sizing: border-box; scroll-margin-top: calc(var(--header-h) - 30px);">
+<section id="catalogue" data-screen-label="Catalogue" aria-label="Catalogue" style="max-width: 1440px; margin: 0 auto; padding: clamp(110px, 13vw, 200px) var(--gutter); box-sizing: border-box; scroll-margin-top: calc(var(--header-h) + 40px - clamp(110px, 13vw, 200px));">
   <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid var(--ink);">
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <span class="eyebrow">Room II — Catalogue</span>
       <h2 data-reveal="1" class="section-title">All works <span style="font-style: italic; color: var(--muted); font-size: 0.5em; letter-spacing: 0;">({{ shownCount }})</span></h2>
     </div>
-    <div role="tablist" aria-label="Filter projects" style="display: flex; gap: 24px; flex-wrap: wrap; font-size: 14px;">
+    <div role="group" aria-label="Filter projects" style="display: flex; gap: 24px; flex-wrap: wrap; font-size: 14px;">
       <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
-        <button type="button" role="tab" class="tab" aria-selected="{{ f.active }}" onClick="{{ f.pick }}">{{ f.label }} <span style="font-size: 11px; color: var(--muted);">{{ f.count }}</span></button>
+        <button type="button" class="tab" aria-pressed="{{ f.active }}" onClick="{{ f.pick }}">{{ f.label }} <span style="font-size: 11px; color: var(--muted);">{{ f.count }}</span></button>
       </sc-for>
     </div>
   </div>
@@ -199,7 +259,7 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
   </div>
 </section>
 
-<section id="opensource" class="flush-top" data-screen-label="Open source" style="max-width: 1440px; margin: 0 auto; padding: 0 var(--gutter) clamp(110px, 13vw, 200px); box-sizing: border-box;">
+<section id="opensource" class="flush-top" data-screen-label="Open source" aria-label="Open source" style="max-width: 1440px; margin: 0 auto; padding: 0 var(--gutter) clamp(110px, 13vw, 200px); box-sizing: border-box;">
   <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid var(--ink);">
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <span class="eyebrow">Room III — Open source</span>
@@ -208,15 +268,13 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
     <a href="https://github.com/dhirajnikam" target="_blank" rel="noopener" class="ink-link" style="font-size: 14px; padding-bottom: 2px;">github.com/dhirajnikam <span class="arr arr-ne">↗</span></a>
   </div>
 
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 56px clamp(40px, 6vw, 96px); padding-top: 56px; align-items: start;">
-    <div style="display: flex; flex-direction: column; gap: 18px;">
-      <div style="background: var(--ink); padding: 8px; box-shadow: var(--shadow-card);">
-        <div style="background: var(--mat); padding: clamp(18px, 2.4vw, 32px);"><canvas ref="{{ paintContrib }}" style="display: block; width: 100%; aspect-ratio: 53 / 9; height: auto;"></canvas></div>
-      </div>
-      <div style="display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; font-size: 13px; line-height: 1.5;">
-        <span><span style="font-weight: 600;">Dhiraj Nikam</span><br><span style="font-family: var(--serif); font-style: italic; font-size: 22px;">A Year of Commits</span><span style="font-family: var(--serif); font-size: 22px;">, 2026</span></span>
-        <span style="color: var(--muted); max-width: 30ch;">A drawing of a year at the keyboard: one ink mark per day, red marks a release.</span>
-      </div>
+  <div style="margin-top: 56px; background: var(--ink); padding: 8px; box-shadow: var(--shadow-card);">
+    <div style="background: var(--mat); padding: clamp(18px, 2.4vw, 32px);"><canvas ref="{{ paintContrib }}" style="display: block; width: 100%; aspect-ratio: 53 / 9; height: auto;"></canvas></div>
+  </div>
+  <div class="os-grid">
+    <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px; line-height: 1.5;">
+      <span><span style="font-weight: 600;">Dhiraj Nikam</span><br><span style="font-family: var(--serif); font-style: italic; font-size: 22px;">A Year of Commits</span><span style="font-family: var(--serif); font-size: 22px;">, 2026</span></span>
+      <span style="color: var(--muted); max-width: 30ch;">An imagined year at the keyboard, drawn from a seed: one ink mark per day, red for a release.</span>
     </div>
 
     <div style="display: flex; flex-direction: column; border-top: 1px solid var(--ink);">
@@ -232,14 +290,15 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
   </div>
 </section>
 
-<section id="sculpture" data-sculpture="1" data-screen-label="Sculpture" style="position: relative; height: 260vh; background: var(--ink); color: var(--mat);">
+<section id="sculpture" data-tone="ink" data-sculpture="1" data-screen-label="Sculpture" aria-label="Sculpture" style="position: relative; height: 260vh; background: var(--ink); color: var(--mat);">
   <div style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
     <span class="eyebrow" style="position: absolute; top: calc(var(--header-h) + 6px); left: var(--gutter); color: rgb(var(--mat-rgb) / 0.6);">Room IV — Sculpture</span>
     <div style="position: absolute; inset: 0; perspective: 1800px;">
-      <div style="position: absolute; left: 50%; top: 46%; width: 0; height: 0; transform-style: preserve-3d;">
+      <div data-stack="1" style="position: absolute; left: 50%; width: 0; height: 0; transform-style: preserve-3d;">
         <sc-for list="{{ layers }}" as="l" hint-placeholder-count="3">
-          <div data-plane="1" style="position: absolute; left: 0; top: 0; width: min(360px, 62vw, 44vh); aspect-ratio: 1; box-sizing: border-box; border: 1px solid rgb(var(--mat-rgb) / 0.75); background: rgb(var(--ink-rgb) / 0.6); transform: translate(-50%, -50%) rotateX(60deg) rotateZ(-45deg); display: flex; align-items: flex-end; padding: 20px;">
-            <span style="font-family: var(--serif); font-style: italic; font-size: 40px; line-height: 1;">{{ l.k }}</span>
+          <div data-plane="1" style="position: absolute; left: 0; top: 0; aspect-ratio: 1; box-sizing: border-box; border: 1px solid rgb(var(--mat-rgb) / 0.75); background: rgb(var(--ink-rgb) / 0.6); transform: translate(-50%, -50%) rotateX(60deg) rotateZ(-45deg); display: flex; align-items: flex-end; padding: 20px;">
+            <canvas ref="{{ l.paint }}"></canvas>
+            <span style="position: relative; font-family: var(--serif); font-style: italic; font-size: 40px; line-height: 1;">{{ l.k }}</span>
           </div>
         </sc-for>
       </div>
@@ -253,19 +312,19 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
   </div>
 </section>
 
-<section id="statement" data-screen-label="Statement" style="padding: clamp(120px, 14vw, 220px) var(--gutter); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 56px clamp(40px, 8vw, 140px); align-items: center; max-width: 1240px; margin: 0 auto; box-sizing: border-box;">
+<section id="statement" data-screen-label="Statement" aria-label="Statement" style="padding: clamp(120px, 14vw, 220px) var(--gutter); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 56px clamp(40px, 8vw, 140px); align-items: center; max-width: 1240px; margin: 0 auto; box-sizing: border-box;">
   <div style="background: var(--ink); padding: 10px; width: min(100%, 400px); box-sizing: border-box; justify-self: center; box-shadow: var(--shadow-wall);">
     <div style="background: var(--mat); padding: 28px;"><img src="./assets/portrait.jpg" alt="Dhiraj Nikam standing beside a motorcycle in a hillside clearing" style="width: 100%; aspect-ratio: 4 / 5; display: block; filter: grayscale(1); object-fit: cover;"></div>
   </div>
   <div style="display: flex; flex-direction: column; gap: 28px;">
     <span class="eyebrow">Artist statement</span>
-    <p data-reveal="1" style="margin: 0; font-family: var(--serif); font-size: clamp(32px, 3.4vw, 52px); line-height: 1.08; letter-spacing: -0.01em;">I treat software the way a printmaker treats a plate: <span style="font-style: italic;">every layer matters, and the last one is the one people touch.</span></p>
+    <p data-words="1" style="margin: 0; font-family: var(--serif); font-size: clamp(32px, 3.4vw, 52px); line-height: 1.08; letter-spacing: -0.01em;">I treat software the way a printmaker treats a plate: <span style="font-style: italic;">every layer matters, and the last one is the one people touch.</span></p>
     <p style="margin: 0; font-size: 16px; line-height: 1.7; color: var(--body); max-width: 56ch;">4+ years building production Flutter apps and the AI-powered backends behind them, mostly for teams whose software has to work in the field: solar and wind O&amp;M engineers, site teams, operators. Flutter and Dart on the device; Python (FastAPI, Django, LangChain) and TypeScript (Node.js, React) on the server; AWS Bedrock, PostgreSQL and Neo4j underneath. Open-source author on pub.dev and the VS Code Marketplace.</p>
     <div style="display: flex; gap: 28px; flex-wrap: wrap; font-size: 14px; font-weight: 500;"><a href="#career" class="ink-link" style="padding-bottom: 2px;">Career <span class="arr arr-s">↓</span></a><a href="./Dhiraj_Nikam_Resume.pdf" target="_blank" rel="noopener" class="ink-link" style="padding-bottom: 2px;">Download CV (PDF)</a></div>
   </div>
 </section>
 
-<section id="career" class="flush-top" data-screen-label="Career" style="max-width: 1240px; margin: 0 auto; padding: 0 var(--gutter) clamp(110px, 13vw, 200px); box-sizing: border-box;">
+<section id="career" class="flush-top" data-screen-label="Career" aria-label="Career" style="max-width: 1240px; margin: 0 auto; padding: 0 var(--gutter) clamp(110px, 13vw, 200px); box-sizing: border-box;">
   <div style="display: flex; flex-direction: column; gap: 16px; padding-bottom: 28px; border-bottom: 1px solid var(--ink);">
     <span class="eyebrow">Chronology</span>
     <h2 data-reveal="1" class="section-title">Career</h2>
@@ -291,7 +350,7 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
   </sc-for>
 </section>
 
-<section id="elsewhere" data-screen-label="Elsewhere" style="background: var(--mat); border-top: 1px solid rgb(var(--ink-rgb) / 0.1);">
+<section id="elsewhere" data-screen-label="Elsewhere" aria-label="Elsewhere" style="background: var(--mat); border-top: 1px solid rgb(var(--ink-rgb) / 0.1);">
   <div style="max-width: 1440px; margin: 0 auto; padding: clamp(96px, 11vw, 160px) var(--gutter); box-sizing: border-box; display: flex; flex-direction: column; gap: 48px;">
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <span class="eyebrow">Also</span>
@@ -302,7 +361,7 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
         <div style="display: flex; flex-direction: column; border-top: 1px solid var(--ink);">
           <span class="eyebrow" style="padding: 14px 0 6px;">{{ g.label }}</span>
           <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
-            <a href="{{ it.url }}" style="display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-bottom: 1px solid rgb(var(--ink-rgb) / 0.12);">
+            <a href="{{ it.url }}" target="{{ it.target }}" rel="noopener" style="display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-bottom: 1px solid rgb(var(--ink-rgb) / 0.12);">
               <span style="font-family: var(--serif); font-size: 22px; line-height: 1.2;">{{ it.title }}</span>
               <span style="font-size: 13px; color: var(--muted);">{{ it.meta }}</span>
             </a>
@@ -313,19 +372,20 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
   </div>
 </section>
 
-<section id="commissions" data-screen-label="Commissions" style="border-top: 1px solid rgb(var(--ink-rgb) / 0.14); padding: clamp(110px, 14vw, 200px) var(--gutter) 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 32px;">
+<section id="commissions" data-tone="accent" data-screen-label="Commissions" aria-label="Commissions" style="padding: clamp(110px, 14vw, 200px) var(--gutter) 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 32px;">
   <span class="eyebrow">Open to remote roles</span>
-  <a data-reveal="1" href="mailto:dhirajnikam78@gmail.com" style="font-family: var(--serif); font-style: italic; font-size: clamp(30px, 9vw, 160px); line-height: 1; letter-spacing: -0.025em; overflow-wrap: anywhere;">dhirajnikam78@gmail.com</a>
+  <a data-reveal="1" href="mailto:dhirajnikam78@gmail.com" style="font-family: var(--serif); font-style: italic; font-size: clamp(22px, 8.4vw, 160px); line-height: 1; letter-spacing: -0.025em; overflow-wrap: anywhere;">dhirajnikam78@gmail.com</a>
   <span style="font-size: 15px; color: var(--body); max-width: 44ch; line-height: 1.6;">For Flutter apps, AI and RAG systems, or a second pair of hands on a system that needs care. Based in Pune, India.</span>
-  <div style="width: 100%; display: flex; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; margin-top: clamp(80px, 10vw, 140px); padding-top: 20px; border-top: 1px solid rgb(var(--ink-rgb) / 0.14); font-size: 13px; color: var(--muted);">
+  <footer style="width: 100%; display: flex; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; margin-top: clamp(80px, 10vw, 140px); padding-top: 20px; border-top: 1px solid rgb(var(--mat-rgb) / 0.4); font-size: 13px; color: var(--muted);">
     <span>© 2026 Dhiraj Nikam</span>
     <span class="footer-links"><a href="https://github.com/dhirajnikam" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/dhiraj-nikam-b93028b7" target="_blank" rel="noopener">LinkedIn</a><a href="https://pub.dev/publishers/dhirajnikam.dev" target="_blank" rel="noopener">pub.dev</a><a href="./Dhiraj_Nikam_Resume.pdf" target="_blank" rel="noopener">Résumé</a></span>
     <span>{{ time }}</span>
-  </div>
+  </footer>
 </section>
+</main>
 
 <sc-if value="{{ room }}" hint-placeholder-val="{{ false }}">
-  <div data-room="1" role="dialog" aria-modal="true" style="position: fixed; inset: 0; z-index: 120; background: var(--wall); overflow-y: auto;">
+  <div data-room="1" role="dialog" aria-modal="true" aria-label="{{ room.title }}" style="position: fixed; inset: 0; z-index: 120; background: var(--wall); overflow-y: auto;">
     <div style="position: sticky; top: 0; display: flex; justify-content: space-between; align-items: baseline; padding: 22px var(--gutter); background: var(--wall); z-index: 2;">
       <span class="eyebrow">{{ room.num }} — {{ room.title }}</span>
       <button type="button" onClick="{{ close }}" class="ink-link" style="font-size: 14px;">Close <span class="arr arr-x">✕</span></button>
@@ -336,11 +396,11 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
           <div style="width: 72%; background: var(--ink); padding: 8px; box-shadow: var(--shadow-card);"><div style="background: var(--mat); padding: 20px;"><canvas ref="{{ room.paint }}" style="display: block; width: 100%; aspect-ratio: 4 / 5; height: auto;"></canvas></div></div>
         </sc-if>
         <sc-if value="{{ room.pair }}" hint-placeholder-val="{{ true }}">
-          <div data-phone="1"><div data-phone-body="1"><div data-phone-screen="1"><img src="{{ room.phones.0 }}" alt="" style="width: 100%; aspect-ratio: 9 / 19.5; display: block; object-fit: cover;"></div></div></div>
-          <div data-phone="1" style="margin-top: 12%;"><div data-phone-body="1"><div data-phone-screen="1"><img src="{{ room.phones.1 }}" alt="" style="width: 100%; aspect-ratio: 9 / 19.5; display: block; object-fit: cover;"></div></div></div>
+          <div data-phone="1"><div data-phone-body="1"><div data-phone-screen="1"><img ref="{{ room.shots.0 }}" alt="{{ room.title }}, app screen one" style="width: 100%; aspect-ratio: 9 / 19.5; display: block; object-fit: cover;"></div></div></div>
+          <div data-phone="1" style="margin-top: 12%;"><div data-phone-body="1"><div data-phone-screen="1"><img ref="{{ room.shots.1 }}" alt="{{ room.title }}, app screen two" style="width: 100%; aspect-ratio: 9 / 19.5; display: block; object-fit: cover;"></div></div></div>
         </sc-if>
         <sc-if value="{{ room.desktop }}" hint-placeholder-val="{{ false }}">
-          <div style="width: 100%; background: var(--ink); padding: 8px;"><img src="{{ room.desktop }}" alt="" style="width: 100%; aspect-ratio: 16 / 10; display: block; object-fit: cover;"></div>
+          <div data-monitor="1" style="width: 100%; margin-bottom: 15.5%;"><div data-monitor-screen="1"><img ref="{{ room.desk }}" alt="{{ room.title }}, web screen"></div></div>
         </sc-if>
       </div>
       <div style="display: flex; flex-direction: column; gap: 24px;">
@@ -356,7 +416,7 @@ header { background: rgb(var(--wall-rgb) / 0.86); -webkit-backdrop-filter: blur(
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
           <sc-if value="{{ room.appStore }}" hint-placeholder-val="{{ false }}"><a href="{{ room.appStore }}" target="_blank" rel="noopener" class="store-badge"><small>Download on the</small><b>App Store</b></a></sc-if>
           <sc-if value="{{ room.play }}" hint-placeholder-val="{{ false }}"><a href="{{ room.play }}" target="_blank" rel="noopener" class="store-badge"><small>Get it on</small><b>Google Play</b></a></sc-if>
-          <sc-if value="{{ room.site }}" hint-placeholder-val="{{ false }}"><a href="{{ room.site.url }}" target="_blank" rel="noopener" class="press" style="display: flex; align-items: center; padding: 10px 18px; border: 1px solid var(--ink); border-radius: 10px; font-size: 15px; font-weight: 500;" style-hover="border-color: var(--accent); color: var(--accent);">{{ room.site.label }} <span class="arr arr-ne">↗</span></a></sc-if>
+          <sc-if value="{{ room.site }}" hint-placeholder-val="{{ false }}"><a href="{{ room.site.url }}" target="_blank" rel="noopener" class="press" style="display: flex; align-items: center; gap: 6px; padding: 10px 18px; border: 1px solid var(--ink); border-radius: 10px; font-size: 15px; font-weight: 500;" style-hover="border-color: var(--accent); color: var(--accent);">{{ room.site.label }} <span class="arr arr-ne">↗</span></a></sc-if>
         </div>
       </div>
     </div>
@@ -422,22 +482,23 @@ const CAREER = [
 const ELSEWHERE = [
   { label: 'Side projects', items: [{ title: 'The Bridge', meta: 'Go + Bubble Tea terminal dashboard for shell, Jira, GitHub and Gemini', url: 'https://github.com/dhirajnikam/the-bridge' }, { title: 'Loco — Pilot Assessment System', meta: 'NestJS, MongoDB, React · psychometric assessment', url: 'https://github.com/dhirajnikam/loco-project' }, { title: 'Clawdbot Local Toolkit', meta: 'Offline TTS/STT and PDF tools for a self-hosted AI assistant', url: 'https://github.com/dhirajnikam/clawdbot-local-toolkit' }] },
   { label: 'Impact', items: [{ title: '8+ production apps shipped', meta: 'Google Play & App Store', url: '#works' }, { title: '40K+ combined downloads', meta: 'Across client products', url: '#works' }, { title: '96% faster Flutter releases', meta: '24 hours to 15 minutes', url: '#career' }] },
-  { label: 'Links', items: [{ title: 'dhirajnikam.github.io', meta: 'Portfolio', url: 'https://dhirajnikam.github.io/' }, { title: 'github.com/dhirajnikam', meta: 'GitHub', url: 'https://github.com/dhirajnikam' }, { title: 'pub.dev publisher', meta: 'dhirajnikam.dev', url: 'https://pub.dev/publishers/dhirajnikam.dev' }] }
+  { label: 'Links', items: [{ title: 'LinkedIn', meta: 'dhiraj-nikam', url: 'https://www.linkedin.com/in/dhiraj-nikam-b93028b7' }, { title: 'github.com/dhirajnikam', meta: 'GitHub', url: 'https://github.com/dhirajnikam' }, { title: 'pub.dev publisher', meta: 'dhirajnikam.dev', url: 'https://pub.dev/publishers/dhirajnikam.dev' }] }
 ];
+const MENU = [['#works', 'Works'], ['#catalogue', 'Catalogue'], ['#opensource', 'Open source'], ['#statement', 'About'], ['#career', 'Career'], ['#commissions', 'Contact']].map(([href, label], i) => ({ href, label, num: '0' + (i + 1) }));
 const NUMBER_WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
 const pad2 = n => String(n).padStart(2, '0');
 const FILTERS = ['All', 'Mobile', 'AI', 'Web', 'Back end'];
 const LAYERS = [
-  { k: 'Interface', note: 'Interface: Flutter, Dart, BLoC, React, TypeScript' },
-  { k: 'Services', note: 'Services: Python, FastAPI, Django, Node.js, LangChain' },
-  { k: 'Data', note: 'Data: PostgreSQL, Redis, Neo4j, vector DBs, AWS' }
+  { k: 'Interface', art: 'marks', note: 'Interface: Flutter, Dart, BLoC, React, TypeScript' },
+  { k: 'Services', art: 'flow', note: 'Services: Python, FastAPI, Django, Node.js, LangChain' },
+  { k: 'Data', art: 'threads', note: 'Data: PostgreSQL, Redis, Neo4j, vector DBs, AWS' }
 ];
 const SPLIT_AT = 0.45, LAYER_SPAN = (0.99 - SPLIT_AT) / LAYERS.length;
 let palette;
 const colors = () => palette || (palette = (() => {
   const css = getComputedStyle(document.documentElement), v = name => css.getPropertyValue('--' + name).trim();
   const alpha = name => a => `rgb(${v(name + '-rgb')} / ${a})`;
-  return { ink: v('ink'), accent: v('accent'), mat: v('mat'), wall: v('wall'), inkA: alpha('ink'), accentA: alpha('accent'), wallA: alpha('wall') };
+  return { ink: v('ink'), accent: v('accent'), mat: v('mat'), wall: v('wall'), inkA: alpha('ink'), accentA: alpha('accent'), matA: alpha('mat'), wallA: alpha('wall') };
 })());
 const clamp = v => Math.max(0, Math.min(1, v));
 const ease = t => t * t * (3 - 2 * t);
@@ -474,15 +535,14 @@ const ART = {
 
 const painter = new ResizeObserver(entries => entries.forEach(e => e.target.isConnected ? e.target.paint() : painter.unobserve(e.target)));
 const paintWith = draw => cv => { if (!cv) return; cv.paint = () => draw(cv); painter.unobserve(cv); painter.observe(cv); };
-const slug = t => t.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
-function drawArt(cv, project) {
+function drawArt(cv, project, dark) {
   const dpr = Math.min(2, devicePixelRatio || 1), w = cv.clientWidth, h = cv.clientHeight;
   if (!w || !h) return;
   cv.width = w * dpr; cv.height = h * dpr;
   const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
-  const C = colors();
-  ctx.fillStyle = C.mat; ctx.fillRect(0, 0, w, h);
+  const K = colors(), C = dark ? { ...K, ink: K.matA(0.3), inkA: a => K.matA(a * 0.45) } : K;
+  if (!dark) { ctx.fillStyle = C.mat; ctx.fillRect(0, 0, w, h); }
   const R = rng(hash(project.title)), s = R() * 100, u = w / 400;
   ctx.lineCap = 'round';
   ART[project.art](ctx, w, h, u, s, R, C);
@@ -505,13 +565,17 @@ function drawContrib(cv) {
 }
 
 class Component extends DCLogic {
-  state = { room: -1, time: '', layer: -1, filter: 'All' };
+  state = { room: -1, time: '', layer: -1, filter: 'All', menu: false };
+  layers = LAYERS.map(l => ({ ...l, paint: paintWith(cv => drawArt(cv, { title: l.k, art: l.art }, true)) }));
   views = PROJECTS.map((p, i) => ({
-    ...p, num: 'No. ' + pad2(i + 1), platformLine: p.platforms.join(', '), catLine: p.cats.join(' · '), slot: 'v6-proj-' + slug(p.title),
+    ...p, num: 'No. ' + pad2(i + 1), platformLine: p.platforms.join(', '), catLine: p.cats.join(' · '),
+    // Set through refs, not src="{{ … }}": the browser would otherwise request the raw template text before it is filled in.
+    shots: (p.phones || []).map(src => el => { if (el) el.src = src; }), desk: el => { if (el && p.desktop) el.src = p.desktop; },
     pair: !p.desktop && p.phones, overlay: p.desktop && p.phones && p.phones[0],
     view: () => this.open(i), paint: paintWith(cv => drawArt(cv, p))
   }));
   featured = this.views.filter(p => p.featured);
+  elsewhere = ELSEWHERE.map(g => ({ ...g, items: g.items.map(it => ({ ...it, target: it.url[0] === '#' ? '_self' : '_blank' })) }));
   paintHero = paintWith(cv => this.setupHero(cv));
   paintContrib = paintWith(drawContrib);
   animateCards() {
@@ -522,20 +586,30 @@ class Component extends DCLogic {
     this.reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || this.props.motion === false;
     this.tick(); this.clock = setInterval(() => this.tick(), 15000);
     this.cx = -9999; this.cy = -9999;
-    this.onMove = e => { this.cx = e.clientX; this.cy = e.clientY; };
-    this.onKey = e => { if (e.key === 'Escape' && this.state.room >= 0) this.close(); };
-    addEventListener('mousemove', this.onMove); addEventListener('keydown', this.onKey);
+    this.vx = 0; this.vy = 0; this.ripples = [];
+    // Pointer, not mouse, so a finger works too. Its speed drags the field; a press on the drawing sends out a ripple.
+    this.onMove = e => { if (this.cx > -999) { this.vx = Math.max(-40, Math.min(40, this.vx + (e.clientX - this.cx) * 0.5)); this.vy = Math.max(-40, Math.min(40, this.vy + (e.clientY - this.cy) * 0.5)); } this.cx = e.clientX; this.cy = e.clientY; };
+    this.onDown = e => { this.cx = e.clientX; this.cy = e.clientY; const H = this.hero; if (!H || e.target.closest('a, button, [data-room]')) return; const r = H.cv.getBoundingClientRect(); if (e.clientY < r.bottom && this.ripples.length < 6) this.ripples.push({ x: (e.clientX - r.left) / r.width * H.w, y: (e.clientY - r.top) / r.height * H.h, r: 0 }); };
+    this.onKey = e => { if (e.key !== 'Escape') return; if (this.state.room >= 0) this.close(); else if (this.state.menu) this.setMenu(false); };
+    addEventListener('pointermove', this.onMove); addEventListener('pointerdown', this.onDown); addEventListener('keydown', this.onKey);
     if (!this.reduce) {
       document.querySelectorAll('[data-fade]').forEach((el, i) => el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 1400, delay: 300 + i * 200, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }));
-      this.io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.animate([{ opacity: 0, transform: 'translateY(30px)' }, { opacity: 1, transform: 'none' }], { duration: 1200, easing: 'cubic-bezier(.2,.8,.2,1)' }); this.io.unobserve(e.target); } }), { threshold: 0.25 });
+      // Titles rise through a mask at their own baseline, once. The clip ends past the box so descenders are never cut.
+      this.io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.animate([{ clipPath: 'inset(0 -5% 100% -5%)', transform: 'translateY(100%)' }, { clipPath: 'inset(0 -5% -25% -5%)', transform: 'none' }], { duration: 900, easing: 'cubic-bezier(.2,.8,.2,1)' }); this.io.unobserve(e.target); } }), { threshold: 0.25 });
       document.querySelectorAll('[data-reveal]').forEach(el => this.io.observe(el));
+      // Statements are read at scroll pace: split into words once (text nodes only, so inline spans keep their styling), lit in frame().
+      this.words = [...document.querySelectorAll('[data-words]')].map(el => {
+        const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodes = []; while (tw.nextNode()) nodes.push(tw.currentNode);
+        nodes.forEach(nd => { const f = document.createDocumentFragment(); nd.data.split(/(\s+)/).forEach(t => { if (!t.trim()) return f.append(t); const sp = document.createElement('span'); sp.dataset.w = '1'; sp.textContent = t; f.append(sp); }); nd.replaceWith(f); });
+        return { el, spans: [...el.querySelectorAll('[data-w]')], p: -1 };
+      });
     }
     const loop = () => { this.frame(); this.raf = requestAnimationFrame(loop); };
     loop();
   }
 
   componentWillUnmount() {
-    removeEventListener('mousemove', this.onMove); removeEventListener('keydown', this.onKey);
+    removeEventListener('pointermove', this.onMove); removeEventListener('pointerdown', this.onDown); removeEventListener('keydown', this.onKey);
     clearInterval(this.clock); cancelAnimationFrame(this.raf); if (this.io) this.io.disconnect();
   }
 
@@ -546,29 +620,49 @@ class Component extends DCLogic {
     this.setState({ time });
   }
 
+  // Hero: a sheet of ink marks, one per grid cell, each turning with a slowly drifting noise field. A second,
+  // fixed field sets how heavy each mark is, so the sheet has dark passages and quiet ones; the paper is left
+  // to faint dots under the header and the title. The cursor combs the marks around itself and turns them red.
   setupHero(cv) {
     const dpr = Math.min(2, devicePixelRatio || 1), w = cv.clientWidth, h = cv.clientHeight;
     cv.width = w * dpr; cv.height = h * dpr;
     const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.fillStyle = colors().wall; ctx.fillRect(0, 0, w, h);
     const R = rng(7);
-    this.hero = { cv, ctx, w, h, t: 0, ps: Array.from({ length: 1600 }, () => ({ x: R() * w, y: R() * h, life: R() * 200, red: R() < 0.02 })) };
-    if (this.reduce) for (let k = 0; k < 120; k++) this.stepHero();
+    this.hero = { cv, ctx, w, h, t: 0, tx: 0, ty: 0, ps: Array.from({ length: 650 }, () => ({ x: R() * w, y: R() * h, z: R(), life: R() * 200, red: R() < 0.02 })) };
+    if (this.reduce) for (let k = 0; k < 26; k++) this.stepHero(true); // still frame: the trails are kept, not faded
   }
 
-  stepHero() {
+  stepHero(still) {
     const H = this.hero; if (!H) return;
     const { ctx, w, h } = H, C = colors(); H.t += 0.0016;
-    ctx.fillStyle = C.wallA(0.035); ctx.fillRect(0, 0, w, h);
-    const rect = H.cv.getBoundingClientRect(), mx = this.cx - rect.left, my = this.cy - rect.top;
-    ctx.lineWidth = 0.7;
+    if (!still) {
+      ctx.fillStyle = C.wallA(0.1); ctx.fillRect(0, 0, w, h);
+      // A translucent wash alone never quite reaches the paper colour (8-bit rounding leaves ghosts of old trails),
+      // so also lift every pixel one step and cap it at the paper: old ink is gone for good within a few seconds.
+      ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = 'rgb(2 2 2)'; ctx.fillRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'darken'; ctx.fillStyle = C.wall; ctx.fillRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    const rect = H.cv.getBoundingClientRect(), mx = (this.cx - rect.left) / rect.width * H.w, my = (this.cy - rect.top) / rect.height * H.h; // the canvas is scaled and tilted, so map back into its own space
+    // Depth: the sheet tilts in perspective towards the pointer (and sways a little on its own), and each particle
+    // sits at its own depth: near ones are heavier, darker, faster and slide further as the view shifts.
+    const on = mx > 0 && my > 0 && mx < w && my < h, sway = Math.sin(H.t * 40);
+    H.tx += ((on ? mx / w - 0.5 : 0) + sway * 0.06 - H.tx) * 0.06; H.ty += ((on ? my / h - 0.5 : 0) - H.ty) * 0.06;
+    H.cv.style.transform = `perspective(1100px) rotateX(${(-H.ty * 9).toFixed(2)}deg) rotateY(${(H.tx * 11).toFixed(2)}deg) scale(1.14)`;
+    this.vx *= 0.92; this.vy *= 0.92;
+    this.ripples = this.ripples.filter(r => (r.r += 7) < 640);
     for (const p of H.ps) {
-      let a = field(p.x, p.y, H.t * 6, 0.0032);
+      let a = field(p.x, p.y, H.t * 6, 0.0032), speed = 0.7 + p.z * 1.3, hot = 0, px = 0, py = 0; const ox = -H.tx * p.z * 46, oy = -H.ty * p.z * 46;
       const dx = p.x - mx, dy = p.y - my, d = Math.hypot(dx, dy);
-      if (d < 180) a += (1 - d / 180) * Math.PI * 0.9;
-      const nx = p.x + Math.cos(a) * 1.4, ny = p.y + Math.sin(a) * 1.4;
-      ctx.strokeStyle = p.red ? C.accentA(0.7) : C.inkA(0.22);
-      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(nx, ny); ctx.stroke();
+      // Near the pointer: the field swirls, quickens, is dragged along with the pointer's own motion, and runs red.
+      if (d < 200) { const k = 1 - d / 200; a += k * Math.PI * 0.9; speed += k * 1.6; px = this.vx * k * 0.3; py = this.vy * k * 0.3; hot = k; }
+      // A ripple is a ring travelling outwards; whatever it passes over is pushed along and inked red for a moment.
+      for (const r of this.ripples) { const rx = p.x - r.x, ry = p.y - r.y, dr = Math.hypot(rx, ry) || 1, band = (1 - Math.abs(dr - r.r) / 45) * (1 - r.r / 640); if (band > 0) { px += rx / dr * band * 9; py += ry / dr * band * 9; hot = Math.max(hot, band * 1.5); } }
+      const nx = p.x + Math.cos(a) * speed + px, ny = p.y + Math.sin(a) * speed + py;
+      ctx.strokeStyle = p.red ? C.accentA(0.7) : hot > 0.3 ? C.accentA(Math.min(0.8, 0.2 + hot * 0.6).toFixed(2)) : C.inkA((0.1 + p.z * 0.34).toFixed(2));
+      ctx.lineWidth = 0.45 + p.z * 1.1;
+      ctx.beginPath(); ctx.moveTo(p.x + ox, p.y + oy); ctx.lineTo(nx + ox, ny + oy); ctx.stroke();
       p.x = nx; p.y = ny; p.life--;
       if (p.life < 0 || nx < 0 || ny < 0 || nx > w || ny > h) { p.x = Math.random() * w; p.y = Math.random() * h; p.life = 120 + Math.random() * 200; }
     }
@@ -588,13 +682,22 @@ class Component extends DCLogic {
       const c = document.querySelector('[data-gallery-count]'); if (c) { const n = this.featured.length; c.textContent = pad2(Math.min(n, Math.floor(p * n) + 1)) + ' / ' + pad2(n); }
     }
 
+    if (this.state.menu && vw > 860) this.setMenu(false);
+    const hd = document.querySelector('header');
+    if (hd) { let tone = ''; if (!this.state.menu) document.querySelectorAll('section[data-tone]').forEach(s => { const r = s.getBoundingClientRect(); if (r.top <= 35 && r.bottom > 35) tone = s.dataset.tone; }); if (hd.dataset.tone !== tone) hd.dataset.tone = tone; }
+
+    (this.words || []).forEach(W => {
+      const r = W.el.getBoundingClientRect(), n = W.spans.length, p = clamp((vh * 0.92 - r.top) / (vh * 0.5));
+      if (p !== W.p) { W.p = p; W.spans.forEach((sp, i) => { sp.style.opacity = (0.16 + 0.84 * clamp((p * (n + 4) - i) / 4)).toFixed(3); }); }
+    });
+
     const sc = document.querySelector('[data-sculpture]');
     if (sc) {
       const r = sc.getBoundingClientRect(); const p = clamp(-r.top / (r.height - vh));
       const e = this.reduce ? 1 : ease(clamp(p / 0.4));
       const active = p < SPLIT_AT ? -1 : Math.min(LAYERS.length - 1, Math.floor((p - SPLIT_AT) / LAYER_SPAN));
       sc.querySelectorAll('[data-plane]').forEach((pl, i) => {
-        pl.style.transform = `translate(-50%, -50%) rotateX(60deg) rotateZ(${-45 + (this.reduce ? 0 : p * 50)}deg) translateZ(${((LAYERS.length - 1) / 2 - i) * (10 + e * 130) + (active === i ? 20 : 0)}px)`;
+        pl.style.transform = `translate(-50%, -50%) rotateX(60deg) rotateZ(${-45 + (this.reduce ? 0 : p * 50)}deg) translateZ(${((LAYERS.length - 1) / 2 - i) * (10 + e * pl.offsetWidth * 0.36) + (active === i ? 20 : 0)}px)`;
         pl.style.borderColor = active === i ? 'var(--accent)' : 'rgb(var(--mat-rgb) / 0.75)';
         pl.style.color = active === i ? 'var(--accent)' : 'var(--mat)';
       });
@@ -602,14 +705,20 @@ class Component extends DCLogic {
     }
   }
 
+  setMenu(on) { document.body.style.overflow = on ? 'hidden' : ''; this.setState({ menu: on }); }
+
   open(i) {
+    this.opener = document.activeElement;
     this.setState({ room: i }, () => {
       document.body.style.overflow = 'hidden';
       const el = document.querySelector('[data-room]');
+      // A real modal: the page behind is inert, focus moves in, and close() hands it back.
+      document.querySelectorAll('header, main').forEach(n => { n.inert = true; });
+      if (el) el.querySelector('button').focus({ preventScroll: true });
       if (el && !this.reduce) el.animate([{ clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], { duration: 800, easing: 'cubic-bezier(.7,0,.2,1)' });
     });
   }
-  close() { document.body.style.overflow = ''; this.setState({ room: -1 }); }
+  close() { document.body.style.overflow = ''; document.querySelectorAll('header, main').forEach(n => { n.inert = false; }); this.setState({ room: -1 }, () => { if (this.opener && this.opener.isConnected) this.opener.focus({ preventScroll: true }); }); }
 
   renderVals() {
     const projects = this.views;
@@ -621,10 +730,12 @@ class Component extends DCLogic {
       featured: this.featured, featuredCountWord: NUMBER_WORDS[this.featured.length],
       repos: REPOS.map(r => ({ ...r, dot: LANG_DOT[r.lang] })),
       career: CAREER,
-      elsewhere: ELSEWHERE,
+      elsewhere: this.elsewhere,
+      menuOpen: this.state.menu, menuLabel: this.state.menu ? 'Close' : 'Menu', toggleMenu: () => this.setMenu(!this.state.menu), closeMenu: () => this.setMenu(false),
+      menuLinks: MENU,
       shown, shownCount: pad2(shown.length),
       filters: FILTERS.map(label => ({ label, active: f === label, count: String(label === 'All' ? projects.length : projects.filter(p => p.cats.includes(label)).length), pick: () => this.setState({ filter: label }, () => this.animateCards()) })),
-      layers: LAYERS,
+      layers: this.layers,
       layerNote: l < 0 ? 'Scroll to separate the layers.' : LAYERS[l].note,
       room: projects[this.state.room],
       paintHero: this.paintHero, paintContrib: this.paintContrib,
